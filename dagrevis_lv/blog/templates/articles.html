@@ -1,0 +1,11 @@
+{% for article in articles %}
+
+    <h3><a href="{% url blog_article article.pk %}">{{ article.title }}</a></h3>
+
+    <p>{{ article.content }}
+
+{% empty %}
+
+    <p>No articles.</p>
+
+{% endfor %}
