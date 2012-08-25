@@ -3,6 +3,7 @@ from django.test import TestCase
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 from blog.models import *
+from django.template import defaultfilters
 
 
 def create_user(username=None, password=None):
@@ -12,10 +13,11 @@ def create_user(username=None, password=None):
     return user
 
 
-def create_article(user=None, title=None, content=None):
+def create_article(user=None, title=None, content=None, slug=None):
     user = user if user != None else create_user()
     title = title if title != None else str(uuid4())
     content = content if content != None else str(uuid4())
+    slug = slug if slug != None else str(uuid4())
     article = Article()
     article.user = user
     article.title = title
@@ -26,9 +28,12 @@ def create_article(user=None, title=None, content=None):
 
 class ArticleTest(TestCase):
     def test_articles_list(self):
+        # Page exists and no articles.
         response = self.client.get(reverse("blog_articles"))
         self.assertEqual(200, response.status_code)
         self.assertIn("No articles.", response.content)
+
+        # All OK.
         article1 = create_article()
         article2 = create_article()
         response = self.client.get(reverse("blog_articles"))
@@ -36,10 +41,22 @@ class ArticleTest(TestCase):
         self.assertIn(article2.content, response.content)
 
     def test_single_article(self):
+        # Wrong PK.
         response = self.client.get(reverse("blog_article", kwargs={"article_pk": 9999}))
         self.assertEqual(404, response.status_code)
+
         article = create_article()
+
+        # No slug.
         response = self.client.get(reverse("blog_article", kwargs={"article_pk": article.pk}))
+        self.assertEqual(200, response.status_code)
+
+        # Wrong slug.
+        response = self.client.get(reverse("blog_article", kwargs={"article_pk": article.pk}))
+        self.assertEqual(200, response.status_code)
+
+        # All OK.
+        response = self.client.get(reverse("blog_article", kwargs={"article_pk": article.pk, "slug": defaultfilters.slugify(article.slug)}))
         self.assertEqual(200, response.status_code)
         self.assertIn(article.title, response.content)
         self.assertIn(article.content, response.content)
