@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.template import defaultfilters
 
 
 class Article(models.Model):
@@ -12,3 +13,9 @@ class Article(models.Model):
 
     def __unicode__(self):
         return self.title
+
+    def clean(self):
+        """Generates and saves slug, if it's not set."""
+        if self.slug == "":
+            self.slug = defaultfilters.slugify(self.title)
+        super(Article, self).clean()

@@ -14,7 +14,7 @@ def articles(request):
     )
 
 
-def article(request, article_pk):
+def article(request, article_pk, slug):
     article = get_object_or_404(Article, pk=article_pk)
     return render_to_response(
         "article.html",
