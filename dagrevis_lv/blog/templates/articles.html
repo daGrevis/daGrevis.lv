@@ -1,6 +1,6 @@
 {% for article in articles %}
 
-    <h3><a href="{% url blog_article article.pk %}">{{ article.title }}</a></h3>
+    <h3><a href="{% url blog_article article.pk article.slug %}">{{ article.title }}</a></h3>
 
     <p>{{ article.content }}
 
