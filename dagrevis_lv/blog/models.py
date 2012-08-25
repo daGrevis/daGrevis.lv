@@ -8,6 +8,7 @@ class Article(models.Model):
     last_updated = models.DateTimeField(auto_now=True)
     title = models.CharField(max_length=255)
     content = models.TextField()
+    slug = models.CharField(max_length=255, blank=True)
 
     def __unicode__(self):
         return self.title
