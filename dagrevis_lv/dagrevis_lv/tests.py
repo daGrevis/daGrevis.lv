@@ -25,3 +25,7 @@ def create_article(user=None, title=None, content=None, slug=None):
     article.slug = slug
     article.save()
     return article
+
+
+def logged_in():
+    return False
