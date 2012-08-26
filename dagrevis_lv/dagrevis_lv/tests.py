@@ -27,5 +27,5 @@ def create_article(user=None, title=None, content=None, slug=None):
     return article
 
 
-def logged_in():
-    return False
+def logged_in(client):
+    return "_auth_user_id" in client.session

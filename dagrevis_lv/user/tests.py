@@ -17,8 +17,10 @@ class AuthenticationTest(TestCase):
         # Wrong password.
         user = create_user()
         response = self.client.post(reverse("user_login"), {"username": user.username, "password": str(uuid4())})
+        self.assertFalse(logged_in())
 
         # All OK.
         password = str(uuid4())
         user = create_user(password=password)
         response = self.client.post(reverse("user_login"), {"username": user.username, "password": user.password})
+        self.assertTrue(logged_in())
