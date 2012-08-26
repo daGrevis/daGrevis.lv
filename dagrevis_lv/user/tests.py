@@ -11,16 +11,18 @@ class AuthenticationTest(TestCase):
         self.assertEqual(200, response.status_code)
 
         # No user.
-        response = self.client.post(reverse("user_login"), {"username": str(uuid4()), "password": str(uuid4())})
-        self.assertFalse(logged_in())
+        response = self.client.post(reverse("user_login"), {"username": str(uuid4())[:30], "password": str(uuid4())})
+        self.assertFalse(logged_in(self.client))
 
         # Wrong password.
-        user = create_user()
-        response = self.client.post(reverse("user_login"), {"username": user.username, "password": str(uuid4())})
-        self.assertFalse(logged_in())
+        username = str(uuid4())[:30]
+        create_user(username=username)
+        response = self.client.post(reverse("user_login"), {"username": username, "password": str(uuid4())})
+        self.assertFalse(logged_in(self.client))
 
         # All OK.
+        username = str(uuid4())[:30]
         password = str(uuid4())
-        user = create_user(password=password)
-        response = self.client.post(reverse("user_login"), {"username": user.username, "password": user.password})
-        self.assertTrue(logged_in())
+        create_user(username=username, password=password)
+        response = self.client.post(reverse("user_login"), {"username": username, "password": password})
+        self.assertTrue(logged_in(self.client))

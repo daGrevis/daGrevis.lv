@@ -1,4 +1,5 @@
 from os import path
+from django.core.urlresolvers import reverse
 
 # Django settings for dagrevis_lv project.
 
@@ -150,3 +151,5 @@ LOGGING = {
         },
     }
 }
+
+LOGIN_REDIRECT_URL = reverse("blog_articles")
