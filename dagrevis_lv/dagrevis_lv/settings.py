@@ -1,4 +1,5 @@
 from os import path
+from django.core.urlresolvers import reverse
 
 # Django settings for dagrevis_lv project.
 
@@ -119,6 +120,7 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     "blog",
+    "user",
 )
 
 # A sample logging configuration. The only tangible logging
@@ -149,3 +151,5 @@ LOGGING = {
         },
     }
 }
+
+LOGIN_REDIRECT_URL = reverse("blog_articles")
