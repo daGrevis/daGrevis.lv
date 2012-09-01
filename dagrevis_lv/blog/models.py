@@ -19,3 +19,14 @@ class Article(models.Model):
         if self.slug == "":
             self.slug = defaultfilters.slugify(self.title)
         super(Article, self).clean()
+
+
+class Comment(models.Model):
+    article = models.ForeignKey(Article)
+    user = models.ForeignKey(User)
+    created = models.DateTimeField(auto_now_add=True)
+    last_updated = models.DateTimeField(auto_now=True)
+    content = models.TextField()
+
+    def __unicode__(self):
+        return self.content[:100]
