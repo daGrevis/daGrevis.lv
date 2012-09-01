@@ -4,6 +4,7 @@ from django.test import TestCase
 from django.core.urlresolvers import reverse
 from django.template import defaultfilters
 from .models import *
+from markdown2 import markdown
 
 
 class ArticleTest(TestCase):
@@ -59,6 +60,20 @@ class ArticleTest(TestCase):
         self.assertIn(article.title, response.content)
         self.assertIn(article.content, response.content)
 
+    def test_content_parsed_as_markdown(self):
+        # Markdown's representation of bold text.
+        content = "**{}**".format(get_data())
+        article = create_article(content=content)
+        response = self.client.get(reverse(
+            "blog_article",
+            kwargs={
+                "article_pk": article.pk,
+                "slug": article.slug,
+            },
+        ))
+        expected = markdown(content)
+        self.assertIn(expected, response.content)
+
 
 class CommentTest(TestCase):
     def test_no_comments(self):
@@ -68,7 +83,7 @@ class CommentTest(TestCase):
             kwargs={
                 "article_pk": article.pk,
                 "slug": article.slug,
-            }
+            },
         ))
         expected = "No comments."
         self.assertIn(expected, response.content)
@@ -82,7 +97,7 @@ class CommentTest(TestCase):
             kwargs={
                 "article_pk": article.pk,
                 "slug": article.slug,
-            }
+            },
         ))
         expected = 'Please <a href="{}">login</a> to comment.'
         expected = expected.format(reverse("user_login"))
@@ -95,7 +110,7 @@ class CommentTest(TestCase):
             kwargs={
                 "article_pk": article.pk,
                 "slug": article.slug,
-            }
+            },
         ))
         self.assertIn("<button>Add comment</button>", response.content)
 
@@ -115,7 +130,7 @@ class CommentTest(TestCase):
         )
         self.assertEqual(response.status_code, 403)
         self.assertFalse(
-            Article.objects.get(pk=article.pk).comment_set.exists()
+            Article.objects.get(pk=article.pk).comment_set.exists(),
         )
 
         # As member.
@@ -145,3 +160,17 @@ class CommentTest(TestCase):
             Article.objects.get(pk=article.pk).comment_set.count(),
             expected,
         )
+
+    def test_content_parsed_as_markdown(self):
+        # Markdown's representation of italic text.
+        content = "_{}_".format(get_data())
+        comment = create_comment(content=content)
+        response = self.client.get(reverse(
+            "blog_article",
+            kwargs={
+                "article_pk": comment.article.pk,
+                "slug": comment.article.slug,
+            },
+        ))
+        expected = markdown(content)
+        self.assertIn(expected, response.content)
