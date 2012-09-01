@@ -1,4 +1,3 @@
-from uuid import uuid4
 from dagrevis_lv.tests import *
 from django.test import TestCase
 from django.core.urlresolvers import reverse
@@ -43,7 +42,7 @@ class ArticleTest(TestCase):
             "blog_article",
             kwargs={
                 "article_pk": article.pk,
-                "slug": defaultfilters.slugify(str(uuid4())),
+                "slug": defaultfilters.slugify(get_data()),
             },
         ))
         self.assertEqual(301, response.status_code)
@@ -126,7 +125,7 @@ class CommentTest(TestCase):
                     "slug": article.slug,
                 },
             ),
-            {"content": str(uuid4())},
+            {"content": get_data()},
         )
         self.assertEqual(response.status_code, 403)
         self.assertFalse(
@@ -143,7 +142,7 @@ class CommentTest(TestCase):
                     "slug": article.slug,
                 },
             ),
-            {"content": str(uuid4())},
+            {"content": get_data()},
         )
         self.assertEqual(
             Article.objects.get(pk=article.pk).comment_set.count(),
