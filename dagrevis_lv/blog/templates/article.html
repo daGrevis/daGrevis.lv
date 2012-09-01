@@ -1,3 +1,38 @@
 <h3>{{ article.title }}</h3>
 
 <p>{{ article.content }}</p>
+
+<h4>Comments</h4>
+
+{% for comment in comments %}
+
+    <p>
+        <strong>{{ comment.author }}</strong>
+        {{ comment }}
+    </p>
+
+{% empty %}
+
+    <p>No comments.</p>
+
+{% endfor %}
+
+<h4>Add Comment</h4>
+
+{% if user.is_authenticated %}
+
+    <form method="post">
+
+        {% csrf_token %}
+
+        {{ comment_form.as_p }}
+
+        <button>Add comment</button>
+
+    </form>
+
+{% else %}
+
+    <p>Please <a href="{% url user_login %}">login</a> to comment.</p>
+
+{% endif %}

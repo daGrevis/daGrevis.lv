@@ -1,4 +1,3 @@
-from uuid import uuid4
 from dagrevis_lv.tests import *
 from django.test import TestCase
 from django.core.urlresolvers import reverse
@@ -11,18 +10,36 @@ class AuthenticationTest(TestCase):
         self.assertEqual(200, response.status_code)
 
         # No user.
-        response = self.client.post(reverse("user_login"), {"username": str(uuid4())[:30], "password": str(uuid4())})
+        response = self.client.post(
+            reverse("user_login"),
+            {
+                "username": get_data(length=30),  # Max length of username.
+                "password": get_data(),
+            },
+        )
         self.assertFalse(logged_in(self.client))
 
         # Wrong password.
-        username = str(uuid4())[:30]
+        username = get_data(length=30)
         create_user(username=username)
-        response = self.client.post(reverse("user_login"), {"username": username, "password": str(uuid4())})
+        response = self.client.post(
+            reverse("user_login"),
+            {
+                "username": username,
+                "password": get_data(),
+            },
+        )
         self.assertFalse(logged_in(self.client))
 
         # All OK.
-        username = str(uuid4())[:30]
-        password = str(uuid4())
+        username = get_data(length=30)
+        password = get_data()
         create_user(username=username, password=password)
-        response = self.client.post(reverse("user_login"), {"username": username, "password": password})
+        response = self.client.post(
+            reverse("user_login"),
+            {
+                "username": username,
+                "password": password,
+            },
+        )
         self.assertTrue(logged_in(self.client))
