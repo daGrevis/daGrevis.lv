@@ -39,3 +39,7 @@ class ArticleTest(TestCase):
         self.assertEqual(200, response.status_code)
         self.assertIn(article.title, response.content)
         self.assertIn(article.content, response.content)
+
+
+class CommentTest(TestCase):
+    pass
