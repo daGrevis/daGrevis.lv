@@ -2,7 +2,7 @@ from dagrevis_lv.tests import *
 from django.test import TestCase
 from django.core.urlresolvers import reverse
 from django.template import defaultfilters
-from .models import *
+from blog.models import *
 from markdown2 import markdown
 
 
