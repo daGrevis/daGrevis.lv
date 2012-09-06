@@ -1,9 +1,8 @@
-from dagrevis_lv.tests import *
 from django.test import TestCase
+from core.test_utilities import *
 from django.core.urlresolvers import reverse
 from django.template import defaultfilters
 from blog.models import *
-from markdown2 import markdown
 
 
 class ArticleTest(TestCase):
@@ -58,20 +57,6 @@ class ArticleTest(TestCase):
         self.assertEqual(200, response.status_code)
         self.assertIn(article.title, response.content)
         self.assertIn(article.content, response.content)
-
-    def test_content_parsed_as_markdown(self):
-        # Markdown's representation of bold text.
-        content = "**{}**".format(get_data())
-        article = create_article(content=content)
-        response = self.client.get(reverse(
-            "blog_article",
-            kwargs={
-                "article_pk": article.pk,
-                "slug": article.slug,
-            },
-        ))
-        expected = markdown(content)
-        self.assertIn(expected, response.content)
 
 
 class CommentTest(TestCase):
@@ -159,17 +144,3 @@ class CommentTest(TestCase):
             Article.objects.get(pk=article.pk).comment_set.count(),
             expected,
         )
-
-    def test_content_parsed_as_markdown(self):
-        # Markdown's representation of italic text.
-        content = "_{}_".format(get_data())
-        comment = create_comment(content=content)
-        response = self.client.get(reverse(
-            "blog_article",
-            kwargs={
-                "article_pk": comment.article.pk,
-                "slug": comment.article.slug,
-            },
-        ))
-        expected = markdown(content)
-        self.assertIn(expected, response.content)
