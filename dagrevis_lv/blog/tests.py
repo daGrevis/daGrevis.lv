@@ -1,9 +1,8 @@
-from uuid import uuid4
-from dagrevis_lv.tests import *
 from django.test import TestCase
+from core.test_utilities import *
 from django.core.urlresolvers import reverse
 from django.template import defaultfilters
-from .models import *
+from blog.models import *
 
 
 class ArticleTest(TestCase):
@@ -42,7 +41,7 @@ class ArticleTest(TestCase):
             "blog_article",
             kwargs={
                 "article_pk": article.pk,
-                "slug": defaultfilters.slugify(str(uuid4())),
+                "slug": defaultfilters.slugify(get_data()),
             },
         ))
         self.assertEqual(301, response.status_code)
@@ -68,7 +67,7 @@ class CommentTest(TestCase):
             kwargs={
                 "article_pk": article.pk,
                 "slug": article.slug,
-            }
+            },
         ))
         expected = "No comments."
         self.assertIn(expected, response.content)
@@ -82,7 +81,7 @@ class CommentTest(TestCase):
             kwargs={
                 "article_pk": article.pk,
                 "slug": article.slug,
-            }
+            },
         ))
         expected = 'Please <a href="{}">login</a> to comment.'
         expected = expected.format(reverse("user_login"))
@@ -95,7 +94,7 @@ class CommentTest(TestCase):
             kwargs={
                 "article_pk": article.pk,
                 "slug": article.slug,
-            }
+            },
         ))
         self.assertIn("<button>Add comment</button>", response.content)
 
@@ -111,11 +110,11 @@ class CommentTest(TestCase):
                     "slug": article.slug,
                 },
             ),
-            {"content": str(uuid4())},
+            {"content": get_data()},
         )
         self.assertEqual(response.status_code, 403)
         self.assertFalse(
-            Article.objects.get(pk=article.pk).comment_set.exists()
+            Article.objects.get(pk=article.pk).comment_set.exists(),
         )
 
         # As member.
@@ -128,7 +127,7 @@ class CommentTest(TestCase):
                     "slug": article.slug,
                 },
             ),
-            {"content": str(uuid4())},
+            {"content": get_data()},
         )
         self.assertEqual(
             Article.objects.get(pk=article.pk).comment_set.count(),

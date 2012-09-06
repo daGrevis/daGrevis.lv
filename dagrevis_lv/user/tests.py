@@ -1,5 +1,5 @@
-from dagrevis_lv.tests import *
 from django.test import TestCase
+from core.test_utilities import *
 from django.core.urlresolvers import reverse
 
 

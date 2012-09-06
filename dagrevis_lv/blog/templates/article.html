@@ -1,15 +1,16 @@
+{% load text_processors %}
+
+
 <h3>{{ article.title }}</h3>
 
-<p>{{ article.content }}</p>
+{{ article.content|markdown }}
 
 <h4>Comments</h4>
 
 {% for comment in comments %}
 
-    <p>
-        <strong>{{ comment.author }}</strong>
-        {{ comment }}
-    </p>
+    <strong>{{ comment.author }}</strong>
+    {{ comment.content|markdown }}
 
 {% empty %}
 
