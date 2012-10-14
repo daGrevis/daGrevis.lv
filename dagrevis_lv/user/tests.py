@@ -1,6 +1,7 @@
 from django.test import TestCase
-from core.test_utilities import *
 from django.core.urlresolvers import reverse
+
+from core.test_utilities import get_data, logged_in, create_user
 
 
 class AuthenticationTest(TestCase):

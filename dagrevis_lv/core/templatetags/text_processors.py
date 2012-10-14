@@ -1,7 +1,9 @@
-from django import template
-from django.template import defaultfilters
-from django.utils import html, safestring
 from markdown2 import markdown as markdown_processor
+
+from django import template
+from django.utils import html, safestring
+from django.template import defaultfilters
+
 
 register = template.Library()
 

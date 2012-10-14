@@ -1,19 +1,14 @@
 from django import http
 from django.core.urlresolvers import reverse
 from django.template import RequestContext
-from django.shortcuts import *
-from .models import *
+from django.shortcuts import render_to_response, get_object_or_404, redirect
+
+from blog.models import Article, CommentForm
 
 
 def articles(request):
     articles = Article.objects.order_by("-id")
-    return render_to_response(
-        "articles.html",
-        {
-            "articles": articles,
-        },
-        context_instance=RequestContext(request),
-    )
+    return render_to_response("articles.html", {"articles": articles}, context_instance=RequestContext(request))
 
 
 def article(request, article_pk, slug=None):
@@ -23,8 +18,8 @@ def article(request, article_pk, slug=None):
         return http.HttpResponsePermanentRedirect(reverse(
             "blog_article", kwargs={
                 "article_pk": article_pk,
-                "slug": article.slug
-            }
+                "slug": article.slug,
+            },
         ))
     if request.method == "POST":
         # Comment adding.

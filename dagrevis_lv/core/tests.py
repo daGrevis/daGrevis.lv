@@ -1,16 +1,14 @@
-from core.test_utilities import *
-from django.test import TestCase
+from core.test_utilities import get_data
 from core.templatetags import text_processors
+
+from django.test import TestCase
 from django.utils import html
 
 
 class TextProcessorsMarkdownWrapperTest(TestCase):
 
     def test_processors_wrapper(self):
-        """
-        Tests that wrapper for processor works by testing bold's syntax. Real
-        tests for Markdown processor can be found in it's package.
-        """
+        """Tests that wrapper for processor works by testing bold's syntax. Real tests for Markdown processor can be found in it's package."""
         data = get_data()
         expected = "<p><strong>{}</strong></p>\n".format(data)
         # Markdown's representation of bold text.

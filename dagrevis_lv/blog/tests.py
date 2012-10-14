@@ -1,8 +1,9 @@
 from django.test import TestCase
-from core.test_utilities import *
 from django.core.urlresolvers import reverse
-from django.template import defaultfilters
-from blog.models import *
+from django.template.defaultfilters import slugify
+
+from core import test_utilities
+from blog.models import Article
 
 
 class ArticleTest(TestCase):
@@ -13,27 +14,21 @@ class ArticleTest(TestCase):
         self.assertIn("No articles.", response.content)
 
         # All OK.
-        article1 = create_article()
-        article2 = create_article()
+        article1 = test_utilities.create_article()
+        article2 = test_utilities.create_article()
         response = self.client.get(reverse("blog_articles"))
         self.assertIn(article1.title, response.content)
         self.assertIn(article2.content, response.content)
 
     def test_single_article(self):
         # Wrong PK.
-        response = self.client.get(reverse(
-            "blog_article",
-            kwargs={"article_pk": 9999},
-        ))
+        response = self.client.get(reverse("blog_article", kwargs={"article_pk": 9999}))
         self.assertEqual(404, response.status_code)
 
-        article = create_article()
+        article = test_utilities.create_article()
 
         # No slug.
-        response = self.client.get(reverse(
-            "blog_article",
-            kwargs={"article_pk": article.pk},
-        ))
+        response = self.client.get(reverse("blog_article", kwargs={"article_pk": article.pk}))
         self.assertEqual(301, response.status_code)
 
         # Wrong slug.
@@ -41,7 +36,7 @@ class ArticleTest(TestCase):
             "blog_article",
             kwargs={
                 "article_pk": article.pk,
-                "slug": defaultfilters.slugify(get_data()),
+                "slug": slugify(test_utilities.get_data()),
             },
         ))
         self.assertEqual(301, response.status_code)
@@ -61,7 +56,7 @@ class ArticleTest(TestCase):
 
 class CommentTest(TestCase):
     def test_no_comments(self):
-        article = create_article()
+        article = test_utilities.create_article()
         response = self.client.get(reverse(
             "blog_article",
             kwargs={
@@ -73,7 +68,7 @@ class CommentTest(TestCase):
         self.assertIn(expected, response.content)
 
     def test_show_or_hide_form(self):
-        article = create_article()
+        article = test_utilities.create_article()
 
         # As anonymous.
         response = self.client.get(reverse(
@@ -88,7 +83,7 @@ class CommentTest(TestCase):
         self.assertIn(expected, response.content)
 
         # As member.
-        create_and_login_user(self.client)
+        test_utilities.create_and_login_user(self.client)
         response = self.client.get(reverse(
             "blog_article",
             kwargs={
@@ -99,7 +94,7 @@ class CommentTest(TestCase):
         self.assertIn("<button>Add comment</button>", response.content)
 
     def test_add_comment(self):
-        article = create_article()
+        article = test_utilities.create_article()
 
         # As anonymous.
         response = self.client.post(
@@ -110,15 +105,13 @@ class CommentTest(TestCase):
                     "slug": article.slug,
                 },
             ),
-            {"content": get_data()},
+            {"content": test_utilities.get_data()},
         )
         self.assertEqual(response.status_code, 403)
-        self.assertFalse(
-            Article.objects.get(pk=article.pk).comment_set.exists(),
-        )
+        self.assertFalse(Article.objects.get(pk=article.pk).comment_set.exists())
 
         # As member.
-        create_and_login_user(self.client)
+        test_utilities.create_and_login_user(self.client)
         self.client.post(
             reverse(
                 "blog_article",
@@ -127,20 +120,14 @@ class CommentTest(TestCase):
                     "slug": article.slug,
                 },
             ),
-            {"content": get_data()},
+            {"content": test_utilities.get_data()},
         )
-        self.assertEqual(
-            Article.objects.get(pk=article.pk).comment_set.count(),
-            1,
-        )
+        self.assertEqual(Article.objects.get(pk=article.pk).comment_set.count(), 1)
 
     def test_comment_list(self):
         expected = 2
-        create_and_login_user(self.client)
-        article = create_article()
+        test_utilities.create_and_login_user(self.client)
+        article = test_utilities.create_article()
         for _ in range(expected):
-            create_comment(article=article)
-        self.assertEqual(
-            Article.objects.get(pk=article.pk).comment_set.count(),
-            expected,
-        )
+            test_utilities.create_comment(article=article)
+        self.assertEqual(Article.objects.get(pk=article.pk).comment_set.count(), expected)
