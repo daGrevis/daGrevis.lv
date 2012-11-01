@@ -46,7 +46,7 @@ def article(request, article_pk, slug=None):
     else:
         comment_form = CommentForm()
     comments = article.comment_set.all()
-    comments = Comment.calculate_depth(comments)
+    comments = Comment.calculate_depth_and_sort(comments)
     return render_to_response(
         "article.html",
         {

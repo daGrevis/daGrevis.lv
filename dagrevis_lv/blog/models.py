@@ -29,27 +29,28 @@ class Comment(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
     content = models.TextField()
-    depth_level = 1
+    depth = 1
 
     def __unicode__(self):
         return self.content
 
     @staticmethod
-    def calculate_depth(comments, sorted_comments=None, comment=None, depth_level=1):
+    def calculate_depth_and_sort(comments, sorted_comments=None, deeper_comment=None, depth=0):
         """
-        @brief Calculates depth of comments w/ recursion.
-        @param comments: Comments
-        @param comment: Comment (for recursion, isn't used from outside)
-        @param depth_level: Depth level (for recursion, isn't used from outside)
-        @return Comments /w depth level
+        @brief Calculates depth of comments and sorts them. Uses recursion, be careful!
+        @param comments: Comments (unsorted)
+        @param sorted_comments: Sorted comments (for recursion, isn't used from outside)
+        @param deeper_comment: Comment that is deeper than current comment (for recursion, isn't used from outside)
+        @param depth: Depth (for recursion, isn't used from outside)
+        @return Sorted comments w/ depth
         """
-        for the_comment in comments:
-            if the_comment.parent == comment:
-                the_comment.depth_level = depth_level
+        for comment in comments:
+            if comment.parent == deeper_comment:
+                comment.depth = depth
                 if sorted_comments is None:
                     sorted_comments = []
-                sorted_comments.append(the_comment)
-                Comment.calculate_depth(comments, sorted_comments, the_comment, depth_level + 1)
+                sorted_comments.append(comment)
+                Comment.calculate_depth_and_sort(comments, sorted_comments, comment, depth + 1)
         return sorted_comments
 
 
