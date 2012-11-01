@@ -23,14 +23,33 @@ class Article(models.Model):
 
 
 class Comment(models.Model):
+    parent = models.ForeignKey("self", null=True, blank=True)
     article = models.ForeignKey(Article)
     author = models.ForeignKey(User)
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
     content = models.TextField()
+    depth_level = 1
 
     def __unicode__(self):
         return self.content
+
+    @staticmethod
+    def calculate_depth(comments, sorted_comments=[], comment=None, depth_level=1):
+        """
+        @brief Calculates depth of comments w/ recursion.
+        @param comments: Comments
+        @param comment: Comment (for recursion, isn't used from outside)
+        @param depth_level: Depth level (for recursion, isn't used from outside)
+        @return Comments /w depth level
+        """
+        for the_comment in comments:
+            print(the_comment)
+            if the_comment.parent == comment:
+                the_comment.depth_level = depth_level
+                sorted_comments.append(the_comment)
+                Comment.calculate_depth(comments, sorted_comments, the_comment, depth_level + 1)
+        return sorted_comments
 
 
 class CommentForm(forms.ModelForm):

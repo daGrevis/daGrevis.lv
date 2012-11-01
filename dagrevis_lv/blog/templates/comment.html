@@ -1,0 +1,7 @@
+{% load text_processors %}
+
+
+<div class="comment" data-depth_level="{{ comment.depth_level }}">
+    <strong>{{ comment.author }}</strong> (<a href="{% url blog_article article_pk=article.pk slug=article.slug %}?parent_pk={{ comment.pk }}">reply</a>)
+    {{ comment.content|markdown }}
+</div>

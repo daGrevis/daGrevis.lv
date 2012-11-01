@@ -1,39 +1,47 @@
+{% extends "base.html" %}
 {% load text_processors %}
 
 
-<h3>{{ article.title }}</h3>
+{% block content %}
 
-{{ article.content|markdown }}
+    <h3>{{ article.title }}</h3>
 
-<h4>Comments</h4>
+    {{ article.content|markdown }}
 
-{% for comment in comments %}
+    <h4>Comments</h4>
 
-    <strong>{{ comment.author }}</strong>
-    {{ comment.content|markdown }}
+    {% for comment in comments %}
 
-{% empty %}
+        {% include "comment.html" with comment=comment %}
 
-    <p>No comments.</p>
+    {% empty %}
 
-{% endfor %}
+        <p>No comments.</p>
 
-<h4>Add Comment</h4>
+    {% endfor %}
 
-{% if user.is_authenticated %}
+    <h4>Add Comment</h4>
 
-    <form method="post">
+    {% if user.is_authenticated %}
 
-        {% csrf_token %}
+        <form method="post">
 
-        {{ comment_form.as_p }}
+            {% csrf_token %}
 
-        <button>Add comment</button>
+            {% if parent_pk %}
+                <input name="parent_pk" type="hidden" value="{{ parent_pk }}" />
+            {% endif %}
 
-    </form>
+            {{ comment_form.as_p }}
 
-{% else %}
+            <button>Add comment</button>
 
-    <p>Please <a href="{% url user_login %}">login</a> to comment.</p>
+        </form>
 
-{% endif %}
+    {% else %}
+
+        <p>Please <a href="{% url user_login %}">login</a> to comment.</p>
+
+    {% endif %}
+
+{% endblock %}
