@@ -35,7 +35,7 @@ class Comment(models.Model):
         return self.content
 
     @staticmethod
-    def calculate_depth(comments, sorted_comments=[], comment=None, depth_level=1):
+    def calculate_depth(comments, sorted_comments=None, comment=None, depth_level=1):
         """
         @brief Calculates depth of comments w/ recursion.
         @param comments: Comments
@@ -44,9 +44,10 @@ class Comment(models.Model):
         @return Comments /w depth level
         """
         for the_comment in comments:
-            print(the_comment)
             if the_comment.parent == comment:
                 the_comment.depth_level = depth_level
+                if sorted_comments is None:
+                    sorted_comments = []
                 sorted_comments.append(the_comment)
                 Comment.calculate_depth(comments, sorted_comments, the_comment, depth_level + 1)
         return sorted_comments
