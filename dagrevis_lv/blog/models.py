@@ -29,29 +29,29 @@ class Comment(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
     content = models.TextField()
-    depth = 1
+    depth = None
 
     def __unicode__(self):
         return self.content
 
     @staticmethod
-    def calculate_depth_and_sort(comments, sorted_comments=None, deeper_comment=None, depth=1):
+    def calculate_depth_and_sort(comments, _sorted_comments=None, _deeper_comment=None, _depth=1):
         """
-        @brief Calculates depth of comments and sorts them. Uses recursion, be careful!
-        @param comments: Comments (unsorted)
-        @param sorted_comments: Sorted comments (for recursion, isn't used from outside)
-        @param deeper_comment: Comment that is deeper than current comment (for recursion, isn't used from outside)
-        @param depth: Depth (for recursion, isn't used from outside)
-        @return Sorted comments w/ depth
+        @brief Calculates depth of comments and sorts them.
+        @param comments: Comments (unsorted).
+        @param _sorted_comments: Sorted comments (for recursion, isn't used from outside).
+        @param _deeper_comment: Comment that is deeper than current comment (for recursion, isn't used from outside).
+        @param _depth: Depth (for recursion, isn't used from outside).
+        @return Sorted comments w/ depth.
         """
         for comment in comments:
-            if comment.parent == deeper_comment:
-                comment.depth = depth
-                if sorted_comments is None:
-                    sorted_comments = []
-                sorted_comments.append(comment)
-                Comment.calculate_depth_and_sort(comments, sorted_comments, comment, depth + 1)
-        return sorted_comments
+            if comment.parent == _deeper_comment:
+                comment.depth = _depth
+                if _sorted_comments is None:
+                    _sorted_comments = []
+                _sorted_comments.append(comment)
+                Comment.calculate_depth_and_sort(comments, _sorted_comments, comment, _depth + 1)
+        return _sorted_comments
 
 
 class CommentForm(forms.ModelForm):
