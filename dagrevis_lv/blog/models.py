@@ -35,7 +35,7 @@ class Comment(models.Model):
         return self.content
 
     @staticmethod
-    def calculate_depth_and_sort(comments, sorted_comments=None, deeper_comment=None, depth=0):
+    def calculate_depth_and_sort(comments, sorted_comments=None, deeper_comment=None, depth=1):
         """
         @brief Calculates depth of comments and sorts them. Uses recursion, be careful!
         @param comments: Comments (unsorted)

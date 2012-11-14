@@ -124,10 +124,17 @@ class CommentTest(TestCase):
         )
         self.assertEqual(Article.objects.get(pk=article.pk).comment_set.count(), 1)
 
-    def test_comment_list(self):
-        expected = 2
-        test_utilities.create_and_login_user(self.client)
+    def test_nested_comments(self):
+        """Testing order and depth level of comments."""
         article = test_utilities.create_article()
-        for _ in range(expected):
-            test_utilities.create_comment(article=article)
-        self.assertEqual(Article.objects.get(pk=article.pk).comment_set.count(), expected)
+        comment1 = test_utilities.create_comment(article=article)
+        comment2 = test_utilities.create_comment(article=article)
+        comment3 = test_utilities.create_comment(article=article, parent=comment1)
+        comment4 = test_utilities.create_comment(article=article, parent=comment3)
+        response = self.client.get(reverse("blog_article", kwargs={"article_pk": article.pk, "slug": article.slug}))
+        expected_comments = [comment1, comment3, comment4, comment2]
+        actual_comments = list(response.context[-1]["comments"])
+        self.assertEqual(expected_comments, actual_comments)  # Order.
+        expected_levels_of_depth = [1, 2, 3, 1]
+        actual_levels_of_depth = [comment.depth for comment in actual_comments]
+        self.assertEqual(expected_levels_of_depth, actual_levels_of_depth)  # Depth level.

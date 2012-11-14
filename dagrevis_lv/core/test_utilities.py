@@ -50,11 +50,12 @@ def create_article(author=None, title=None, content=None, slug=None):
     )
 
 
-def create_comment(article=None, author=None, content=None):
+def create_comment(article=None, author=None, content=None, parent=None):
     article = article if article is not None else create_article()
     author = author if author is not None else create_user()
     content = content if content is not None else get_data()
     return Comment.objects.create(
+        parent=parent,
         article=article,
         author=author,
         content=content,
