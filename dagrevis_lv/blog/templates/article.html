@@ -6,6 +6,15 @@
 
     <h3>{{ article.title }}</h3>
 
+    {% if tags %}
+        <p>Tags:
+        {% for tag in tags %}
+            {{ tag.content }}&nbsp;
+        {% endfor %}
+    {% else %}
+        <p>No tags.</p>
+    {% endif %}
+
     {{ article.content|markdown }}
 
     <h4>Comments</h4>

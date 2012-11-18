@@ -3,9 +3,11 @@
 import exceptions
 from uuid import uuid4
 
-from blog.models import Article, Comment
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
+
+from blog.models import Article, Comment, Tag
 
 
 def get_data(unique=True, random=True, length=None):
@@ -60,3 +62,17 @@ def create_comment(article=None, author=None, content=None, parent=None):
         author=author,
         content=content,
     )
+
+
+def create_tag(article=None, content=None):
+    article = article if article is not None else create_article()
+    content = content if content is not None else get_data()
+    return Tag.objects.create(
+        content=content,
+        article=article,
+    )
+
+
+def request_article(client, article=None):
+    article = article if article is not None else create_article()
+    return client.get(reverse("blog_article", kwargs={"article_pk": article.pk, "slug": article.slug}))

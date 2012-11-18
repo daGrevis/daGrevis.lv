@@ -47,11 +47,13 @@ def article(request, article_pk, slug=None):
         comment_form = CommentForm()
     comments = article.comment_set.all()
     comments = Comment.calculate_depth_and_sort(comments)
+    tags = article.tag_set.all()
     return render_to_response(
         "article.html",
         {
             "article": article,
             "comments": comments,
+            "tags": tags,
             "comment_form": comment_form,
             "parent_pk": request.GET.get("parent_pk"),
         },
