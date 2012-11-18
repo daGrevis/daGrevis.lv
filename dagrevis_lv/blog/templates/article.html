@@ -6,14 +6,11 @@
 
     <h3>{{ article.title }}</h3>
 
-    <h4>Tags</h4>
-
     {% if tags %}
-        <ul>
-            {% for tag in tags %}
-                <li>{{ tag.content }}</li>
-            {% endfor %}
-        </ul>
+        <p>Tags:
+        {% for tag in tags %}
+            {{ tag.content }}&nbsp;
+        {% endfor %}
     {% else %}
         <p>No tags.</p>
     {% endif %}

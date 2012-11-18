@@ -3,9 +3,11 @@
 import exceptions
 from uuid import uuid4
 
-from blog.models import Article, Comment, Tag
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
+
+from blog.models import Article, Comment, Tag
 
 
 def get_data(unique=True, random=True, length=None):
@@ -69,3 +71,8 @@ def create_tag(article=None, content=None):
         content=content,
         article=article,
     )
+
+
+def request_article(client, article=None):
+    article = article if article is not None else create_article()
+    return client.get(reverse("blog_article", kwargs={"article_pk": article.pk, "slug": article.slug}))

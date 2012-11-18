@@ -3,7 +3,7 @@ from django.core.urlresolvers import reverse
 from django.template.defaultfilters import slugify
 
 from core import test_utilities
-from blog.models import Article, Tag
+from blog.models import Article
 
 
 class ArticleTest(TestCase):
@@ -42,13 +42,7 @@ class ArticleTest(TestCase):
         self.assertEqual(301, response.status_code)
 
         # All OK.
-        response = self.client.get(reverse(
-            "blog_article",
-            kwargs={
-                "article_pk": article.pk,
-                "slug": article.slug,
-            },
-        ))
+        response = test_utilities.request_article(self.client, article)
         self.assertEqual(200, response.status_code)
         self.assertIn(article.title, response.content)
         self.assertIn(article.content, response.content)
@@ -57,13 +51,7 @@ class ArticleTest(TestCase):
 class CommentTest(TestCase):
     def test_no_comments(self):
         article = test_utilities.create_article()
-        response = self.client.get(reverse(
-            "blog_article",
-            kwargs={
-                "article_pk": article.pk,
-                "slug": article.slug,
-            },
-        ))
+        response = test_utilities.request_article(self.client, article)
         expected = "No comments."
         self.assertIn(expected, response.content)
 
@@ -71,26 +59,14 @@ class CommentTest(TestCase):
         article = test_utilities.create_article()
 
         # As anonymous.
-        response = self.client.get(reverse(
-            "blog_article",
-            kwargs={
-                "article_pk": article.pk,
-                "slug": article.slug,
-            },
-        ))
+        response = test_utilities.request_article(self.client, article)
         expected = 'Please <a href="{}">login</a> to comment.'
         expected = expected.format(reverse("user_login"))
         self.assertIn(expected, response.content)
 
         # As member.
         test_utilities.create_and_login_user(self.client)
-        response = self.client.get(reverse(
-            "blog_article",
-            kwargs={
-                "article_pk": article.pk,
-                "slug": article.slug,
-            },
-        ))
+        response = test_utilities.request_article(self.client, article)
         self.assertIn("<button>Add comment</button>", response.content)
 
     def test_add_comment(self):
@@ -131,7 +107,7 @@ class CommentTest(TestCase):
         comment2 = test_utilities.create_comment(article=article)
         comment3 = test_utilities.create_comment(article=article, parent=comment1)
         comment4 = test_utilities.create_comment(article=article, parent=comment3)
-        response = self.client.get(reverse("blog_article", kwargs={"article_pk": article.pk, "slug": article.slug}))
+        response = test_utilities.request_article(self.client, article)
         expected_comments = [comment1, comment3, comment4, comment2]
         actual_comments = list(response.context[-1]["comments"])
         self.assertEqual(expected_comments, actual_comments)  # Order.
@@ -143,7 +119,7 @@ class CommentTest(TestCase):
 class TagTest(TestCase):
     def test_no_tags(self):
         article = test_utilities.create_article()
-        response = self.client.get(reverse("blog_article", kwargs={"article_pk": article.pk, "slug": article.slug}))
+        response = test_utilities.request_article(self.client, article)
         tags = response.context[-1]["tags"]
         self.assertEqual(0, len(tags))
 
@@ -151,7 +127,13 @@ class TagTest(TestCase):
         article = test_utilities.create_article()
         tag1 = test_utilities.create_tag(article)
         tag2 = test_utilities.create_tag(article)
-        response = self.client.get(reverse("blog_article", kwargs={"article_pk": article.pk, "slug": article.slug}))
-        tags = list(response.context[-1]["tags"])
+        response = test_utilities.request_article(self.client, article)
+        tags = response.context[-1]["tags"]
         self.assertEqual(tag1, tags[0])
         self.assertEqual(tag2, tags[1])
+
+    def test_tags_displayed(self):
+        article = test_utilities.create_article()
+        tag = test_utilities.create_tag(article)
+        response = test_utilities.request_article(self.client, article)
+        self.assertIn(tag.content, response.content)
