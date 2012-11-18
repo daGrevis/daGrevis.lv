@@ -35,7 +35,7 @@ def article(request, article_pk, slug=None):
             if parent_pk:
                 parent = get_object_or_404(Comment, pk=parent_pk)
                 if parent == comment:
-                    return htt.HttpResponseForbidden("Comment can't be child for itself!")
+                    return http.HttpResponseForbidden("Comment can't be child for itself!")
                 comment.parent = parent
             comment.save()
             return redirect(
