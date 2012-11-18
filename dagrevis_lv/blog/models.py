@@ -64,3 +64,6 @@ class Tag(models.Model):
     article = models.ForeignKey(Article)
     content = models.CharField(max_length=255)
     created = models.DateTimeField(auto_now_add=True)
+
+    def __unicode__(self):
+        return self.content
