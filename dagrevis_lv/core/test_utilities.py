@@ -3,7 +3,7 @@
 import exceptions
 from uuid import uuid4
 
-from blog.models import Article, Comment
+from blog.models import Article, Comment, Tag
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
 
@@ -59,4 +59,13 @@ def create_comment(article=None, author=None, content=None, parent=None):
         article=article,
         author=author,
         content=content,
+    )
+
+
+def create_tag(article=None, content=None):
+    article = article if article is not None else create_article()
+    content = content if content is not None else get_data()
+    return Tag.objects.create(
+        content=content,
+        article=article,
     )

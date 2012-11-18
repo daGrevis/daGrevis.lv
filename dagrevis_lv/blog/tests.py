@@ -3,7 +3,7 @@ from django.core.urlresolvers import reverse
 from django.template.defaultfilters import slugify
 
 from core import test_utilities
-from blog.models import Article
+from blog.models import Article, Tag
 
 
 class ArticleTest(TestCase):
@@ -138,3 +138,20 @@ class CommentTest(TestCase):
         expected_depth = [1, 2, 3, 1]
         actual_depth = [comment.depth for comment in actual_comments]
         self.assertEqual(expected_depth, actual_depth)  # Depth.
+
+
+class TagTest(TestCase):
+    def test_no_tags(self):
+        article = test_utilities.create_article()
+        response = self.client.get(reverse("blog_article", kwargs={"article_pk": article.pk, "slug": article.slug}))
+        tags = response.context[-1]["tags"]
+        self.assertEqual(0, len(tags))
+
+    def test_has_tags(self):
+        article = test_utilities.create_article()
+        tag1 = test_utilities.create_tag(article)
+        tag2 = test_utilities.create_tag(article)
+        response = self.client.get(reverse("blog_article", kwargs={"article_pk": article.pk, "slug": article.slug}))
+        tags = list(response.context[-1]["tags"])
+        self.assertEqual(tag1, tags[0])
+        self.assertEqual(tag2, tags[1])
