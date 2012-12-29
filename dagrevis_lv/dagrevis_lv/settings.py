@@ -173,3 +173,7 @@ META_KEYWORDS = ""
 META_DESCRIPTION = ""
 AUTHOR_NAME = "Raitis Stengrevics"
 AUTHOR_URL = "http://dagrevis.lv/about-me/"
+
+# Google analytics.
+GA_ENABLED = False
+GA_ID = "UA-7141181-6"
