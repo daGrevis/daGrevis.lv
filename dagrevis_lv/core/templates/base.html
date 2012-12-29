@@ -1,7 +1,10 @@
+{% load i18n %}
+
+
 <!DOCTYPE html>
 <html>
     <head>
-        <title>daGrevis.lv | Blogs</title>
+        <title>daGrevis.lv | {% trans "Blog" %}</title>
 
         <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600&amp;subset=latin,latin-ext" />
         <link rel="stylesheet" href="{{ STATIC_URL }}stylesheets/normalize--2.0.1.css" />
@@ -15,10 +18,10 @@
                 <h1><a href="{% url blog_articles %}">daGrevis.lv</a></h1>
                 <nav>
                     <ul>
-                        <li><a href="#">Par mani</a></li>
-                        <li><a href="#">Par blogu</a></li>
-                        <li><a href="#">Kontakti</a></li>
-                        <li><a href="#">Meklēšana</a></li>
+                        <li><a href="#">{% trans "About me" %}</a></li>
+                        <li><a href="#">{% trans "About blog" %}</a></li>
+                        <li><a href="#">{% trans "Contacts" %}</a></li>
+                        <li><a href="#">{% trans "Search" %}</a></li>
                     </ul>
                 </nav>
             </header>
@@ -26,7 +29,13 @@
             {% block content %}{% endblock %}
 
             <footer id="page_footer">
-                <p>Satura autors ir <a href="#">Raitis Stengrevics</a>, ja vien nav norādīts citādāk.</p>
+                <p>
+                    {% with author_url="#" author_name="Raitis Stengrevics" %}
+                        {% blocktrans %}
+                            Content author is <a href="{{ author_url }}">{{ author_name }}</a>, unless specified.
+                        {% endblocktrans %}
+                    {% endwith %}
+                </p>
                 <ul id="social_icons">
                     <li><a href="https://twitter.com/daGrevis" class="icon-twitter"></a></li>
                     <li><a href="https://github.com/daGrevis" class="icon-github"></a></li>
