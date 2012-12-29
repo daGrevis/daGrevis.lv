@@ -6,19 +6,7 @@
 
     {% include "blocks/article.html" %}
 
-    <div id="comments">
-
-        {% for comment in comments %}
-
-            {% include "blocks/comment.html" with comment=comment %}
-
-        {% empty %}
-
-            <p class="notification">{% trans "No comments." %}</p>
-
-        {% endfor %}
-
-    </div>
+    {% include "blocks/comments.html" %}
 
     {% include "blocks/add_comment.html" %}
 

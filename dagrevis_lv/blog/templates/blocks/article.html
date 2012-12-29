@@ -23,21 +23,29 @@
             {% trans "Published:" %} <time datetime="{{ article.created|date:"c" }}">{{ article.created|date:"F j, Y" }}</time><br />
             {% trans "Author:" %} <a href="#">{{ article.author.username }}</a>
         </p>
-        <p class="right">
-            <a href="{{ article.get_link }}#comments">
-                {% with comment_count=article.comment_set.count %}
-                    {% if comment_count == 0 %}
-                        {% trans "No comments" %}
-                    {% elif comment_count == 1 %}
-                        {% trans "1 comment" %}
-                    {% else %}
-                        {% blocktrans %}
-                            {{ comment_count }} comments
-                        {% endblocktrans %}
-                    {% endif %}
-                {% endwith %}
-            </a>
-        </p>
+        <div class="right">
+            <p>
+                <a href="{{ article.get_link }}#comments">
+                    {% with comment_count=article.comment_set.count %}
+                        {% if comment_count == 0 %}
+                            {% trans "No comments" %}
+                        {% elif comment_count == 1 %}
+                            {% trans "1 comment" %}
+                        {% else %}
+                            {% blocktrans %}
+                                {{ comment_count }} comments
+                            {% endblocktrans %}
+                        {% endif %}
+                    {% endwith %}
+                </a>
+            </p>
+            <nav id="share">
+                <ul>
+                    <li><a href="{{ article_link }}" class="icon-external-link" title="{% trans "Article link" %}"></a></li>
+                    <li><a href="#" class="icon-retweet" title="{% trans "Tweet link" %}"></a></li>
+                </ul>
+            </nav>
+        </div>
         <div class="clearer"></div>
     </footer>
 </article>

@@ -60,7 +60,7 @@ button {
     }
 }
 
-#page_header h1, nav {
+#page_header h1, #page_header nav {
     display: inline-block;
 }
 #page_header h1:before {
@@ -234,4 +234,13 @@ article footer {
 }
 .right {
     float: right;
+}
+
+#share ul {
+    list-style: none;
+    float: right;
+    margin-top: -1em;
+}
+#share li {
+    display: inline-block;
 }
