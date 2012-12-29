@@ -1,0 +1,33 @@
+{% load i18n %}
+
+
+<div id="add_comment">
+
+    {% if user.is_authenticated %}
+
+        <form action="#add_comment" method="post">
+            {% csrf_token %}
+            {% if comment_pk_to_reply %}<input name="comment_pk_to_reply" type="hidden" value="{{ comment_pk_to_reply }}" />{% endif %}
+            <p><textarea name="content" rows="5" placeholder="{% trans "Your comment..." %}"></textarea></p>
+            <p>
+                <button>{% trans "Add comment" %}</button>
+                {% if comment_pk_to_reply  %}
+                    <span id="reply_to">
+                        {% blocktrans %}
+                            (reply to <a href="{{ article_link }}?comment_pk_to_reply={{ comment.pk }}">comment #{{ comment_pk_to_reply }}</a>)
+                        {% endblocktrans %}
+                    </span>
+                {% endif %}
+            </p>
+        </form>
+
+    {% else %}
+
+        <p class="notification">
+            {% url user_login as url_for_user_login %}
+            {% blocktrans %}Please <a href="{{ url_for_user_login }}">login</a>, if you want to comment.{% endblocktrans %}
+        </p>
+
+    {% endif %}
+
+</div>
