@@ -65,7 +65,7 @@
         <script src="{{ STATIC_URL }}scripts/rainbow--e0b555d/language/python.js"></script>
         <script src="{{ STATIC_URL }}scripts/main.js"></script>
 
-        {% if not settings.DEBUG %}
+        {% if settings.GA_ENABLED %}
             <script>
                 var _gaq = _gaq || [];
                 _gaq.push(['_setAccount', '{{ settings.GA_ID }}']);
