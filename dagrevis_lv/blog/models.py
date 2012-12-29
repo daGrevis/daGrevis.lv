@@ -22,9 +22,6 @@ class Article(models.Model):
             self.slug = defaultfilters.slugify(self.title)
         super(Article, self).clean()
 
-    def tags(self):
-        return self.tag_set.all()
-
     def get_link(self):
         return reverse("blog_article", kwargs={"article_pk": self.pk, "slug": self.slug})
 
