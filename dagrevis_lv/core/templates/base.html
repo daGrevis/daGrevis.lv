@@ -2,8 +2,13 @@
 
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
+        <meta charset="utf-8" />
+        <meta name="keywords" content="" />
+        <meta name="description" content="" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
         <title>daGrevis.lv | {% trans "Blog" %}</title>
 
         <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600&amp;subset=latin,latin-ext" />
@@ -14,9 +19,9 @@
     </head>
     <body>
         <div id="container">
-            <header id="page_header">
+            <header id="page_header" role="banner">
                 <h1><a href="{% url blog_articles %}">daGrevis.lv</a></h1>
-                <nav>
+                <nav role="navigation">
                     <ul>
                         <li><a href="#">{% trans "About me" %}</a></li>
                         <li><a href="#">{% trans "About blog" %}</a></li>
@@ -26,9 +31,11 @@
                 </nav>
             </header>
 
-            {% block content %}{% endblock %}
+            <section role="main">
+                {% block content %}{% endblock %}
+            </section>
 
-            <footer id="page_footer">
+            <footer id="page_footer" role="contentinfo">
                 <p>
                     {% with author_url="#" author_name="Raitis Stengrevics" %}
                         {% blocktrans %}
