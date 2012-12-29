@@ -5,11 +5,11 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <meta name="keywords" content="" />
-        <meta name="description" content="" />
+        <meta name="keywords" content="{{ settings.META_KEYWORDS }}" />
+        <meta name="description" content="{{ settings.META_DESCRIPTION }}" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-        <title>daGrevis.lv | {% trans "Blog" %}</title>
+        <title>{{ settings.SITE_TITLE }} | {% trans "Blog" %}</title>
 
         <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600&amp;subset=latin,latin-ext" />
         <link rel="stylesheet" href="{{ STATIC_URL }}stylesheets/normalize--2.0.1.css" />
@@ -20,7 +20,7 @@
     <body>
         <div id="container">
             <header id="page_header" role="banner">
-                <h1><a href="{% url blog_articles %}">daGrevis.lv</a></h1>
+                <h1><a href="{% url blog_articles %}">{{ settings.SITE_TITLE }}</a></h1>
                 <nav role="navigation">
                     <ul>
                         <li><a href="#">{% trans "About me" %}</a></li>
@@ -37,7 +37,7 @@
 
             <footer id="page_footer" role="contentinfo">
                 <p>
-                    {% with author_url="#" author_name="Raitis Stengrevics" %}
+                    {% with author_url=settings.AUTHOR_URL author_name=settings.AUTHOR_NAME %}
                         {% blocktrans %}
                             Content author is <a href="{{ author_url }}">{{ author_name }}</a>, unless specified.
                         {% endblocktrans %}

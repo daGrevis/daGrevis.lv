@@ -167,3 +167,9 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 )
 
 MAXIMUM_DEPTH_FOR_COMMENT = 5
+
+SITE_TITLE = "daGrevis.lv"
+META_KEYWORDS = ""
+META_DESCRIPTION = ""
+AUTHOR_NAME = "Raitis Stengrevics"
+AUTHOR_URL = "http://dagrevis.lv/about-me/"
