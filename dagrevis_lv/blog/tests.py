@@ -1,6 +1,7 @@
 from django.test import TestCase
 from django.core.urlresolvers import reverse
 from django.template.defaultfilters import slugify
+from django.conf import settings
 
 from core import test_utilities
 from blog.models import Article
@@ -60,7 +61,7 @@ class CommentTest(TestCase):
 
         # As anonymous.
         response = test_utilities.request_article(self.client, article)
-        expected = 'Please <a href="{}">login</a> to comment.'
+        expected = 'Please <a href="{}">login</a>, if you want to comment.'
         expected = expected.format(reverse("user_login"))
         self.assertIn(expected, response.content)
 
@@ -73,31 +74,13 @@ class CommentTest(TestCase):
         article = test_utilities.create_article()
 
         # As anonymous.
-        response = self.client.post(
-            reverse(
-                "blog_article",
-                kwargs={
-                    "article_pk": article.pk,
-                    "slug": article.slug,
-                },
-            ),
-            {"content": test_utilities.get_data()},
-        )
+        response = self.client.post(article.get_link(), {"content": test_utilities.get_data()})
         self.assertEqual(response.status_code, 403)
         self.assertFalse(Article.objects.get(pk=article.pk).comment_set.exists())
 
         # As member.
         test_utilities.create_and_login_user(self.client)
-        self.client.post(
-            reverse(
-                "blog_article",
-                kwargs={
-                    "article_pk": article.pk,
-                    "slug": article.slug,
-                },
-            ),
-            {"content": test_utilities.get_data()},
-        )
+        self.client.post(article.get_link(), {"content": test_utilities.get_data()})
         self.assertEqual(Article.objects.get(pk=article.pk).comment_set.count(), 1)
 
     def test_nested_comments(self):
@@ -114,6 +97,28 @@ class CommentTest(TestCase):
         expected_depth = [1, 2, 3, 1]
         actual_depth = [comment.depth for comment in actual_comments]
         self.assertEqual(expected_depth, actual_depth)  # Depth.
+
+    def test_get_depth(self):
+        comment1 = test_utilities.create_comment()
+        comment2 = test_utilities.create_comment(article=comment1.article, parent=comment1)
+        comment3 = test_utilities.create_comment(article=comment2.article, parent=comment2)
+        self.assertEqual(1, comment1.get_depth())
+        self.assertEqual(3, comment3.get_depth())
+
+    def test_max_depth(self):
+        """Tests that comment nesting isn't deeper than defined."""
+        original_max = settings.MAXIMUM_DEPTH_FOR_COMMENT
+        settings.MAXIMUM_DEPTH_FOR_COMMENT = 2
+        article = test_utilities.create_article()
+        comment1 = test_utilities.create_comment(article=article)
+        comment2 = test_utilities.create_comment(article=article, parent=comment1)
+        test_utilities.create_and_login_user(self.client)
+        response = self.client.post(article.get_link(), {
+            "content": test_utilities.get_data(),
+            "comment_pk_to_reply": comment2.pk,
+        })
+        self.assertEqual(403, response.status_code)
+        settings.MAXIMUM_DEPTH_FOR_COMMENT = original_max
 
 
 class TagTest(TestCase):

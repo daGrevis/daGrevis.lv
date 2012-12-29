@@ -1,24 +1,20 @@
 """Test utilities are NOT tested because they are used by many tests and that's why they are self-tested in indirect way."""
 
-import exceptions
 from uuid import uuid4
 
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
-from django.core.urlresolvers import reverse
 
 from blog.models import Article, Comment, Tag
 
 
-def get_data(unique=True, random=True, length=None):
-    """Get data for testing purposes. By default data is unique and random."""
-    if unique and random:
-        data = str(uuid4())
-        if length is not None:
-            data = data[:length]
-        return data
-    else:
-        raise exceptions.NotImplementedError
+def get_data(length=32):
+    """Get data for testing purposes."""
+    data = ""
+    while len(data) < length:
+        data += str(uuid4())
+    data = data[:length]
+    return data
 
 
 def create_user(username=None, password=None):
@@ -75,4 +71,4 @@ def create_tag(article=None, content=None):
 
 def request_article(client, article=None):
     article = article if article is not None else create_article()
-    return client.get(reverse("blog_article", kwargs={"article_pk": article.pk, "slug": article.slug}))
+    return client.get(article.get_link())
