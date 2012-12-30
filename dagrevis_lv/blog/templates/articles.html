@@ -6,15 +6,21 @@
 
     <div id="articles">
 
-        {% for article in articles %}
+        {% if articles %}
 
-            {% include "blocks/article.html" %}
+            {% for article in articles %}
 
-        {% empty %}
+                {% include "blocks/article.html" %}
+
+            {% endfor %}
+
+            {% include "blocks/pagination.html" %}
+
+        {% else %}
 
             <p>{% trans "No articles." %}</p>
 
-        {% endfor %}
+        {% endif %}
 
     </div>
 

@@ -180,6 +180,9 @@ article footer {
     margin: .25em;
     padding: .5em .75em;
 }
+.tags :hover {
+    background: #f5f5f5;
+}
 
 #social_icons li {
     display: inline-block;
@@ -243,4 +246,28 @@ article footer {
 }
 #share li {
     display: inline-block;
+}
+
+#pagination {
+    margin-top: 6em;
+}
+#pagination ul {
+    list-style: none;
+}
+#pagination li {
+    border: 1px solid #D9D9D9;
+    font-size: .75em;
+    letter-spacing: 1px;
+    display: inline-block;
+    margin: .25em;
+    padding: .5em .75em;
+}
+#pagination li:hover {
+    background: #f5f5f5;
+}
+#pagination .active {
+    background: #f5f5f5;
+}
+#pagination .arrow {
+    font-weight: 600;
 }
