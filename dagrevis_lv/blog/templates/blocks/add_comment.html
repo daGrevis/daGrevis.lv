@@ -25,7 +25,11 @@
 
         <p class="notification">
             {% url user_login as url_for_user_login %}
-            {% blocktrans %}Please <a href="{{ url_for_user_login }}">login</a>, if you want to comment.{% endblocktrans %}
+            {% blocktrans %}Please login with <a href="#">Twitter</a> or <a href="#">GitHub</a>, if you want to comment.{% endblocktrans %}
+            <ul id="login">
+                <li><a href="#" class="icon-twitter-sign" alt="With Twitter"></a></li>
+                <li><a href="#" class="icon-github-sign" alt="With GitHub"></a></li>
+            </ul>
         </p>
 
     {% endif %}

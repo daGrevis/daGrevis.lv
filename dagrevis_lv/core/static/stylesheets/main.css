@@ -23,12 +23,18 @@ a {
     font-weight: 600;
     text-decoration: none;
 }
-textarea {
+input, textarea {
+    display: block;
     border: 1px solid #D9D9D9;
     font-size: .875em;
     padding: .5em .75em;
     line-height: 2em;
     outline: none;
+}
+input {
+    width: 300px;
+}
+textarea {
     width: 550px;
 }
 button {
@@ -271,4 +277,12 @@ article footer {
 }
 #pagination .active {
     background: #f5f5f5;
+}
+
+#login ul {
+    list-style: none;
+}
+#login li {
+    font-size: 2em;
+    display: inline-block;
 }
