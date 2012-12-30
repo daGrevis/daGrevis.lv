@@ -1,1 +1,15 @@
-tags
+{% extends "base.html" %}
+{% load i18n %}
+
+
+{% block content %}
+
+    <h1>{% trans "Tags" %}</h1>
+
+    <section class="content">
+
+        <p>{% trans "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer tincidunt ipsum neque. Morbi eu risus leo. Ut quis urna nunc, sit amet fringilla lectus. In nulla est, tristique vel semper sit amet, scelerisque at ante. Nunc a congue enim. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Fusce interdum, metus non egestas consequat, mauris leo consectetur dolor, vel sagittis eros ante id quam. Vivamus luctus congue bibendum. Cras at felis sapien. Fusce commodo nibh quis velit adipiscing ut pretium felis convallis. Aliquam erat volutpat." %}</p>
+
+    </section>
+
+{% endblock %}
