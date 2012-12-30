@@ -18,4 +18,14 @@ urlpatterns = patterns(
         "article",
         name="blog_article",
     ),
+    url(
+        r"^tags/$",
+        "tags",
+        name="blog_tags",
+    ),
+    url(
+        r"^search/$",
+        "search",
+        name="blog_search",
+    ),
 )

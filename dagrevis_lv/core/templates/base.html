@@ -30,10 +30,10 @@
                 <h1><a href="{% url blog_articles %}">{{ settings.SITE_TITLE }}</a></h1>
                 <nav role="navigation">
                     <ul>
-                        <li><a href="#">{% trans "About" %}</a></li>
-                        <li><a href="#">{% trans "Contacts" %}</a></li>
-                        <li><a href="#">{% trans "Tags" %}</a></li>
-                        <li><a href="#">{% trans "Search" %}</a></li>
+                        <li><a href="{% url core_about %}">{% trans "About" %}</a></li>
+                        <li><a href="{% url core_contacts %}">{% trans "Contacts" %}</a></li>
+                        <li><a href="{% url blog_tags %}">{% trans "Tags" %}</a></li>
+                        <li><a href="{% url blog_search %}">{% trans "Search" %}</a></li>
                     </ul>
                 </nav>
             </header>

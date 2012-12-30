@@ -56,3 +56,11 @@ def article(request, article_pk, slug=None):
         },
         context_instance=RequestContext(request),
     )
+
+
+def tags(request):
+    return render_to_response("tags.html", context_instance=RequestContext(request))
+
+
+def search(request):
+    return render_to_response("search.html", context_instance=RequestContext(request))
