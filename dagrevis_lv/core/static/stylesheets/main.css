@@ -210,6 +210,9 @@ article footer {
     padding: 1.5em;
     margin-top: 2em;
 }
+.comment.superuser_comment {
+    background: #ffe5e5;
+}
 #comments .comment .actions li {
     display: inline-block;
 }

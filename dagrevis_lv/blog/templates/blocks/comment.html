@@ -2,7 +2,7 @@
 {% load text_processors %}
 
 
-<div id="comment{{ comment.pk }}" class="comment depth{{ comment.depth }}">
+<div id="comment{{ comment.pk }}" class="comment depth{{ comment.depth }} {% if comment.author.is_superuser %}superuser_comment{% endif %}">
     <section class="content">
         {{ comment.content|markdown }}
     </section>
