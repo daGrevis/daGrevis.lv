@@ -289,3 +289,11 @@ article footer {
     font-size: 2em;
     display: inline-block;
 }
+
+#tags ul {
+    list-style: none;
+    padding: 0;
+}
+#tags li {
+    display: inline-block;
+}
