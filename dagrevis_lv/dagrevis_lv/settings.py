@@ -154,3 +154,26 @@ LOGGING = {
 }
 
 LOGIN_REDIRECT_URL = reverse("blog_articles")
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    "django.contrib.auth.context_processors.auth",
+    "django.core.context_processors.debug",
+    "django.core.context_processors.i18n",
+    "django.core.context_processors.media",
+    "django.core.context_processors.static",
+    "django.core.context_processors.tz",
+    "django.contrib.messages.context_processors.messages",
+    "core.context_processors.settings",
+)
+
+MAXIMUM_DEPTH_FOR_COMMENT = 5
+
+SITE_TITLE = "daGrevis.lv"
+META_DESCRIPTION = ""
+META_AUTHOR = ""
+AUTHOR_NAME = "Raitis Stengrevics"
+AUTHOR_URL = "http://dagrevis.lv/about-me/"
+
+# Google analytics.
+GA_ENABLED = False
+GA_ID = "UA-7141181-6"

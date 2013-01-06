@@ -1,14 +1,27 @@
-{% load text_processors %}
+{% extends "base.html" %}
+{% load i18n %}
 
 
-{% for article in articles %}
+{% block content %}
 
-    <h3><a href="{% url blog_article article.pk article.slug %}">{{ article.title }}</a></h3>
+    <div id="articles">
 
-    {{ article.content|markdown }}
+        {% if articles %}
 
-{% empty %}
+            {% for article in articles %}
 
-    <p>No articles.</p>
+                {% include "blocks/article.html" %}
 
-{% endfor %}
+            {% endfor %}
+
+            {% include "blocks/pagination.html" %}
+
+        {% else %}
+
+            <p>{% trans "No articles." %}</p>
+
+        {% endif %}
+
+    </div>
+
+{% endblock %}

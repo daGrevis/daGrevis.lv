@@ -1,56 +1,13 @@
 {% extends "base.html" %}
-{% load text_processors %}
+{% load i18n %}
 
 
 {% block content %}
 
-    <h3>{{ article.title }}</h3>
+    {% include "blocks/article.html" %}
 
-    {% if tags %}
-        <p>Tags:
-        {% for tag in tags %}
-            {{ tag.content }}&nbsp;
-        {% endfor %}
-    {% else %}
-        <p>No tags.</p>
-    {% endif %}
+    {% include "blocks/comments.html" %}
 
-    {{ article.content|markdown }}
-
-    <h4>Comments</h4>
-
-    {% for comment in comments %}
-
-        {% include "comment.html" with comment=comment %}
-
-    {% empty %}
-
-        <p>No comments.</p>
-
-    {% endfor %}
-
-    <h4>Add Comment</h4>
-
-    {% if user.is_authenticated %}
-
-        <form method="post">
-
-            {% csrf_token %}
-
-            {% if parent_pk %}
-                <input name="parent_pk" type="hidden" value="{{ parent_pk }}" />
-            {% endif %}
-
-            {{ comment_form.as_p }}
-
-            <button>Add comment</button>
-
-        </form>
-
-    {% else %}
-
-        <p>Please <a href="{% url user_login %}">login</a> to comment.</p>
-
-    {% endif %}
+    {% include "blocks/add_comment.html" %}
 
 {% endblock %}

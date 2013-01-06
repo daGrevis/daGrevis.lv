@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+
+{% block content %}
+
+    <section class="content">
+
+        <h1>{% trans "Search" %}</h1>
+
+        <form action="">
+            <p>
+                <label>
+                    {% trans "Word or phrase" %}
+                    <input name="phrase" />
+                </label>
+            </p>
+            <p>
+                <label>
+                    {% trans "Tags" %} <em>{% trans "(separate them by comma)" %}</em>
+                    <input name="phrase" />
+                </label>
+            </p>
+            <p>
+                <button>{% trans "Find articles" %}</button>
+            </p>
+        </form>
+
+    </section>
+
+{% endblock %}

@@ -1,0 +1,16 @@
+{% load i18n %}
+
+
+<div id="comments">
+
+    {% for comment in comments %}
+
+        {% include "blocks/comment.html" with comment=comment %}
+
+    {% empty %}
+
+        <p class="notification">{% trans "No comments." %}</p>
+
+    {% endfor %}
+
+</div>

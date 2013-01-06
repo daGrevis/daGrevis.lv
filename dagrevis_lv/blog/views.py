@@ -1,7 +1,7 @@
 from django import http
-from django.core.urlresolvers import reverse
 from django.template import RequestContext
 from django.shortcuts import render_to_response, get_object_or_404, redirect
+from django.conf import settings
 
 from blog.models import Article, Comment, CommentForm
 
@@ -16,12 +16,7 @@ def article(request, article_pk, slug=None):
     article = get_object_or_404(Article, pk=article_pk)
     # If slug is incorrect, "redirect friendly" to URL with correct slug.
     if not slug or slug != article.slug:
-        return http.HttpResponsePermanentRedirect(reverse(
-            "blog_article", kwargs={
-                "article_pk": article_pk,
-                "slug": article.slug,
-            },
-        ))
+        return http.HttpResponsePermanentRedirect(article.get_link())
     if request.method == "POST":
         # Comment adding.
         if request.user.is_anonymous():
@@ -31,11 +26,13 @@ def article(request, article_pk, slug=None):
             comment = comment_form.save(commit=False)
             comment.article = article
             comment.author = request.user
-            parent_pk = request.POST.get("parent_pk")
-            if parent_pk:
-                parent = get_object_or_404(Comment, pk=parent_pk)
+            comment_pk_to_reply = request.POST.get("comment_pk_to_reply")
+            if comment_pk_to_reply:
+                parent = get_object_or_404(Comment, pk=comment_pk_to_reply)
                 if parent == comment:
                     return http.HttpResponseForbidden("Comment can't be child for itself!")
+                if parent.get_depth() >= settings.MAXIMUM_DEPTH_FOR_COMMENT:
+                    return http.HttpResponseForbidden("Comments can't go deeper than {} levels!".format(settings.MAXIMUM_DEPTH_FOR_COMMENT))
                 comment.parent = parent
             comment.save()
             return redirect(
@@ -55,7 +52,15 @@ def article(request, article_pk, slug=None):
             "comments": comments,
             "tags": tags,
             "comment_form": comment_form,
-            "parent_pk": request.GET.get("parent_pk"),
+            "comment_pk_to_reply": request.GET.get("comment_pk_to_reply"),
         },
         context_instance=RequestContext(request),
     )
+
+
+def tags(request):
+    return render_to_response("tags.html", context_instance=RequestContext(request))
+
+
+def search(request):
+    return render_to_response("search.html", context_instance=RequestContext(request))

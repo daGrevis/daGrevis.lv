@@ -2,6 +2,7 @@ from django import forms
 from django.db import models
 from django.template import defaultfilters
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
 
 
 class Article(models.Model):
@@ -20,6 +21,9 @@ class Article(models.Model):
         if self.slug == "":
             self.slug = defaultfilters.slugify(self.title)
         super(Article, self).clean()
+
+    def get_link(self):
+        return reverse("blog_article", kwargs={"article_pk": self.pk, "slug": self.slug})
 
 
 class Comment(models.Model):
@@ -52,6 +56,15 @@ class Comment(models.Model):
                 _sorted_comments.append(comment)
                 Comment.calculate_depth_and_sort(comments, _sorted_comments, comment, _depth + 1)
         return _sorted_comments
+
+    def get_depth(self):
+        """Calculates depth. **Will perform one query for each level, be careful!"""
+        depth = 1
+        comment = self
+        while comment.parent is not None:
+            depth += 1
+            comment = comment.parent
+        return depth
 
 
 class CommentForm(forms.ModelForm):

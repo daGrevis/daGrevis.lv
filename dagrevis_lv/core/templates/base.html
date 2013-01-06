@@ -1,12 +1,83 @@
+{% load i18n %}
+
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <title>daGrevis.lv</title>
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
-        <script src="{{ STATIC_URL }}scripts/base.js"></script>
+
+        <meta name="description" content="{{ settings.META_DESCRIPTION }}" />
+        <meta name="author" content="{{ settings.META_AUTHOR }}" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+        <title>{{ settings.SITE_TITLE }} | {% trans "Blog" %}</title>
+
+        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600&amp;subset=latin,latin-ext" />
+        <link rel="stylesheet" href="{{ STATIC_URL }}stylesheets/normalize--2.0.1.css" />
+        <link rel="stylesheet" href="{{ STATIC_URL }}stylesheets/font-awesome--3.css" />
+        <link rel="stylesheet" href="{{ STATIC_URL }}stylesheets/rainbow--e0b555d/github-custom.css" />
+        <link rel="stylesheet" href="{{ STATIC_URL }}stylesheets/main.css" />
+
+        <link rel="shortcut icon" href="{{ STATIC_URL }}favicons/favicon.ico" />
+        <link rel="apple-touch-icon" href="{{ STATIC_URL }}favicons/apple-touch-icon.png" />
+        <link rel="apple-touch-icon" sizes="72x72" href="{{ STATIC_URL }}favicons/apple-touch-icon-72x72.png" />
+        <link rel="apple-touch-icon" sizes="114x114" href="{{ STATIC_URL }}favicons/apple-touch-icon-114x114.png" />
     </head>
     <body>
-        {% block content %}{% endblock %}
+        <div id="container">
+            <header id="page_header" role="banner">
+                <h1><a href="{% url blog_articles %}">{{ settings.SITE_TITLE }}</a></h1>
+                <nav role="navigation">
+                    <ul>
+                        <li><a href="{% url core_about %}">{% trans "About" %}</a></li>
+                        <li><a href="{% url core_contacts %}">{% trans "Contacts" %}</a></li>
+                        <li><a href="{% url blog_tags %}">{% trans "Tags" %}</a></li>
+                        <li><a href="{% url blog_search %}">{% trans "Search" %}</a></li>
+                    </ul>
+                </nav>
+            </header>
+
+            <section role="main">
+                <div id="content">
+                    {% block content %}{% endblock %}
+                </div>
+            </section>
+
+            <footer id="page_footer" role="contentinfo">
+                <p>
+                    {% with author_url=settings.AUTHOR_URL author_name=settings.AUTHOR_NAME %}
+                        {% blocktrans %}
+                            Content author is <a href="{{ author_url }}">{{ author_name }}</a>, unless specified.
+                        {% endblocktrans %}
+                    {% endwith %}
+                </p>
+                <ul id="social_icons">
+                    <li><a href="https://twitter.com/daGrevis" class="icon-twitter" title="{% trans "Twitter" %}"></a></li>
+                    <li><a href="https://github.com/daGrevis" class="icon-github-alt" title="{% trans "GitHub" %}"></a></li>
+                    <li><a href="https://linkedin.com/in/daGrevis" class="icon-linkedin" title="{% trans "LinkedIn" %}"></a></li>
+                    <li><a href="#" class="icon-envelope" title="{% trans "Contacts" %}"></a></li>
+                </ul>
+            </footer>
+        </div>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+        <script src="{{ STATIC_URL }}scripts/rainbow--e0b555d/rainbow.js"></script>
+        <script src="{{ STATIC_URL }}scripts/rainbow--e0b555d/language/generic.js"></script>
+        <script src="{{ STATIC_URL }}scripts/rainbow--e0b555d/language/python.js"></script>
+        <script src="{{ STATIC_URL }}scripts/main.js"></script>
+
+        {% if settings.GA_ENABLED %}
+            <script>
+                var _gaq = _gaq || [];
+                _gaq.push(['_setAccount', '{{ settings.GA_ID }}']);
+                _gaq.push(['_trackPageview']);
+                (function() {
+                    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+                })();
+            </script>
+        {% endif %}
     </body>
 </html>
