@@ -8,9 +8,9 @@ body {
 ul, ol {
     padding: 0;
 }
-[class^="icon-"] {
-    color: #262626;
-}
+/* [class^="icon-"] { */
+/*     color: #262626; */
+/* } */
 h1 { font-size: 1.5em; }
 h1 a { color: #262626; }
 h2 {
@@ -272,22 +272,14 @@ article footer {
     font-size: .75em;
     letter-spacing: 1px;
     display: inline-block;
-    margin: .25em;
-    padding: .5em .75em;
+    margin: .125em;
+    padding: .25em .375em;
 }
 #pagination li:hover {
     background: #f5f5f5;
 }
 #pagination .active {
     background: #f5f5f5;
-}
-
-#login ul {
-    list-style: none;
-}
-#login li {
-    font-size: 2em;
-    display: inline-block;
 }
 
 #tags ul {

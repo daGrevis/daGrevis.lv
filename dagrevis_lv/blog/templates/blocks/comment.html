@@ -15,7 +15,7 @@
             <li><a href="{{ article.get_link }}#comment{{ comment.pk }}" class="icon-link" title="{% trans "Link" %}"></a></li>
             {% if comment.depth < settings.MAXIMUM_DEPTH_FOR_COMMENT %}
                 <li>
-                    <a href="{{ article.get_link }}?comment_pk_to_reply={{ comment.pk }}#add_comment" class="icon-share-alt" title="{% trans "Reply" %}"></a>
+                    <a href="{{ article.get_link }}?comment_pk_to_reply={{ comment.pk }}#add_comment" class="icon-reply" title="{% trans "Reply" %}"></a>
                 </li>
             {% endif %}
         </ul>
