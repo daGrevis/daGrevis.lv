@@ -1,12 +1,12 @@
 $(function() {
-    // Lets fake font size for tags.
+    // Fake font-size for tags.
     var $tags = $("#tags")
     if ($tags.length) {
-        var ems = [1, 1.2, 1.4, 1.6, 1.8, 2]
-        $lis = $tags.find("li")
-        $.each($lis, function(i, el) {
-            el_index = Math.floor(Math.random() * ems.length)
-            $(el).css("font-size", ems[el_index] + "em")
+        var sizes = [1, 1.2, 1.4, 1.6, 1.8, 2]
+        $li_els = $tags.find("li")
+        $.each($li_els, function(i, el) {
+            var size_index = Math.floor(Math.random() * sizes.length)
+            $(el).css("font-size", sizes[size_index] + "em")
         })
     }
 })

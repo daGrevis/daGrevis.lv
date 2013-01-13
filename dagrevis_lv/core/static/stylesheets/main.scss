@@ -54,6 +54,10 @@
 
 /* Tag selectors */
 
+    ::selection {
+        background: lighten($blue, 45%);
+    }
+
     body {
         color: $black;
         font-family: "Open Sans", Tahoma, Geneva, sans-serif;
@@ -158,7 +162,7 @@
                 border-bottom: 2px solid $green;
             }
             li:nth-child(3):hover {
-                border-bottom: 2px solid $orange;
+                border-bottom: 2px solid $yellow;
             }
             li:nth-child(4):hover {
                 border-bottom: 2px solid $red;
@@ -254,8 +258,12 @@
             margin: 4em 0;
         }
 
-        .reply_to {
+        #reply_to {
             margin-left: .5em;
+        }
+
+        #tags {
+            @include horiz_list;
         }
 
     }
