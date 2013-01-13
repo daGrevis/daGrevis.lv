@@ -4,8 +4,6 @@
 
 {% block content %}
 
-    <div id="articles">
-
         {% if articles %}
 
             {% for article in articles %}
@@ -14,14 +12,10 @@
 
             {% endfor %}
 
-            {% include "blocks/pagination.html" %}
-
         {% else %}
 
             <p>{% trans "No articles." %}</p>
 
         {% endif %}
-
-    </div>
 
 {% endblock %}

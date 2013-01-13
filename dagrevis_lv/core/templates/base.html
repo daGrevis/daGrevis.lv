@@ -29,40 +29,40 @@
         <link rel="apple-touch-icon" sizes="114x114" href="{{ STATIC_URL }}favicons/apple-touch-icon-114x114.png" />
     </head>
     <body>
-        <div id="container">
-            <header id="page_header" role="banner">
-                <h1><a href="{% url blog_articles %}">{{ settings.SITE_TITLE }}</a></h1>
-                <nav role="navigation">
-                    <ul>
-                        <li><a href="{% url core_about %}">{% trans "About" %}</a></li>
-                        <li><a href="{% url core_contacts %}">{% trans "Contacts" %}</a></li>
-                        <li><a href="{% url blog_tags %}">{% trans "Tags" %}</a></li>
-                        <li><a href="{% url blog_search %}">{% trans "Search" %}</a></li>
-                    </ul>
-                </nav>
-            </header>
+        <div class="container">
+            <div class="ten columns">
+                <header role="banner">
+                    <h1><a href="{% url blog_articles %}">{{ settings.SITE_TITLE }}</a></h1>
+                    <nav role="navigation">
+                        <ul>
+                            <li><a href="{% url core_about %}">{% trans "About" %}</a></li>
+                            <li><a href="{% url core_contacts %}">{% trans "Contacts" %}</a></li>
+                            <li><a href="{% url blog_tags %}">{% trans "Tags" %}</a></li>
+                            <li><a href="{% url blog_search %}">{% trans "Search" %}</a></li>
+                        </ul>
+                    </nav>
+                </header>
 
-            <section role="main">
-                <div id="content">
+                <section role="main">
                     {% block content %}{% endblock %}
-                </div>
-            </section>
+                </section>
 
-            <footer id="page_footer" role="contentinfo">
-                <p>
-                    {% with author_url=settings.AUTHOR_URL author_name=settings.AUTHOR_NAME %}
-                        {% blocktrans %}
-                            Content author is <a href="{{ author_url }}">{{ author_name }}</a>, unless specified.
-                        {% endblocktrans %}
-                    {% endwith %}
-                </p>
-                <ul id="social_icons">
-                    <li><a href="https://twitter.com/daGrevis" class="icon-twitter" title="{% trans "Twitter" %}"></a></li>
-                    <li><a href="https://github.com/daGrevis" class="icon-github-alt" title="{% trans "GitHub" %}"></a></li>
-                    <li><a href="https://linkedin.com/in/daGrevis" class="icon-linkedin" title="{% trans "LinkedIn" %}"></a></li>
-                    <li><a href="#" class="icon-envelope" title="{% trans "Contacts" %}"></a></li>
-                </ul>
-            </footer>
+                <footer role="contentinfo">
+                    <p>
+                        {% with author_url=settings.AUTHOR_URL author_name=settings.AUTHOR_NAME %}
+                            {% blocktrans %}
+                                Content author is <a href="{{ author_url }}">{{ author_name }}</a>, unless specified.
+                            {% endblocktrans %}
+                        {% endwith %}
+                    </p>
+                    <ul>
+                        <li><a href="https://twitter.com/daGrevis" class="icon-twitter" title="{% trans "Twitter" %}"></a></li>
+                        <li><a href="https://github.com/daGrevis" class="icon-github-alt" title="{% trans "GitHub" %}"></a></li>
+                        <li><a href="https://linkedin.com/in/daGrevis" class="icon-linkedin" title="{% trans "LinkedIn" %}"></a></li>
+                        <li><a href="#" class="icon-envelope" title="{% trans "Contacts" %}"></a></li>
+                    </ul>
+                </footer>
+            </div>
         </div>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
