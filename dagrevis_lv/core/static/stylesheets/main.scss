@@ -17,32 +17,41 @@
 
 /* Variables */
 
-    $dark_color: #262626;
+    $font_size: .875em;
     $line_height: 2em;
+
+    $black: #262626;
+    $grey: #4d4d4d;
+    $light_gray: #d9d9d9;
+    /* From Solarized */
+    $yellow: #b58900;
+    $orange: #cb4b16;
+    $red: #dc322f;
+    $magneta: #d33682;
+    $violet: #6c71c4;
+    $blue: #268bd2;
+    $cyan: #2aa198;
+    $green: #859900;
 
 /* Mixins */
 
     @mixin horiz_list {
         padding-left: 0;
         li {
-            list-style: none;
             display: inline-block;
+            list-style: none;
         }
     }
 
     @mixin box {
-        border: 1px solid #D9D9D9;
-    }
-
-    @mixin form_el {
-        padding: .5em .75em;
+        border: 1px solid $light_gray;
     }
 
 /* Tag selectors */
 
     body {
-        font-family: "Open Sans";
-        color: $dark_color;
+        color: $black;
+        font-family: "Open Sans", Tahoma, Geneva, sans-serif;
     }
 
     h1 {
@@ -50,14 +59,14 @@
     }
 
     p {
+        font-size: $font_size;
         line-height: $line_height;
-        font-size: .875em;
     }
 
     a {
-        color: $dark_color;
-        text-decoration: none;
+        color: $black;
         font-weight: 600;
+        text-decoration: none;
     }
 
     ul {
@@ -70,23 +79,39 @@
 
     input {
         @include box;
-        @include form_el;
         display: block;
+        padding: .5em .75em;
         width: 60px * 5;
     }
 
     button {
         @include box;
-        @include form_el;
         background: white;
         font-size: .95em;
+        padding: .5em .75em;
     }
 
     textarea {
         @include box;
-        @include form_el;
-        width: 60px * 9;
         line-height: $line_height;
+        padding: .5em .75em;
+        width: 60px * 9;
+    }
+
+    pre {
+        @include box;
+        font-size: $font_size;
+        line-height: 1.5em;
+        padding: 1.5em;
+    }
+
+    code {
+        font-family: Inconsolata, "Lucida Console", Monaco, monospace;
+        padding: 0 .5em;
+    }
+
+    pre code {
+        padding: 0
     }
 
 /* Class selectors */
@@ -100,6 +125,7 @@
 /* Logic sections */
 
     header[role="banner"] {
+        margin-bottom: 4em;
         h1, nav {
             display: inline-block;
         }
@@ -107,18 +133,30 @@
             float: right;
         }
         h1:before {
-            font-family: "FontAwesome";
             content: "\F005";
+            font-family: "FontAwesome";
             padding-right: .5em;
         }
         ul {
             @include horiz_list;
             li {
-                font-size: .875em;
+                font-size: $font_size;
                 padding: 0 .5em;
                 a:before {
                     content: "/ ";
                 }
+            }
+            li:nth-child(1):hover {
+                border-bottom: 2px solid $blue;
+            }
+            li:nth-child(2):hover {
+                border-bottom: 2px solid $green;
+            }
+            li:nth-child(3):hover {
+                border-bottom: 2px solid $orange;
+            }
+            li:nth-child(4):hover {
+                border-bottom: 2px solid $red;
             }
             a {
                 font-weight: 400;
@@ -126,64 +164,90 @@
         }
     }
 
+    section[role="main"] {
+
+        margin-bottom: 6em;
+        article {
+            header {
+                ul {
+                    @include horiz_list;
+                    margin-top: -1em;
+                    li {
+                        font-size: .75em;
+                        letter-spacing: 1px;
+                        margin: .25em;
+                        padding: .5em .75em;
+                        @include box;
+                    }
+                    a {
+                        font-weight: 400;
+                    }
+                }
+            }
+            section {
+                a {
+                    text-decoration: underline;
+                }
+                a:visited {
+                    color: $grey;
+                }
+            }
+            .about {
+                float: left;
+            }
+            .share {
+                float: right;
+                ul {
+                    @include horiz_list;
+                    margin-top: -1em;
+                    text-align: right;
+                }
+            }
+        }
+
+        .comment {
+            @include box;
+            margin-top: 2em;
+            padding: 1.5em;
+            section {
+                a {
+                    text-decoration: underline;
+                }
+                a:visited {
+                    color: $grey;
+                }
+            }
+            .about {
+                float: left;
+            }
+            .share {
+                float: right;
+                ul {
+                    @include horiz_list;
+                }
+            }
+        }
+        .depth1 {
+        }
+        .depth2 {
+            margin-left: 2em;
+        }
+        .depth3 {
+            margin-left: 4em;
+        }
+        .depth4 {
+            margin-left: 6em;
+        }
+        .depth5 {
+            margin-left: 8em;
+        }
+
+    }
+
     footer[role="contentinfo"] {
         ul {
             @include horiz_list;
+            font-size: 1.5em;
+            margin-top: -.5em;
         }
-    }
-
-    article {
-        header {
-            ul {
-                @include horiz_list;
-                li {
-                    font-size: .75em;
-                    letter-spacing: 1px;
-                    margin: .25em;
-                    padding: .5em .75em;
-                    @include box;
-                }
-                a {
-                    font-weight: 400;
-                }
-            }
-        }
-        .about {
-            float: left;
-        }
-        .share {
-            float: right;
-            ul {
-                @include horiz_list;
-            }
-        }
-    }
-
-    .comment {
-        padding: 1.5em;
-        margin-top: 2em;
-        @include box;
-        .about {
-            float: left;
-        }
-        .share {
-            float: right;
-            ul {
-                @include horiz_list;
-            }
-        }
-    }
-    .depth1 {
-    }
-    .depth2 {
-        margin-left: 2em;
-    }
-    .depth3 {
-        margin-left: 4em;
-    }
-    .depth4 {
-        margin-left: 6em;
-    }
-    .depth5 {
-        margin-left: 8em;
     }
