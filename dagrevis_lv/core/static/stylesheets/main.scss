@@ -15,6 +15,11 @@
     /* Mobile Portrait Size to Mobile Landscape Size (devices and browsers) */
     @media only screen and (max-width: 479px) {}
 
+/* Variables */
+
+    $dark_color: #262626;
+    $line_height: 2em;
+
 /* Mixins */
 
     @mixin horiz_list {
@@ -25,15 +30,63 @@
         }
     }
 
+    @mixin box {
+        border: 1px solid #D9D9D9;
+    }
+
+    @mixin form_el {
+        padding: .5em .75em;
+    }
+
 /* Tag selectors */
 
     body {
         font-family: "Open Sans";
+        color: $dark_color;
+    }
+
+    h1 {
+        font-size: 1.5em;
     }
 
     p {
-        line-height: 2em;
+        line-height: $line_height;
         font-size: .875em;
+    }
+
+    a {
+        color: $dark_color;
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    ul {
+        list-style: square;
+    }
+
+    img {
+        max-width: 60px * 10;
+    }
+
+    input {
+        @include box;
+        @include form_el;
+        display: block;
+        width: 60px * 5;
+    }
+
+    button {
+        @include box;
+        @include form_el;
+        background: white;
+        font-size: .95em;
+    }
+
+    textarea {
+        @include box;
+        @include form_el;
+        width: 60px * 9;
+        line-height: $line_height;
     }
 
 /* Class selectors */
@@ -44,7 +97,7 @@
 
 /* ID selectors */
 
-/* Logic section */
+/* Logic sections */
 
     header[role="banner"] {
         h1, nav {
@@ -53,8 +106,23 @@
         nav {
             float: right;
         }
+        h1:before {
+            font-family: "FontAwesome";
+            content: "\F005";
+            padding-right: .5em;
+        }
         ul {
             @include horiz_list;
+            li {
+                font-size: .875em;
+                padding: 0 .5em;
+                a:before {
+                    content: "/ ";
+                }
+            }
+            a {
+                font-weight: 400;
+            }
         }
     }
 
@@ -68,17 +136,54 @@
         header {
             ul {
                 @include horiz_list;
-            }
-        }
-        footer {
-            .about {
-                float: left;
-            }
-            .share {
-                float: right;
-                ul {
-                    @include horiz_list;
+                li {
+                    font-size: .75em;
+                    letter-spacing: 1px;
+                    margin: .25em;
+                    padding: .5em .75em;
+                    @include box;
+                }
+                a {
+                    font-weight: 400;
                 }
             }
         }
+        .about {
+            float: left;
+        }
+        .share {
+            float: right;
+            ul {
+                @include horiz_list;
+            }
+        }
+    }
+
+    .comment {
+        padding: 1.5em;
+        margin-top: 2em;
+        @include box;
+        .about {
+            float: left;
+        }
+        .share {
+            float: right;
+            ul {
+                @include horiz_list;
+            }
+        }
+    }
+    .depth1 {
+    }
+    .depth2 {
+        margin-left: 2em;
+    }
+    .depth3 {
+        margin-left: 4em;
+    }
+    .depth4 {
+        margin-left: 6em;
+    }
+    .depth5 {
+        margin-left: 8em;
     }
