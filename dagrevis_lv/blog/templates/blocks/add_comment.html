@@ -3,7 +3,7 @@
 
 <div id="add_comment">
 
-    <section class="content">
+    <section>
 
         {% if user.is_authenticated %}
 
@@ -14,7 +14,7 @@
                 <p>
                     <button>{% trans "Add comment" %}</button>
                     {% if comment_pk_to_reply  %}
-                        <span id="reply_to">
+                        <span class="reply_to">
                             {% blocktrans %}
                                 (reply to <a href="{{ article_link }}?comment_pk_to_reply={{ comment.pk }}">comment #{{ comment_pk_to_reply }}</a>)
                             {% endblocktrans %}
@@ -25,7 +25,7 @@
 
         {% else %}
 
-            <p class="notification">
+            <p>
                 {% url user_login as url_for_user_login %}
                 {% blocktrans %}Please login with <a href="#">Twitter</a> or <a href="#">GitHub</a>, if you want to comment.{% endblocktrans %}
             </p>

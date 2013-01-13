@@ -47,6 +47,11 @@
         border: 1px solid $light_gray;
     }
 
+    @mixin about {
+        float: left;
+        color: $grey;
+    }
+
 /* Tag selectors */
 
     body {
@@ -193,13 +198,13 @@
                 }
             }
             .about {
-                float: left;
+                @include about;
             }
             .share {
                 float: right;
                 ul {
                     @include horiz_list;
-                    margin-top: -1em;
+                    margin-top: -.75em;
                     text-align: right;
                 }
             }
@@ -218,7 +223,7 @@
                 }
             }
             .about {
-                float: left;
+                @include about;
             }
             .share {
                 float: right;
@@ -226,6 +231,9 @@
                     @include horiz_list;
                 }
             }
+        }
+        .superuser_comment {
+            background: lighten($red, 45%);
         }
         .depth1 {
         }
@@ -240,6 +248,14 @@
         }
         .depth5 {
             margin-left: 8em;
+        }
+
+        #comments {
+            margin: 4em 0;
+        }
+
+        .reply_to {
+            margin-left: .5em;
         }
 
     }
