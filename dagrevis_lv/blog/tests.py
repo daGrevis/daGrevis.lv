@@ -62,7 +62,6 @@ class CommentTest(TestCase):
         # As anonymous.
         response = test_utilities.request_article(self.client, article)
         expected = 'Please login with <a href="#">Twitter</a> or <a href="#">GitHub</a>, if you want to comment.'
-        expected = expected.format(reverse("user_login"))
         self.assertIn(expected, response.content)
 
         # As member.

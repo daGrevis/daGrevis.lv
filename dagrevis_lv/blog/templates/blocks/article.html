@@ -7,7 +7,7 @@
         <h1><a href="{% url blog_article article.pk article.slug %}">{{ article.title }}</a></h1>
         {% with tags=article.tag_set.all %}
             {% if tags %}
-                <ul class="tags">
+                <ul>
                     {% for tag in tags %}
                         <li><a href="#">{{ tag }}</a></li>
                     {% endfor %}
@@ -15,15 +15,17 @@
             {% endif %}
         {% endwith %}
     </header>
-    <section class="content">
+    <section>
         {{ article.content|markdown }}
     </section>
     <footer>
-        <p class="left">
-            {% trans "Published:" %} <time datetime="{{ article.created|date:"c" }}">{{ article.created|date:"F j, Y" }}</time><br />
-            {% trans "Author:" %} <a href="#">{{ article.author.username }}</a>
-        </p>
-        <div class="right">
+        <div class="about">
+            <p>
+                {% trans "Published:" %} <time datetime="{{ article.created|date:"c" }}">{{ article.created|date:"F j, Y" }}</time><br />
+                {% trans "Author:" %} <a href="#">{{ article.author.username }}</a>
+            </p>
+        </div>
+        <div class="share">
             <p>
                 <a href="{{ article.get_link }}#comments">
                     {% with comment_count=article.comment_set.count %}
@@ -39,13 +41,13 @@
                     {% endwith %}
                 </a>
             </p>
-            <nav id="share">
+            <nav>
                 <ul>
                     <li><a href="{{ article_link }}" class="icon-link" title="{% trans "Article link" %}"></a></li>
                     <li><a href="#" class="icon-retweet" title="{% trans "Tweet link" %}"></a></li>
                 </ul>
             </nav>
         </div>
-        <div class="clearer"></div>
+        <div class="clear"></div>
     </footer>
 </article>

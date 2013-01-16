@@ -3,3 +3,5 @@ include/
 lib/
 *.pyc
 database
+.sass-cache/
+main.css

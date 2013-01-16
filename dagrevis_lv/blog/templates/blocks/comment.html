@@ -3,22 +3,24 @@
 
 
 <div id="comment{{ comment.pk }}" class="comment depth{{ comment.depth }} {% if comment.author.is_superuser %}superuser_comment{% endif %}">
-    <section class="content">
+    <section>
         {{ comment.content|markdown }}
     </section>
     <footer>
-        <p class="left">
+        <p class="about">
             {% trans "Published:" %} <time datetime="{{ article.created|date:"c" }}">{{ article.created|date:"F j, Y" }}</time><br />
             {% trans "Author:" %} <a href="#">{{ article.author.username }}</a>
         </p>
-        <ul class="right actions">
-            <li><a href="{{ article.get_link }}#comment{{ comment.pk }}" class="icon-link" title="{% trans "Link" %}"></a></li>
-            {% if comment.depth < settings.MAXIMUM_DEPTH_FOR_COMMENT %}
-                <li>
-                    <a href="{{ article.get_link }}?comment_pk_to_reply={{ comment.pk }}#add_comment" class="icon-reply" title="{% trans "Reply" %}"></a>
-                </li>
-            {% endif %}
-        </ul>
-        <div class="clearer"></div>
+        <nav class="share">
+            <ul>
+                <li><a href="{{ article.get_link }}#comment{{ comment.pk }}" class="icon-link" title="{% trans "Link" %}"></a></li>
+                {% if comment.depth < settings.MAXIMUM_DEPTH_FOR_COMMENT %}
+                    <li>
+                        <a href="{{ article.get_link }}?comment_pk_to_reply={{ comment.pk }}#add_comment" class="icon-reply" title="{% trans "Reply" %}"></a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+        <div class="clear"></div>
     </footer>
 </div>

@@ -1,0 +1,324 @@
+/* Media queries */
+
+    /* Smaller than standard 960 (devices and browsers) */
+    @media only screen and (max-width: 959px) {}
+
+    /* Tablet Portrait size to standard 960 (devices and browsers) */
+    @media only screen and (min-width: 768px) and (max-width: 959px) {
+
+        .container {
+            margin: 0 auto !important;
+        }
+
+        .ten.columns {
+            width: 60px * 12 !important;
+        }
+
+        textarea {
+            width: 60px * 11 !important;
+        }
+
+        header[role="banner"] {
+            margin-bottom: 8em !important;
+            h1, nav {
+                display: block !important;
+            }
+            nav {
+                float: left !important;
+            }
+        }
+
+    }
+
+    /* All Mobile Sizes (devices and browser) */
+    @media only screen and (max-width: 767px) {
+
+        textarea {
+            width: 60px * 6 !important;
+        }
+
+        .container {
+            margin: 0 auto !important;
+        }
+
+        header[role="banner"] {
+            margin-bottom: 8em !important;
+            nav {
+                float: left !important;
+            }
+        }
+
+    }
+
+    /* Mobile Landscape Size to Tablet Portrait (devices and browsers) */
+    @media only screen and (min-width: 480px) and (max-width: 767px) {}
+
+    /* Mobile Portrait Size to Mobile Landscape Size (devices and browsers) */
+    @media only screen and (max-width: 479px) {
+
+        textarea {
+            width: 60px * 4 !important;
+        }
+
+    }
+
+/* Variables */
+
+    $font_size: .875em;
+    $line_height: 2em;
+
+    $black: #262626;
+    $grey: #4d4d4d;
+    $light_gray: #d9d9d9;
+    /* From Solarized */
+    $yellow: #b58900;
+    $orange: #cb4b16;
+    $red: #dc322f;
+    $magneta: #d33682;
+    $violet: #6c71c4;
+    $blue: #268bd2;
+    $cyan: #2aa198;
+    $green: #859900;
+
+/* Mixins */
+
+    @mixin horiz_list {
+        padding-left: 0;
+        li {
+            display: inline-block;
+            list-style: none;
+        }
+    }
+
+    @mixin box {
+        border: 1px solid $light_gray;
+    }
+
+    @mixin about {
+        float: left;
+        color: $grey;
+    }
+
+/* Tag selectors */
+
+    ::selection {
+        background: lighten($blue, 45%);
+    }
+
+    body {
+        color: $black;
+        font-family: "Open Sans", Tahoma, Geneva, sans-serif;
+    }
+
+    h1 {
+        font-size: 1.5em;
+    }
+
+    p {
+        font-size: $font_size;
+        line-height: $line_height;
+    }
+
+    a {
+        color: $black;
+        font-weight: 600;
+        text-decoration: none;
+    }
+
+    ul {
+        list-style: square;
+    }
+
+    img {
+        max-width: 60px * 10;
+    }
+
+    input {
+        @include box;
+        display: block;
+        padding: .5em .75em;
+        width: 60px * 5;
+    }
+
+    button {
+        @include box;
+        background: white;
+        font-size: .95em;
+        padding: .5em .75em;
+    }
+
+    textarea {
+        @include box;
+        line-height: $line_height;
+        padding: .5em .75em;
+        width: 60px * 9;
+    }
+
+    pre {
+        @include box;
+        font-size: $font_size;
+        line-height: 1.5em;
+        padding: 1.5em;
+    }
+
+    code {
+        font-family: Inconsolata, "Lucida Console", Monaco, monospace;
+        padding: 0 .5em;
+    }
+
+    pre code {
+        padding: 0
+    }
+
+/* Class selectors */
+
+    .container {
+        margin-left: 10%;
+    }
+
+/* ID selectors */
+
+/* Logic sections */
+
+    header[role="banner"] {
+        margin-bottom: 4em;
+        h1, nav {
+            display: inline-block;
+        }
+        nav {
+            float: right;
+        }
+        h1:before {
+            content: "\F005";
+            font-family: "FontAwesome";
+            padding-right: .5em;
+        }
+        ul {
+            @include horiz_list;
+            li {
+                font-size: $font_size;
+                padding: 0 .5em;
+                a:before {
+                    content: "/ ";
+                }
+            }
+            li:nth-child(1):hover {
+                border-bottom: 2px solid $blue;
+            }
+            li:nth-child(2):hover {
+                border-bottom: 2px solid $green;
+            }
+            li:nth-child(3):hover {
+                border-bottom: 2px solid $yellow;
+            }
+            li:nth-child(4):hover {
+                border-bottom: 2px solid $red;
+            }
+            a {
+                font-weight: 400;
+            }
+        }
+    }
+
+    section[role="main"] {
+
+        margin-bottom: 6em;
+        article {
+            header {
+                ul {
+                    @include horiz_list;
+                    margin-top: -1em;
+                    li {
+                        font-size: .75em;
+                        letter-spacing: 1px;
+                        margin: .25em;
+                        padding: .5em .75em;
+                        @include box;
+                    }
+                    a {
+                        font-weight: 400;
+                    }
+                }
+            }
+            section {
+                a {
+                    text-decoration: underline;
+                }
+                a:visited {
+                    color: $grey;
+                }
+            }
+            .about {
+                @include about;
+            }
+            .share {
+                float: right;
+                ul {
+                    @include horiz_list;
+                    margin-top: -.75em;
+                    text-align: right;
+                }
+            }
+        }
+
+        .comment {
+            @include box;
+            margin-top: 2em;
+            padding: 1.5em;
+            section {
+                a {
+                    text-decoration: underline;
+                }
+                a:visited {
+                    color: $grey;
+                }
+            }
+            .about {
+                @include about;
+            }
+            .share {
+                float: right;
+                ul {
+                    @include horiz_list;
+                }
+            }
+        }
+        .superuser_comment {
+            background: lighten($red, 45%);
+        }
+        .depth1 {
+        }
+        .depth2 {
+            margin-left: 2em;
+        }
+        .depth3 {
+            margin-left: 4em;
+        }
+        .depth4 {
+            margin-left: 6em;
+        }
+        .depth5 {
+            margin-left: 8em;
+        }
+
+        #comments {
+            margin: 4em 0;
+        }
+
+        #reply_to {
+            margin-left: .5em;
+        }
+
+        #tags {
+            @include horiz_list;
+        }
+
+    }
+
+    footer[role="contentinfo"] {
+        ul {
+            @include horiz_list;
+            font-size: 1.5em;
+            margin-top: -.5em;
+        }
+    }
