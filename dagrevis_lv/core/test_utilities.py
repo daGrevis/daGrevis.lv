@@ -35,17 +35,16 @@ def logged_in(client):
     return "_auth_user_id" in client.session
 
 
-def create_article(author=None, title=None, content=None, slug=None):
-    author = author if author is not None else create_user()
-    title = title if title is not None else get_data()
-    content = content if content is not None else get_data()
-    slug = slug if slug is not None else slugify(get_data())
-    return Article.objects.create(
-        author=author,
-        title=title,
-        content=content,
-        slug=slug,
-    )
+def create_article(author=None, created=None, title=None, content=None, slug=None):
+    article = Article()
+    article.author = author if author is not None else create_user()
+    if created:
+        article.created = created
+    article.title = title if title is not None else get_data()
+    article.content = content if content is not None else get_data()
+    article.slug = slug if slug is not None else slugify(get_data())
+    article.save()
+    return article
 
 
 def create_comment(article=None, author=None, content=None, parent=None):

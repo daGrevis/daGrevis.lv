@@ -1,3 +1,5 @@
+import datetime
+
 from django.test import TestCase
 from django.core.urlresolvers import reverse
 from django.template.defaultfilters import slugify
@@ -15,11 +17,16 @@ class ArticleTest(TestCase):
         self.assertIn("No articles.", response.content)
 
         # All OK.
-        article1 = test_utilities.create_article()
-        article2 = test_utilities.create_article()
-        response = self.client.get(reverse("blog_articles"))
-        self.assertIn(article1.title, response.content)
-        self.assertIn(article2.content, response.content)
+        article1 = test_utilities.create_article(created=datetime.datetime(year=2013, month=1, day=1))
+        article2 = test_utilities.create_article(created=datetime.datetime(year=2013, month=1, day=1))
+        article3 = test_utilities.create_article(created=datetime.datetime(year=2013, month=2, day=1))
+        response = self.client.get(reverse("blog_articles", kwargs={"year": 2013}))
+        actual_articles = response.context[-1]["articles"]
+        expected_articles = {
+            1: [article1, article2],
+            2: [article3],
+        }
+        self.assertEqual(expected_articles, actual_articles)
 
     def test_single_article(self):
         # Wrong PK.
