@@ -6,9 +6,15 @@
 
         {% if articles %}
 
-            {% for article in articles %}
+            {% for month, articles in sorted_articles.items %}
 
-                {% include "blocks/article.html" %}
+                {{ month }}
+
+                {% for article in articles %}
+
+                    {{ article.title }}
+
+                {% endfor %}
 
             {% endfor %}
 

@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 
 from django.test import TestCase
 from django.core.urlresolvers import reverse
@@ -17,15 +17,14 @@ class ArticleTest(TestCase):
         self.assertIn("No articles.", response.content)
 
         # All OK.
-        article1 = test_utilities.create_article(created=datetime.datetime(year=2013, month=1, day=1))
-        article2 = test_utilities.create_article(created=datetime.datetime(year=2013, month=1, day=1))
-        article3 = test_utilities.create_article(created=datetime.datetime(year=2013, month=2, day=1))
+        article1 = test_utilities.create_article(created=datetime(year=2013, month=1, day=1))
+        article2 = test_utilities.create_article(created=datetime(year=2013, month=1, day=1))
+        article3 = test_utilities.create_article(created=datetime(year=2013, month=2, day=1))
         response = self.client.get(reverse("blog_articles", kwargs={"year": 2013}))
-        actual_articles = response.context[-1]["articles"]
-        expected_articles = {
-            1: [article1, article2],
-            2: [article3],
-        }
+        actual_articles = response.context[-1]["sorted_articles"]
+        expected_articles = {k: v for (k, v) in [(x, []) for x in range(1, 13)]}
+        expected_articles[1] = [article2, article1]
+        expected_articles[2] = [article3]
         self.assertEqual(expected_articles, actual_articles)
 
     def test_single_article(self):
