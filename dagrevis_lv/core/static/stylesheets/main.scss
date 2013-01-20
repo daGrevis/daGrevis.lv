@@ -223,6 +223,12 @@
     section[role="main"] {
 
         margin-bottom: 6em;
+        .article_month time {
+            color: $grey;
+        }
+        .article_month + .article_month {
+            margin-top: 4em;
+        }
         article {
             header {
                 ul {
