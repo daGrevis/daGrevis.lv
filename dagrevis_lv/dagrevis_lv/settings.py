@@ -177,3 +177,5 @@ AUTHOR_URL = "http://dagrevis.lv/about-me/"
 # Google analytics.
 GA_ENABLED = False
 GA_ID = "UA-7141181-6"
+
+ARTICLE_COUNT_PER_PAGE = 40

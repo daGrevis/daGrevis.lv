@@ -30,11 +30,11 @@ class Article(models.Model):
     @staticmethod
     def sort_articles_by_month(articles):
         sorted_articles = {}
-        for month in range(1, 13):
-            sorted_articles[month] = []
-            for article in articles:
-                if article.created.month == month:
-                    sorted_articles[month].append(article)
+        for article in articles:
+            if article.created.month not in sorted_articles:
+                sorted_articles[article.created.month] = [article]
+            else:
+                sorted_articles[article.created.month].append(article)
         return sorted_articles
 
 

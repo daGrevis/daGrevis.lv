@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from django import http
 from django.template import RequestContext
 from django.shortcuts import render_to_response, get_object_or_404, redirect
@@ -8,10 +6,8 @@ from django.conf import settings
 from blog.models import Article, Comment, CommentForm
 
 
-def articles(request, year=None):
-    if year is None:
-        year = datetime.now()
-    articles = Article.objects.order_by("-id")[:20]
+def articles(request):
+    articles = Article.objects.order_by("-id")[:settings.ARTICLE_COUNT_PER_PAGE]
     sorted_articles = Article.sort_articles_by_month(articles)
     return render_to_response(
         "articles.html",

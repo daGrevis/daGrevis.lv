@@ -10,21 +10,28 @@ from blog.models import Article
 
 
 class ArticleTest(TestCase):
-    def test_articles_list(self):
-        # Page exists and no articles.
+    def test_no_articles(self):
         response = self.client.get(reverse("blog_articles"))
-        self.assertEqual(200, response.status_code)
         self.assertIn("No articles.", response.content)
 
-        # All OK.
-        article1 = test_utilities.create_article(created=datetime(year=2013, month=1, day=1))
-        article2 = test_utilities.create_article(created=datetime(year=2013, month=1, day=1))
-        article3 = test_utilities.create_article(created=datetime(year=2013, month=2, day=1))
-        response = self.client.get(reverse("blog_articles", kwargs={"year": 2013}))
+    def test_article_titles(self):
+        article1 = test_utilities.create_article()
+        article2 = test_utilities.create_article()
+        response = self.client.get(reverse("blog_articles"))
+        self.assertIn(article1.title, response.content)
+        self.assertIn(article2.title, response.content)
+
+    def test_sorted_articles(self):
+        date1 = datetime(year=2013, month=1, day=1)
+        date2 = datetime(year=2013, month=2, day=1)
+        article1 = test_utilities.create_article(created=date1)
+        article2 = test_utilities.create_article(created=date1)
+        article3 = test_utilities.create_article(created=date2)
+        response = self.client.get(reverse("blog_articles"))
         actual_articles = response.context[-1]["sorted_articles"]
-        expected_articles = {k: v for (k, v) in [(x, []) for x in range(1, 13)]}
-        expected_articles[1] = [article2, article1]
-        expected_articles[2] = [article3]
+        expected_articles = {}
+        expected_articles[date1.month] = [article2, article1]
+        expected_articles[date2.month] = [article3]
         self.assertEqual(expected_articles, actual_articles)
 
     def test_single_article(self):

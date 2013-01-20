@@ -4,11 +4,6 @@ from django.conf.urls import patterns, url
 urlpatterns = patterns(
     "blog.views",
     url(
-        r"^(?P<year>\d+)/$",
-        "articles",
-        name="blog_articles",
-    ),
-    url(
         r"^$",
         "articles",
         name="blog_articles",
