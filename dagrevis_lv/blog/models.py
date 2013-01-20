@@ -31,10 +31,12 @@ class Article(models.Model):
     def sort_articles_by_month(articles):
         sorted_articles = {}
         for article in articles:
-            if article.created.month not in sorted_articles:
-                sorted_articles[article.created.month] = [article]
+            created = article.created
+            key = created.year, created.month
+            if key not in sorted_articles:
+                sorted_articles[key] = [article]
             else:
-                sorted_articles[article.created.month].append(article)
+                sorted_articles[key].append(article)
         return sorted_articles
 
 

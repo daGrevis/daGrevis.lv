@@ -30,8 +30,8 @@ class ArticleTest(TestCase):
         response = self.client.get(reverse("blog_articles"))
         actual_articles = response.context[-1]["sorted_articles"]
         expected_articles = {}
-        expected_articles[date1.month] = [article2, article1]
-        expected_articles[date2.month] = [article3]
+        expected_articles[date1.year, date1.month] = [article2, article1]
+        expected_articles[date2.year, date2.month] = [article3]
         self.assertEqual(expected_articles, actual_articles)
 
     def test_single_article(self):
