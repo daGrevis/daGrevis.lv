@@ -1,14 +1,30 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load custom_date %}
+{% load sort %}
 
 
 {% block content %}
 
         {% if articles %}
 
-            {% for article in articles %}
+            {% for date, articles in sorted_articles|dict_reverse %}
 
-                {% include "blocks/article.html" %}
+                <section class="article_month">
+
+                    <time>{{ date|fake_date_without_day|date:"F, Y" }}</time>
+
+                    {% for article in articles %}
+
+                        <section>
+
+                                <h1><a href="{{ article.get_link }}">{{ article.title }}</a></h1>
+
+                        </section>
+
+                    {% endfor %}
+
+                </section>
 
             {% endfor %}
 

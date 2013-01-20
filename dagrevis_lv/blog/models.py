@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django import forms
 from django.db import models
 from django.template import defaultfilters
@@ -7,7 +9,7 @@ from django.core.urlresolvers import reverse
 
 class Article(models.Model):
     author = models.ForeignKey(User)
-    created = models.DateTimeField(auto_now_add=True)
+    created = models.DateTimeField(default=datetime.now)
     modified = models.DateTimeField(auto_now=True)
     title = models.CharField(max_length=255)
     content = models.TextField()
@@ -24,6 +26,18 @@ class Article(models.Model):
 
     def get_link(self):
         return reverse("blog_article", kwargs={"article_pk": self.pk, "slug": self.slug})
+
+    @staticmethod
+    def sort_articles_by_month(articles):
+        sorted_articles = {}
+        for article in articles:
+            created = article.created
+            key = created.year, created.month
+            if key not in sorted_articles:
+                sorted_articles[key] = [article]
+            else:
+                sorted_articles[key].append(article)
+        return sorted_articles
 
 
 class Comment(models.Model):

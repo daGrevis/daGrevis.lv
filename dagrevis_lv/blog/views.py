@@ -7,8 +7,16 @@ from blog.models import Article, Comment, CommentForm
 
 
 def articles(request):
-    articles = Article.objects.order_by("-id")
-    return render_to_response("articles.html", {"articles": articles}, context_instance=RequestContext(request))
+    articles = Article.objects.order_by("-id")[:settings.ARTICLE_COUNT_PER_PAGE]
+    sorted_articles = Article.sort_articles_by_month(articles)
+    return render_to_response(
+        "articles.html",
+        {
+            "articles": articles,
+            "sorted_articles": sorted_articles,
+        },
+        context_instance=RequestContext(request)
+    )
 
 
 #TODO: Refactor. Too much code here...

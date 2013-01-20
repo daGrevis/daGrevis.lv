@@ -37,14 +37,14 @@ SITE_ID = 1
 
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
-USE_I18N = False
+USE_I18N = True
 
 # If you set this to False, Django will not format dates, numbers and
 # calendars according to the current locale.
-USE_L10N = False
+USE_L10N = True
 
 # If you set this to False, Django will not use timezone-aware datetimes.
-USE_TZ = True
+USE_TZ = False
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
@@ -177,3 +177,5 @@ AUTHOR_URL = "http://dagrevis.lv/about-me/"
 # Google analytics.
 GA_ENABLED = False
 GA_ID = "UA-7141181-6"
+
+ARTICLE_COUNT_PER_PAGE = 40
