@@ -158,6 +158,10 @@ class TagTest(TestCase):
 
 class SearchTest(TestCase):
     def test_no_results(self):
+        response = self.client.post(reverse("blog_search"), {"phrase": test_utilities.get_data()})
+        actual_results = response.context[-1]["search_results"]
+        expected_results = Article.objects.none()
+        self.assertEqual(actual_results, expected_results)
         test_utilities.create_article()
         response = self.client.post(reverse("blog_search"), {"phrase": test_utilities.get_data()})
         actual_results = response.context[-1]["search_results"]
@@ -209,4 +213,12 @@ class SearchTest(TestCase):
         response = self.client.post(reverse("blog_search"), {"phrase": "spam"})
         actual_results = response.context[-1]["search_results"]
         expected_results = Article.objects.filter(pk__in=[article1.pk, article2.pk])
+        self.assertEqual(actual_results, expected_results)
+
+    def test_many_results_of_which_all_doesnt_match(self):
+        article1 = test_utilities.create_article(title="Spam and Eggs")
+        test_utilities.create_article(content="Spam, spam, spam, spam, spam...")
+        response = self.client.post(reverse("blog_search"), {"phrase": "eggs"})
+        actual_results = response.context[-1]["search_results"]
+        expected_results = Article.objects.get(pk=article1.pk)
         self.assertEqual(actual_results, expected_results)
