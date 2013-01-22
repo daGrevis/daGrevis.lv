@@ -157,26 +157,23 @@ class TagTest(TestCase):
 
 
 class SearchTest(TestCase):
-    def _search_request(self, phrase):
-        return self.client.post(reverse("blog_search"), {"phrase": phrase})
-
     def test_no_results(self):
         test_utilities.create_article()
-        response = self._search_request(test_utilities.get_data())
+        response = self.client.post(reverse("blog_search"), {"phrase": test_utilities.get_data()})
         actual_results = response.context[-1]["search_results"]
         expected_results = Article.objects.none()
         self.assertEqual(actual_results, expected_results)
 
     def test_by_phrase_in_article_title(self):
         article = test_utilities.create_article(title="Spam and Eggs")
-        response = self._search_request("eggs")
+        response = self.client.post(reverse("blog_search"), {"phrase": "eggs"})
         actual_results = response.context[-1]["search_results"]
         expected_results = Article.objects.get(pk=article.pk)
         self.assertEqual(actual_results, expected_results)
 
     def test_by_phrase_in_article_content(self):
         article = test_utilities.create_article(content="The quick brown fox jumps over the lazy dog.")
-        response = self._search_request("lazy dog")
+        response = self.client.post(reverse("blog_search"), {"phrase": "lazy dog"})
         actual_results = response.context[-1]["search_results"]
         expected_results = Article.objects.get(pk=article.pk)
         self.assertEqual(actual_results, expected_results)
@@ -184,7 +181,7 @@ class SearchTest(TestCase):
     def test_by_tag(self):
         article = test_utilities.create_article()
         tag = test_utilities.create_tag(article, content="spam")
-        response = self._search_request(tag.content)
+        response = self.client.post(reverse("blog_search"), {"tags": tag.content})
         actual_results = response.context[-1]["search_results"]
         expected_results = Article.objects.get(pk=article.pk)
         self.assertEqual(actual_results, expected_results)
@@ -194,14 +191,14 @@ class SearchTest(TestCase):
         tag1 = test_utilities.create_tag(article, content="spam")
         tag2 = test_utilities.create_tag(article, content="eggs")
         tags = "{},{}".format(tag1.content, tag2.content)
-        response = self._search_request(tags)
+        response = self.client.post(reverse("blog_search"), {"tags": tags})
         actual_results = response.context[-1]["search_results"]
         expected_results = Article.objects.get(pk=article.pk)
         self.assertEqual(actual_results, expected_results)
 
     def test_by_phrase_with_regex(self):
         article = test_utilities.create_article(content="Tip #42")
-        response = self._search_request("#(\d)+")
+        response = self.client.post(reverse("blog_search"), {"phrase": "#(\d)+"})
         actual_results = response.context[-1]["search_results"]
         expected_results = Article.objects.get(pk=article.pk)
         self.assertEqual(actual_results, expected_results)
@@ -209,7 +206,7 @@ class SearchTest(TestCase):
     def test_many_results(self):
         article1 = test_utilities.create_article(title="Spam and Eggs")
         article2 = test_utilities.create_article(content="Spam, spam, spam, spam, spam...")
-        response = self._search_request("spam")
+        response = self.client.post(reverse("blog_search"), {"phrase": "spam"})
         actual_results = response.context[-1]["search_results"]
         expected_results = Article.objects.filter(pk__in=[article1.pk, article2.pk])
         self.assertEqual(actual_results, expected_results)
