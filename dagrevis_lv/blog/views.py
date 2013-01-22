@@ -72,11 +72,8 @@ def tags(request):
 
 
 def search(request):
-    if request.GET.get("phrase"):
-        query = models.Q(title__icontains=request.GET["phrase"]) | models.Q(content__icontains=request.GET["phrase"])
-        search_results = Article.objects.filter(query)
-    else:
-        search_results = Article.objects.none()
+    #TODO: Validation.
+    search_results = Article.search(request.GET.get("phrase"), request.GET.get("tags", "").split(","))
     return render_to_response(
         "search.html",
         {"search_results": search_results},

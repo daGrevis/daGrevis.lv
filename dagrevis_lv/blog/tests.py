@@ -160,39 +160,38 @@ class SearchTest(TestCase):
     def test_no_results(self):
         response = self.client.get(reverse("blog_search"), {"phrase": test_utilities.get_data()})
         search_results = response.context[-1]["search_results"]
-        self.assertFalse(search_results.exists())
+        self.assertFalse(search_results)
         test_utilities.create_article()
         response = self.client.get(reverse("blog_search"), {"phrase": test_utilities.get_data()})
         search_results = response.context[-1]["search_results"]
-        self.assertFalse(search_results.exists())
+        self.assertFalse(search_results)
 
     def test_by_phrase_in_article_title(self):
         article = test_utilities.create_article(title="Spam and Eggs")
         response = self.client.get(reverse("blog_search"), {"phrase": "eggs"})
         search_results = response.context[-1]["search_results"]
-        self.assertTrue(search_results.filter(pk=article.pk))
+        self.assertEqual(search_results[0], article)
 
     def test_by_phrase_in_article_content(self):
         article = test_utilities.create_article(content="The quick brown fox jumps over the lazy dog.")
         response = self.client.get(reverse("blog_search"), {"phrase": "lazy dog"})
         search_results = response.context[-1]["search_results"]
-        self.assertTrue(search_results.filter(pk=article.pk))
+        self.assertEqual(search_results[0], article)
 
     def test_many_results(self):
-        article1 = test_utilities.create_article(title="Spam and Eggs")
-        article2 = test_utilities.create_article(content="Spam, spam, spam, spam, spam...")
+        test_utilities.create_article(title="Spam and Eggs")
+        test_utilities.create_article(content="Spam, spam, spam, spam, spam...")
         response = self.client.get(reverse("blog_search"), {"phrase": "spam"})
         search_results = response.context[-1]["search_results"]
         COUNT_OF_CREATED_ARTICLES = 2
-        self.assertEqual(len(search_results.filter(pk__in=[article1.pk, article2.pk])), COUNT_OF_CREATED_ARTICLES)
+        self.assertEqual(len(search_results), COUNT_OF_CREATED_ARTICLES)
 
     def test_by_tag(self):
         article = test_utilities.create_article()
         tag = test_utilities.create_tag(article, content="spam")
         response = self.client.get(reverse("blog_search"), {"tags": tag.content})
-        actual_results = response.context[-1]["search_results"]
-        expected_results = Article.objects.get(pk=article.pk)
-        self.assertEqual(actual_results, expected_results)
+        search_results = response.context[-1]["search_results"]
+        self.assertEqual(search_results[0], article)
 
     def test_by_tags(self):
         article = test_utilities.create_article()

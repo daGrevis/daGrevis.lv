@@ -39,6 +39,20 @@ class Article(models.Model):
                 sorted_articles[key].append(article)
         return sorted_articles
 
+    @staticmethod
+    def search(phrase=None, tags=[]):
+        search_results = []
+        if not phrase and not tags:
+            return search_results
+        if phrase:
+            query = models.Q(title__icontains=phrase) | models.Q(content__icontains=phrase)
+            search_results.extend(list(Article.objects.filter(query)))
+        if tags:
+            tags = Tag.objects.filter(content__in=tags)
+            for tag in tags:
+                search_results.append(tag.article)
+        return search_results
+
 
 class Comment(models.Model):
     parent = models.ForeignKey("self", null=True, blank=True)
