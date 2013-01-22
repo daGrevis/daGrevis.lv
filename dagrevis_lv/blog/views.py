@@ -1,6 +1,7 @@
 from django import http
 from django.template import RequestContext
 from django.shortcuts import render_to_response, get_object_or_404, redirect
+from django.db import models
 from django.conf import settings
 
 from blog.models import Article, Comment, CommentForm
@@ -71,4 +72,13 @@ def tags(request):
 
 
 def search(request):
-    return render_to_response("search.html", context_instance=RequestContext(request))
+    if request.GET.get("phrase"):
+        query = models.Q(title__icontains=request.GET["phrase"]) | models.Q(content__icontains=request.GET["phrase"])
+        search_results = Article.objects.filter(query)
+    else:
+        search_results = Article.objects.none()
+    return render_to_response(
+        "search.html",
+        {"search_results": search_results},
+        context_instance=RequestContext(request),
+    )
