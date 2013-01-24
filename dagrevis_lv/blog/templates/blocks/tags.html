@@ -1,0 +1,9 @@
+{% with tags=article.tag_set.all %}
+    {% if tags %}
+        <ul>
+            {% for tag in tags %}
+                <li><a href="#">{{ tag }}</a></li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endwith %}

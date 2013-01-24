@@ -5,15 +5,7 @@
 <article>
     <header>
         <h1><a href="{% url blog_article article.pk article.slug %}">{{ article.title }}</a></h1>
-        {% with tags=article.tag_set.all %}
-            {% if tags %}
-                <ul>
-                    {% for tag in tags %}
-                        <li><a href="#">{{ tag }}</a></li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
-        {% endwith %}
+        {% include "blocks/tags.html" %}
     </header>
     <section>
         {{ article.content|markdown }}
