@@ -1,10 +1,10 @@
 from datetime import datetime
 
-from django import forms
 from django.db import models
 from django.template import defaultfilters
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
+from django.conf import settings
 
 
 class Article(models.Model):
@@ -38,6 +38,27 @@ class Article(models.Model):
             else:
                 sorted_articles[key].append(article)
         return sorted_articles
+
+    @staticmethod
+    def search(phrase=None, tags=[]):
+        """
+        Searches for an article by it's title, content in ignore-case mode and regex mode, plus, searches by article tags in ignore-case mode. Results are
+        merged together.
+
+        """
+        found_articles = []
+        if phrase:
+            query = (models.Q(title__icontains=phrase)
+                     | models.Q(content__icontains=phrase)
+                     | models.Q(title__regex=phrase)
+                     | models.Q(content__regex=phrase))
+            found_articles.extend(list(Article.objects.filter(query)))
+        if tags:
+            tags = Tag.objects.filter(content__in=tags)
+            for tag in tags:
+                found_articles.append(tag.article)
+        found_articles = list(set(found_articles))  # Removes duplicates.
+        return found_articles[:settings.ARTICLE_COUNT_PER_PAGE]
 
 
 class Comment(models.Model):
@@ -79,12 +100,6 @@ class Comment(models.Model):
             depth += 1
             comment = comment.parent
         return depth
-
-
-class CommentForm(forms.ModelForm):
-    class Meta:
-        model = Comment
-        fields = ("content", )
 
 
 class Tag(models.Model):

@@ -315,8 +315,12 @@
             margin-left: .5em;
         }
 
-        #tags {
+        .tags {
             @include horiz_list;
+        }
+
+        .found_articles {
+            margin-top: 4em;
         }
 
     }

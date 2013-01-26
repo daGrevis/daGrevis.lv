@@ -11,20 +11,38 @@
         <form action="">
             <p>
                 <label>
-                    {% trans "Word or phrase" %}
-                    <input name="phrase" />
+                    {% trans "Phrase" %} <em>{% trans "(regular expressions are allowed)" %}</em>
+                    <input name="phrase" value="{{ search_form.phrase.value|default:"" }}" />
                 </label>
             </p>
             <p>
                 <label>
                     {% trans "Tags" %} <em>{% trans "(separate them by comma)" %}</em>
-                    <input name="phrase" />
+                    <input name="tags" value="{{ search_form.tags.value|default:"" }}" />
                 </label>
             </p>
             <p>
                 <button>{% trans "Find articles" %}</button>
             </p>
         </form>
+
+        <section class="found_articles">
+
+            {% if found_articles %}
+
+                {% for article in found_articles %}
+
+                    <section>
+
+                        <h1><a href="{{ article.get_link }}">{{ article.title }}</a></h1>
+
+                    </section>
+
+                {% endfor %}
+
+            {% endif %}
+
+        </section>
 
     </section>
 

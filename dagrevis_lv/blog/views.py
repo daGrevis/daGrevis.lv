@@ -3,7 +3,9 @@ from django.template import RequestContext
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.conf import settings
 
-from blog.models import Article, Comment, CommentForm
+from blog.models import Article, Comment
+from blog.forms import CommentForm
+from blog.forms import SearchForm
 
 
 def articles(request):
@@ -71,4 +73,16 @@ def tags(request):
 
 
 def search(request):
-    return render_to_response("search.html", context_instance=RequestContext(request))
+    search_form = SearchForm(request.GET)
+    if search_form.is_valid():
+        found_articles = Article.search(search_form.cleaned_data["phrase"], search_form.cleaned_data["tags"])
+    else:
+        found_articles = []
+    return render_to_response(
+        "search.html",
+        {
+            "found_articles": found_articles,
+            "search_form": search_form,
+        },
+        context_instance=RequestContext(request),
+    )
