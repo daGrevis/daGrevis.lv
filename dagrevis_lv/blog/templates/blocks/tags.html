@@ -2,7 +2,7 @@
     {% if tags %}
         <ul>
             {% for tag in tags %}
-                <li><a href="{% url blog_search %}?tags={{ tag }}">{{ tag }}</a></li>
+                <li><a href="{% url blog_search %}?tags={{ tag.content }}">{{ tag.content }}</a></li>
             {% endfor %}
         </ul>
     {% endif %}
