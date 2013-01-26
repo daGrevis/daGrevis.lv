@@ -159,7 +159,7 @@ class TagTest(TestCase):
         article = test_utilities.create_article()
         tag = test_utilities.create_tag(article)
         response = test_utilities.request_article(self.client, article)
-        link = "{}?tag={}".format(reverse("blog_search"), tag.content)
+        link = "{}?tags={}".format(reverse("blog_search"), tag.content)
         self.assertIn(link, response.content)
 
     def test_blog_tags(self):
