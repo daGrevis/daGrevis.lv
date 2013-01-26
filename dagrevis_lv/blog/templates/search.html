@@ -11,20 +11,22 @@
         <form action="">
             <p>
                 <label>
-                    {% trans "Word or phrase" %}
-                    <input name="phrase" />
+                    {% trans "Phrase" %} <em>{% trans "(regular expressions are allowed)" %}</em>
+                    <input name="phrase" value="{{ search_form.phrase.value|default:"" }}" />
                 </label>
             </p>
             <p>
                 <label>
                     {% trans "Tags" %} <em>{% trans "(separate them by comma)" %}</em>
-                    <input name="tags" />
+                    <input name="tags" value="{{ search_form.tags.value|default:"" }}" />
                 </label>
             </p>
             <p>
                 <button>{% trans "Find articles" %}</button>
             </p>
         </form>
+
+        {{ search_results }}
 
     </section>
 

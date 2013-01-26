@@ -46,8 +46,6 @@ class Article(models.Model):
 
         """
         search_results = []
-        if not phrase and not tags:
-            return search_results
         if phrase:
             query = (models.Q(title__icontains=phrase)
                      | models.Q(content__icontains=phrase)
