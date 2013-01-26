@@ -1,6 +1,5 @@
 from datetime import datetime
 
-from django import forms
 from django.db import models
 from django.template import defaultfilters
 from django.contrib.auth.models import User
@@ -102,12 +101,6 @@ class Comment(models.Model):
             depth += 1
             comment = comment.parent
         return depth
-
-
-class CommentForm(forms.ModelForm):
-    class Meta:
-        model = Comment
-        fields = ("content", )
 
 
 class Tag(models.Model):

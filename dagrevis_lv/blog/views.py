@@ -1,10 +1,10 @@
 from django import http
 from django.template import RequestContext
 from django.shortcuts import render_to_response, get_object_or_404, redirect
-from django.db import models
 from django.conf import settings
 
-from blog.models import Article, Comment, CommentForm
+from blog.models import Article, Comment
+from blog.forms import CommentForm
 
 
 def articles(request):
