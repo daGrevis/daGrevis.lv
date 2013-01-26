@@ -51,6 +51,7 @@ class Article(models.Model):
             tags = Tag.objects.filter(content__in=tags)
             for tag in tags:
                 search_results.append(tag.article)
+        search_results = list(set(search_results))  # Removes duplicates.
         return search_results
 
 
