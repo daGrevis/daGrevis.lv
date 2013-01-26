@@ -4,6 +4,7 @@ from django.db import models
 from django.template import defaultfilters
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
+from django.conf import settings
 
 
 class Article(models.Model):
@@ -57,7 +58,7 @@ class Article(models.Model):
             for tag in tags:
                 found_articles.append(tag.article)
         found_articles = list(set(found_articles))  # Removes duplicates.
-        return found_articles
+        return found_articles[:settings.ARTICLE_COUNT_PER_PAGE]
 
 
 class Comment(models.Model):
