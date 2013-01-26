@@ -32,11 +32,17 @@
 
                 {% for article in found_articles %}
 
-                    <section>
+                    <article>
 
-                        <h1><a href="{{ article.get_link }}">{{ article.title }}</a></h1>
+                        <header>
 
-                    </section>
+                            <h1><a href="{{ article.get_link }}">{{ article.title }}</a></h1>
+
+                            {% include "blocks/tags.html" %}
+
+                        </header>
+
+                    </article>
 
                 {% endfor %}
 
