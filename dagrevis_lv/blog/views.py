@@ -3,7 +3,7 @@ from django.template import RequestContext
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.conf import settings
 
-from blog.models import Article, Comment
+from blog.models import Article, Comment, Tag
 from blog.forms import CommentForm
 from blog.forms import SearchForm
 
@@ -69,7 +69,12 @@ def article(request, article_pk, slug=None):
 
 
 def tags(request):
-    return render_to_response("tags.html", context_instance=RequestContext(request))
+    tags = Tag.get_tags_by_priority()
+    return render_to_response(
+        "tags.html",
+        {"tags": tags},
+        context_instance=RequestContext(request),
+    )
 
 
 def search(request):

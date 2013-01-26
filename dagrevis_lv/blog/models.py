@@ -109,3 +109,14 @@ class Tag(models.Model):
 
     def __unicode__(self):
         return self.content
+
+    @staticmethod
+    def get_tags_by_priority():
+        tags = Tag.objects.all()
+        sorted_tags = {}
+        for tag in tags:
+            if tag.content in sorted_tags:
+                sorted_tags[tag.content] += 1
+            else:
+                sorted_tags[tag.content] = 1
+        return sorted_tags
