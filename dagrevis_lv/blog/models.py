@@ -41,6 +41,11 @@ class Article(models.Model):
 
     @staticmethod
     def search(phrase=None, tags=[]):
+        """
+        Searches for an article by it's title, content in ignore-case mode and regex mode, plus, searches by article tags in ignore-case mode. Results are
+        merged together.
+
+        """
         search_results = []
         if not phrase and not tags:
             return search_results
