@@ -165,6 +165,7 @@ class TagTest(TestCase):
     def test_blog_tags(self):
         tag1 = test_utilities.create_tag()
         tag2 = test_utilities.create_tag()
+        test_utilities.create_tag(content=tag2.content)
         response = self.client.get(reverse("blog_tags"))
         tags = response.context[-1]["tags"]
         self.assertEqual(tags, [(tag1.content, 1), (tag2.content, 2)])
