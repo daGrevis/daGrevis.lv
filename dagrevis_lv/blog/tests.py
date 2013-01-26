@@ -210,6 +210,6 @@ class SearchTest(TestCase):
 
     def test_by_phrase_with_regex(self):
         article = test_utilities.create_article(content="Tip #42")
-        response = self.client.get(reverse("blog_search"), {"phrase": "#(\d)+"})
+        response = self.client.get(reverse("blog_search"), {"phrase": r"#(\d)+"})
         search_results = response.context[-1]["search_results"]
         self.assertEqual(search_results, [article])
