@@ -26,7 +26,23 @@
             </p>
         </form>
 
-        {{ search_results }}
+        <section class="found_articles">
+
+            {% if found_articles %}
+
+                {% for article in found_articles %}
+
+                    <section>
+
+                        <h1><a href="{{ article.get_link }}">{{ article.title }}</a></h1>
+
+                    </section>
+
+                {% endfor %}
+
+            {% endif %}
+
+        </section>
 
     </section>
 

@@ -45,19 +45,19 @@ class Article(models.Model):
         merged together.
 
         """
-        search_results = []
+        found_articles = []
         if phrase:
             query = (models.Q(title__icontains=phrase)
                      | models.Q(content__icontains=phrase)
                      | models.Q(title__regex=phrase)
                      | models.Q(content__regex=phrase))
-            search_results.extend(list(Article.objects.filter(query)))
+            found_articles.extend(list(Article.objects.filter(query)))
         if tags:
             tags = Tag.objects.filter(content__in=tags)
             for tag in tags:
-                search_results.append(tag.article)
-        search_results = list(set(search_results))  # Removes duplicates.
-        return search_results
+                found_articles.append(tag.article)
+        found_articles = list(set(found_articles))  # Removes duplicates.
+        return found_articles
 
 
 class Comment(models.Model):

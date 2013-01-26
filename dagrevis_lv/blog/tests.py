@@ -159,45 +159,45 @@ class TagTest(TestCase):
 class SearchTest(TestCase):
     def test_no_results(self):
         response = self.client.get(reverse("blog_search"), {"phrase": test_utilities.get_data()})
-        search_results = response.context[-1]["search_results"]
-        self.assertFalse(search_results)
+        found_articles = response.context[-1]["found_articles"]
+        self.assertFalse(found_articles)
         test_utilities.create_article()
         response = self.client.get(reverse("blog_search"), {"phrase": test_utilities.get_data()})
-        search_results = response.context[-1]["search_results"]
-        self.assertFalse(search_results)
+        found_articles = response.context[-1]["found_articles"]
+        self.assertFalse(found_articles)
 
     def test_by_phrase_in_article_title(self):
         article = test_utilities.create_article(title="Spam and Eggs")
         response = self.client.get(reverse("blog_search"), {"phrase": "eggs"})
-        search_results = response.context[-1]["search_results"]
-        self.assertEqual(search_results, [article])
+        found_articles = response.context[-1]["found_articles"]
+        self.assertEqual(found_articles, [article])
 
     def test_by_phrase_in_article_content(self):
         article = test_utilities.create_article(content="The quick brown fox jumps over the lazy dog.")
         response = self.client.get(reverse("blog_search"), {"phrase": "lazy dog"})
-        search_results = response.context[-1]["search_results"]
-        self.assertEqual(search_results, [article])
+        found_articles = response.context[-1]["found_articles"]
+        self.assertEqual(found_articles, [article])
 
     def test_many_results(self):
         article1 = test_utilities.create_article(title="Spam and Eggs")
         article2 = test_utilities.create_article(content="Spam, spam, spam, spam, spam...")
         response = self.client.get(reverse("blog_search"), {"phrase": "spam"})
-        search_results = response.context[-1]["search_results"]
-        self.assertEqual(search_results, [article1, article2])
+        found_articles = response.context[-1]["found_articles"]
+        self.assertEqual(found_articles, [article1, article2])
 
     def test_many_results_but_only_one_match(self):
         article1 = test_utilities.create_article(title="Spam and Eggs")
         test_utilities.create_article(content="Spam, spam, spam, spam, spam...")
         response = self.client.get(reverse("blog_search"), {"phrase": "eggs"})
-        search_results = response.context[-1]["search_results"]
-        self.assertEqual(search_results, [article1])
+        found_articles = response.context[-1]["found_articles"]
+        self.assertEqual(found_articles, [article1])
 
     def test_by_tag(self):
         article = test_utilities.create_article()
         tag = test_utilities.create_tag(article, content="spam")
         response = self.client.get(reverse("blog_search"), {"tags": tag.content})
-        search_results = response.context[-1]["search_results"]
-        self.assertEqual(search_results, [article])
+        found_articles = response.context[-1]["found_articles"]
+        self.assertEqual(found_articles, [article])
 
     def test_by_tags(self):
         article = test_utilities.create_article()
@@ -205,11 +205,11 @@ class SearchTest(TestCase):
         tag2 = test_utilities.create_tag(article, content="eggs")
         tags = "{},{}".format(tag1.content, tag2.content)
         response = self.client.get(reverse("blog_search"), {"tags": tags})
-        search_results = response.context[-1]["search_results"]
-        self.assertEqual(search_results, [article])
+        found_articles = response.context[-1]["found_articles"]
+        self.assertEqual(found_articles, [article])
 
     def test_by_phrase_with_regex(self):
         article = test_utilities.create_article(content="Tip #42")
         response = self.client.get(reverse("blog_search"), {"phrase": r"#(\d)+"})
-        search_results = response.context[-1]["search_results"]
-        self.assertEqual(search_results, [article])
+        found_articles = response.context[-1]["found_articles"]
+        self.assertEqual(found_articles, [article])

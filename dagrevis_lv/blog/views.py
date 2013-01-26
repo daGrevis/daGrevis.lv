@@ -75,13 +75,13 @@ def tags(request):
 def search(request):
     search_form = SearchForm(request.GET)
     if search_form.is_valid():
-        search_results = Article.search(search_form.cleaned_data["phrase"], search_form.cleaned_data["tags"])
+        found_articles = Article.search(search_form.cleaned_data["phrase"], search_form.cleaned_data["tags"])
     else:
-        search_results = []
+        found_articles = []
     return render_to_response(
         "search.html",
         {
-            "search_results": search_results,
+            "found_articles": found_articles,
             "search_form": search_form,
         },
         context_instance=RequestContext(request),
