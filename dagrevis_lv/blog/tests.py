@@ -155,6 +155,20 @@ class TagTest(TestCase):
         response = test_utilities.request_article(self.client, article)
         self.assertIn(tag.content, response.content)
 
+    def test_tag_has_link_to_blog_search(self):
+        article = test_utilities.create_article()
+        tag = test_utilities.create_tag(article)
+        response = test_utilities.request_article(self.client, article)
+        link = "{}?tag={}".format(reverse("blog_search"), tag.content)
+        self.assertIn(link, response.content)
+
+    def test_blog_tags(self):
+        tag1 = test_utilities.create_tag()
+        tag2 = test_utilities.create_tag()
+        response = self.client.get(reverse("blog_tags"))
+        tags = response.context[-1]["tags"]
+        self.assertEqual(tags, [(tag1.content, 1), (tag2.content, 2)])
+
 
 class SearchTest(TestCase):
     def test_no_results(self):
