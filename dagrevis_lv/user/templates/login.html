@@ -10,16 +10,19 @@
         {{ form.non_field_errors }}
 
         {% csrf_token %}
+
         <p>
             <label>{{ form.username.label }}</label>
             <input name="{{ form.username.html_name }}" />
-            {{ form.username.errors }}
         </p>
+        {{ form.username.errors }}
+
         <p>
             <label>{{ form.password.label }}</label>
             <input name="{{ form.password.html_name }}" type="password" />
-            {{ form.password.errors }}
         </p>
+        {{ form.password.errors }}
+
         <p>
             <button>{% trans "Login" %}</button>
         </p>

@@ -10,21 +10,26 @@
         {{ form.non_field_errors }}
 
         {% csrf_token %}
+
         <p>
             <label>{{ form.username.label }}</label>
             <input name="{{ form.username.html_name }}" />
-            {{ form.username.errors }}
         </p>
+        {{ form.username.errors }}
+
         <p>
             <label>{{ form.password1.label }}</label>
             <input name="{{ form.password1.html_name }}" type="password" />
-            {{ form.password1.errors }}
         </p>
+        <p>Please use <a href="http://howsecureismypassword.net/">strong password</a>!</p>
+        {{ form.password1.errors }}
+
         <p>
             <label>{{ form.password2.label }}</label>
             <input name="{{ form.password2.html_name }}" type="password" />
-            {{ form.password2.errors }}
         </p>
+        {{ form.password2.errors }}
+
         <p>
             <button>{% trans "Register" %}</button>
         </p>
