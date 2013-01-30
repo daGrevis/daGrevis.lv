@@ -7,6 +7,8 @@
     <h1>{% trans "Login" %}</h1>
 
     <form method="post">
+        {{ form.non_field_errors }}
+
         {% csrf_token %}
         <p>
             <label>{{ form.username.label }}</label>
