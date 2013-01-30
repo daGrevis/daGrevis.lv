@@ -1,47 +1,59 @@
 from django.test import TestCase
 from django.core.urlresolvers import reverse
-from django.contrib.auth.models import User
+from django.contrib import auth
 
 from core import test_utilities
 
 
 class RegistrationTest(TestCase):
-    def test_no_data(self):
+    def test_fail(self):
+        # No data.
         self.client.post(reverse("user_registration"))
-        self.assertFalse(User.objects.all().exists())
-
-    def test_password_mismatch(self):
+        self.assertFalse(auth.User.objects.all().exists())
+        # Password mismatch.
         self.client.post(
             reverse("user_registration"),
             {
                 "username": test_utilities.get_data(),
-                "password1": "12345",
-                "password2": "1234",
+                "password1": "P4ssw0rd*",
+                "password2": "P4ssw0rd",
             },
         )
-        self.assertFalse(User.objects.all().exists())
+        self.assertFalse(auth.User.objects.all().exists())
 
-    def test_error_message(self):
-        response = self.client.post(
+    def test_success(self):
+        self.client.post(
             reverse("user_registration"),
             {
                 "username": test_utilities.get_data(),
-                "password1": "12345",
-                "password2": "1234",
+                "password1": "P4ssw0rd*",
+                "password2": "P4ssw0rd*",
             },
-            follow=True,
         )
-        expected = "Passwords do not match!"
-        self.assertIn(expected, response.content)
+        self.assertTrue(auth.User.objects.all().exists())
 
-    def test_registration_success(self):
+
+class LoginTest(TestCase):
+    def test_fail(self):
+        self.client.post(reverse("user_login"), {"username": test_utilities.get_data(), "password": test_utilities.get_data()})
+        logged_in = test_utilities.logged_in(self.client)
+        self.assertFalse(logged_in)
+
+    def test_success(self):
         username = test_utilities.get_data()
-        self.client.post(
-            reverse("user_registration"),
-            {
-                "username": username,
-                "password1": "12345",
-                "password2": "12345",
-            },
-        )
-        self.assertTrue(User.objects.get(username=username))
+        password = test_utilities.get_data()
+        test_utilities.create_user(username, password)
+        self.client.post(reverse("user_login"), {"username": username, "password": password})
+        logged_in = test_utilities.logged_in(self.client)
+        self.assertTrue(logged_in)
+
+
+class LogoutTest(TestCase):
+    def test_success(self):
+        username = test_utilities.get_data()
+        password = test_utilities.get_data()
+        test_utilities.create_user(username, password)
+        auth.authenticate(username=username, password=password)
+        self.client.get(reverse("user_logout"))
+        logged_in = test_utilities.logged_in(self.client)
+        self.assertFalse(logged_in)
