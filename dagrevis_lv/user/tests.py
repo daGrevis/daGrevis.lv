@@ -40,7 +40,7 @@ class LoginTest(TestCase):
         self.assertFalse(logged_in)
 
     def test_success(self):
-        username = test_utilities.get_data()
+        username = test_utilities.get_data(length=16)
         password = test_utilities.get_data()
         test_utilities.create_user(username, password)
         self.client.post(reverse("user_login"), {"username": username, "password": password})
