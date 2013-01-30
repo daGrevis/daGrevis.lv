@@ -3,6 +3,7 @@ from django.conf.urls import patterns, url
 
 urlpatterns = patterns(
     "user.views",
+    url(r"^user/registration/$", "registration", name="user_registration"),
 )
 
 urlpatterns += patterns(

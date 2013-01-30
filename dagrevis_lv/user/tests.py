@@ -1,6 +1,7 @@
 from django.test import TestCase
 from django.core.urlresolvers import reverse
 from django.contrib import auth
+from django.contrib.auth.models import User
 
 from core import test_utilities
 
@@ -9,28 +10,28 @@ class RegistrationTest(TestCase):
     def test_fail(self):
         # No data.
         self.client.post(reverse("user_registration"))
-        self.assertFalse(auth.User.objects.all().exists())
+        self.assertFalse(User.objects.all().exists())
         # Password mismatch.
         self.client.post(
             reverse("user_registration"),
             {
-                "username": test_utilities.get_data(),
+                "username": test_utilities.get_data(length=30),
                 "password1": "P4ssw0rd*",
                 "password2": "P4ssw0rd",
             },
         )
-        self.assertFalse(auth.User.objects.all().exists())
+        self.assertFalse(User.objects.all().exists())
 
     def test_success(self):
         self.client.post(
             reverse("user_registration"),
             {
-                "username": test_utilities.get_data(),
+                "username": test_utilities.get_data(length=30),
                 "password1": "P4ssw0rd*",
                 "password2": "P4ssw0rd*",
             },
         )
-        self.assertTrue(auth.User.objects.all().exists())
+        self.assertTrue(User.objects.all().exists())
 
 
 class LoginTest(TestCase):
