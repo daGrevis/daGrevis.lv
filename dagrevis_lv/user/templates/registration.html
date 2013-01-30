@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+
+{% block content %}
+
+    <h1>{% trans "Registration" %}</h1>
+
+    <form method="post">
+        {{ form.non_field_errors }}
+
+        {% csrf_token %}
+
+        <p>
+            <label>{{ form.username.label }}</label>
+            <input name="{{ form.username.html_name }}" />
+        </p>
+        {{ form.username.errors }}
+
+        <p>
+            <label>{{ form.password1.label }}</label>
+            <input name="{{ form.password1.html_name }}" type="password" />
+        </p>
+        <p>Please use a <a href="http://howsecureismypassword.net/">strong password</a>!</p>
+        {{ form.password1.errors }}
+
+        <p>
+            <label>{{ form.password2.label }}</label>
+            <input name="{{ form.password2.html_name }}" type="password" />
+        </p>
+        {{ form.password2.errors }}
+
+        <p>
+            <button>{% trans "Register" %}</button>
+        </p>
+    </form>
+
+    <p>You can <a href="{% url user_login %}">login here</a>.</p>
+
+{% endblock %}

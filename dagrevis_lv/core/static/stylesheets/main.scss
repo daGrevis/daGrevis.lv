@@ -291,7 +291,7 @@
             }
         }
         .superuser_comment {
-            background: lighten($green, 50%);
+            background: lighten($green, 45%);
         }
         .depth1 {
         }
@@ -340,6 +340,13 @@
 
         .found_articles {
             margin-top: 4em;
+        }
+
+        .errorlist {
+            @include horiz_list;
+            font-weight: 600;
+            margin-top: 1em;
+            margin-bottom: 2em;
         }
 
     }

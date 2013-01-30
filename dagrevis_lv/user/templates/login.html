@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+
+{% block content %}
+
+    <h1>{% trans "Login" %}</h1>
+
+    <form method="post">
+        {{ form.non_field_errors }}
+
+        {% csrf_token %}
+
+        <p>
+            <label>{{ form.username.label }}</label>
+            <input name="{{ form.username.html_name }}" />
+        </p>
+        {{ form.username.errors }}
+
+        <p>
+            <label>{{ form.password.label }}</label>
+            <input name="{{ form.password.html_name }}" type="password" />
+        </p>
+        {{ form.password.errors }}
+
+        <p>
+            <button>{% trans "Login" %}</button>
+        </p>
+    </form>
+
+    <p>You can <a href="{% url user_registration %}">register here</a>.</p>
+
+{% endblock %}

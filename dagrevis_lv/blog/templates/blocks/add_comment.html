@@ -26,8 +26,11 @@
         {% else %}
 
             <p>
-                {% url user_login as url_for_user_login %}
                 {% blocktrans %}Please login with <a href="#">Twitter</a> or <a href="#">GitHub</a>, if you want to comment.{% endblocktrans %}
+                <br />
+                {% url user_login as url_for_user_login %}
+                {% url user_registration as url_for_user_registration %}
+                {% blocktrans %}It's possible to use simple <a href="{{ url_for_user_login }}">login</a> and <a href="{{ url_for_user_registration }}">registration</a> too!{% endblocktrans %}
             </p>
 
         {% endif %}
