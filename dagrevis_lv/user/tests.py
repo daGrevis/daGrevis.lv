@@ -41,6 +41,20 @@ class RegistrationTest(TestCase):
         )
         self.assertIn(username, response.content)
 
+    def test_honeypot(self):
+        """Honeypot is CAPTCHA alternative."""
+        response = self.client.post(
+            reverse("user_registration"),
+            {
+                "username": test_utilities.get_data(length=30),
+                "password1": "P4ssw0rd*",
+                "password2": "P4ssw0rd*",
+                "im_bot": "on",
+            },
+        )
+        self.assertEqual(response.status_code, 403)
+        self.assertFalse(User.objects.all().exists())
+
 
 class LoginTest(TestCase):
     def test_fail(self):

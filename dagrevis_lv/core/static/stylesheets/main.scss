@@ -99,6 +99,12 @@
         color: $grey;
     }
 
+/* Helpers */
+
+    .hidden {
+        display: none;
+    }
+
 /* Tag selectors */
 
     ::selection {
@@ -139,6 +145,9 @@
         display: block;
         padding: .5em .75em;
         width: 60px * 5;
+    }
+    input[type="checkbox"] {
+        width: 16px;
     }
 
     button {

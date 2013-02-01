@@ -30,6 +30,11 @@
         </p>
         {{ form.password2.errors }}
 
+        <p class="hidden">
+            <label>I'm bot (leave blank)</label>
+            <input type="checkbox" name="im_bot" />
+        </p>
+
         <p>
             <button tabindex="4">{% trans "Register" %}</button>
         </p>

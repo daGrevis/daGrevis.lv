@@ -1,4 +1,4 @@
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponseForbidden
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
 from django.shortcuts import render_to_response
@@ -9,6 +9,8 @@ from user.forms import CustomUserCreationForm
 
 def registration(request):
     if request.method == "POST":
+        if request.POST.get("im_bot") == "on":
+            return HttpResponseForbidden("Seems that you are a bot.")
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             form.save()
