@@ -2,6 +2,7 @@ from django import http
 from django.template import RequestContext
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.conf import settings
+from django.utils.translation import ugettext
 
 from blog.models import Article, Comment, Tag
 from blog.forms import CommentForm
@@ -14,6 +15,7 @@ def articles(request):
     return render_to_response(
         "articles.html",
         {
+            "page_title": ugettext("Blog"),
             "articles": articles,
             "sorted_articles": sorted_articles,
         },
@@ -58,6 +60,7 @@ def article(request, article_pk, slug=None):
     return render_to_response(
         "article.html",
         {
+            "page_title": article.title,
             "article": article,
             "comments": comments,
             "tags": tags,
@@ -72,7 +75,10 @@ def tags(request):
     tags = Tag.get_tags_by_priority()
     return render_to_response(
         "tags.html",
-        {"tags": tags},
+        {
+            "page_title": ugettext("Tags"),
+            "tags": tags,
+        },
         context_instance=RequestContext(request),
     )
 
@@ -85,6 +91,7 @@ def search(request):
     return render_to_response(
         "search.html",
         {
+            "page_title": ugettext("Search"),
             "found_articles": found_articles,
             "search_form": search_form,
         },

@@ -14,7 +14,7 @@
 
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
-        <title>{{ settings.SITE_TITLE }} | {% trans "Blog" %}</title>
+        <title>{% if page_title %}{{ settings.SITE_TITLE }} | {{ page_title }}{% else %}{{ page_title|default:settings.SITE_TITLE }}{% endif %}</title>
 
         <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600&amp;subset=latin,latin-ext" />
         <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Inconsolata:400,700&amp;subset=latin,latin-ext" />
