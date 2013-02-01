@@ -179,40 +179,40 @@ class SearchTest(TestCase):
         test_utilities.create_article()
         response = self.client.get(reverse("blog_search"), {"phrase": test_utilities.get_data()})
         found_articles = response.context[-1]["found_articles"]
-        self.assertFalse(found_articles)
+        self.assertFalse(list(found_articles))
 
     def test_by_phrase_in_article_title(self):
         article = test_utilities.create_article(title="Spam and Eggs")
         response = self.client.get(reverse("blog_search"), {"phrase": "eggs"})
         found_articles = response.context[-1]["found_articles"]
-        self.assertEqual(found_articles, [article])
+        self.assertEqual(list(found_articles), [article])
 
     def test_by_phrase_in_article_content(self):
         article = test_utilities.create_article(content="The quick brown fox jumps over the lazy dog.")
         response = self.client.get(reverse("blog_search"), {"phrase": "lazy dog"})
         found_articles = response.context[-1]["found_articles"]
-        self.assertEqual(found_articles, [article])
+        self.assertEqual(list(found_articles), [article])
 
     def test_many_results(self):
         article1 = test_utilities.create_article(title="Spam and Eggs")
         article2 = test_utilities.create_article(content="Spam, spam, spam, spam, spam...")
         response = self.client.get(reverse("blog_search"), {"phrase": "spam"})
         found_articles = response.context[-1]["found_articles"]
-        self.assertEqual(found_articles, [article1, article2])
+        self.assertEqual(list(found_articles), [article1, article2])
 
     def test_many_results_but_only_one_match(self):
         article1 = test_utilities.create_article(title="Spam and Eggs")
         test_utilities.create_article(content="Spam, spam, spam, spam, spam...")
         response = self.client.get(reverse("blog_search"), {"phrase": "eggs"})
         found_articles = response.context[-1]["found_articles"]
-        self.assertEqual(found_articles, [article1])
+        self.assertEqual(list(found_articles), [article1])
 
     def test_by_tag(self):
         article = test_utilities.create_article()
         tag = test_utilities.create_tag(article, content="spam")
         response = self.client.get(reverse("blog_search"), {"tags": tag.content})
         found_articles = response.context[-1]["found_articles"]
-        self.assertEqual(found_articles, [article])
+        self.assertEqual(list(found_articles), [article])
 
     def test_by_tags(self):
         article = test_utilities.create_article()
@@ -221,10 +221,26 @@ class SearchTest(TestCase):
         tags = "{},{}".format(tag1.content, tag2.content)
         response = self.client.get(reverse("blog_search"), {"tags": tags})
         found_articles = response.context[-1]["found_articles"]
-        self.assertEqual(found_articles, [article])
+        self.assertEqual(list(found_articles), [article])
 
     def test_by_phrase_with_regex(self):
         article = test_utilities.create_article(content="Tip #42")
         response = self.client.get(reverse("blog_search"), {"phrase": r"#(\d)+"})
         found_articles = response.context[-1]["found_articles"]
-        self.assertEqual(found_articles, [article])
+        self.assertEqual(list(found_articles), [article])
+
+    def test_by_phrase_and_tags(self):
+        article_content = "spam"
+        tag_content1 = "eggs"
+        tag_content2 = "cheese"
+        article1 = test_utilities.create_article(content=article_content)
+        article2 = test_utilities.create_article(content=article_content)
+        test_utilities.create_tag(article1, content=tag_content1)
+        test_utilities.create_tag(article2, content=tag_content1)
+        test_utilities.create_tag(article2, content=tag_content2)
+        response = self.client.get(reverse("blog_search"), {
+            "phrase": article_content,
+            "tags": "{}, {}".format(tag_content1, tag_content2)
+        })
+        found_articles = response.context[-1]["found_articles"]
+        self.assertEqual(list(found_articles), [article2])

@@ -40,25 +40,21 @@ class Article(models.Model):
         return sorted_articles
 
     @staticmethod
-    def search(phrase=None, tags=[]):
-        """
-        Searches for an article by it's title, content in ignore-case mode and regex mode, plus, searches by article tags in ignore-case mode. Results are
-        merged together.
-
-        """
-        found_articles = []
+    def search_articles(phrase=None, tags=[]):
+        """Searches for an articles by it's title and content, and / or tags. Results are "and'ed" together."""
+        query_set = Article.objects.all()
+        phrase_query = (models.Q(title__icontains=phrase)
+                        | models.Q(content__icontains=phrase)
+                        | models.Q(title__regex=phrase)
+                        | models.Q(content__regex=phrase))
         if phrase:
-            query = (models.Q(title__icontains=phrase)
-                     | models.Q(content__icontains=phrase)
-                     | models.Q(title__regex=phrase)
-                     | models.Q(content__regex=phrase))
-            found_articles.extend(list(Article.objects.filter(query)))
+            query_set = query_set.filter(phrase_query)
         if tags:
-            tags = Tag.objects.filter(content__in=tags)
-            for tag in tags:
-                found_articles.append(tag.article)
-        found_articles = list(set(found_articles))  # Removes duplicates.
-        return found_articles[:settings.ARTICLE_COUNT_PER_PAGE]
+            query_set = (query_set
+                         .filter(tag__content__in=tags)
+                         .annotate(num_tags=models.Count("tag"))
+                         .filter(num_tags=len(tags)))
+        return query_set[:settings.ARTICLE_COUNT_PER_PAGE]
 
 
 class Comment(models.Model):
