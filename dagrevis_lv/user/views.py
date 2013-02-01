@@ -2,7 +2,9 @@ from django.http import HttpResponseRedirect, HttpResponseForbidden
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
 from django.shortcuts import render_to_response
-from django.contrib.auth import logout as auth_logout
+from django.contrib.auth import login as auth_login, logout as auth_logout
+from django.utils.translation import ugettext
+from django.contrib.auth.forms import AuthenticationForm
 
 from user.forms import CustomUserCreationForm
 
@@ -19,7 +21,28 @@ def registration(request):
         form = CustomUserCreationForm()
     return render_to_response(
         "registration.html",
-        {"form": form},
+        {
+            "page_title": ugettext("Registration"),
+            "form": form,
+        },
+        context_instance=RequestContext(request)
+    )
+
+
+def login(request):
+    if request.method == "POST":
+        form = AuthenticationForm(data=request.POST)
+        if form.is_valid():
+            auth_login(request, form.get_user())
+            return HttpResponseRedirect(reverse("blog_articles"))
+    else:
+        form = AuthenticationForm(request)
+    return render_to_response(
+        "login.html",
+        {
+            "page_title": ugettext("Login"),
+            "form": form,
+        },
         context_instance=RequestContext(request)
     )
 
