@@ -13,7 +13,7 @@
 
         <p>
             <label>{{ form.username.label }}</label>
-            <input name="{{ form.username.html_name }}" />
+            <input name="{{ form.username.html_name }}" value="{{ form.username.value|default:"" }}" autocomplete="off" />
         </p>
         {{ form.username.errors }}
 

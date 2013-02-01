@@ -33,6 +33,14 @@ class RegistrationTest(TestCase):
         )
         self.assertTrue(User.objects.all().exists())
 
+    def test_username_remembered_when_fail(self):
+        username = test_utilities.get_data(length=30)
+        response = self.client.post(
+            reverse("user_registration"),
+            {"username": username},
+        )
+        self.assertIn(username, response.content)
+
 
 class LoginTest(TestCase):
     def test_fail(self):
