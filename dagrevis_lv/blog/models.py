@@ -54,7 +54,7 @@ class Article(models.Model):
                          .filter(tag__content__in=tags)
                          .annotate(num_tags=models.Count("tag"))
                          .filter(num_tags=len(tags)))
-        return list(query_set[:settings.ARTICLE_COUNT_PER_PAGE])
+        return query_set[:settings.ARTICLE_COUNT_PER_PAGE]
 
 
 class Comment(models.Model):
