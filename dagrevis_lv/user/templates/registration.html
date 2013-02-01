@@ -13,25 +13,25 @@
 
         <p>
             <label>{{ form.username.label }}</label>
-            <input name="{{ form.username.html_name }}" value="{{ form.username.value|default:"" }}" autocomplete="off" />
+            <input name="{{ form.username.html_name }}" value="{{ form.username.value|default:"" }}" autocomplete="off" tabindex="1" autofocus />
         </p>
         {{ form.username.errors }}
 
         <p>
             <label>{{ form.password1.label }}</label>
-            <input name="{{ form.password1.html_name }}" type="password" />
+            <input name="{{ form.password1.html_name }}" type="password" tabindex="2" />
         </p>
         <p>Please use a <a href="http://howsecureismypassword.net/">strong password</a>!</p>
         {{ form.password1.errors }}
 
         <p>
             <label>{{ form.password2.label }}</label>
-            <input name="{{ form.password2.html_name }}" type="password" />
+            <input name="{{ form.password2.html_name }}" type="password" tabindex="3" />
         </p>
         {{ form.password2.errors }}
 
         <p>
-            <button>{% trans "Register" %}</button>
+            <button tabindex="4">{% trans "Register" %}</button>
         </p>
     </form>
 
