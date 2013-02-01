@@ -40,9 +40,9 @@ def article(request, article_pk, slug=None):
             if comment_pk_to_reply:
                 parent = get_object_or_404(Comment, pk=comment_pk_to_reply)
                 if parent == comment:
-                    return http.HttpResponseForbidden("Comment can't be child for itself!")
+                    return http.HttpResponseForbidden("Comment can't be child for itself.")
                 if parent.get_depth() >= settings.MAXIMUM_DEPTH_FOR_COMMENT:
-                    return http.HttpResponseForbidden("Comments can't go deeper than {} levels!".format(settings.MAXIMUM_DEPTH_FOR_COMMENT))
+                    return http.HttpResponseForbidden("Comments can't go deeper than {} levels.".format(settings.MAXIMUM_DEPTH_FOR_COMMENT))
                 comment.parent = parent
             comment.save()
             return redirect(
