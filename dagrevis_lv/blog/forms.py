@@ -18,7 +18,9 @@ class SearchForm(forms.Form):
         tags = cleaned_data.get("tags")
         if not tags:
             return []
-        return tags.split(",")
+        tags = tags.split(",")
+        tags = [tag.strip() for tag in tags]
+        return tags
 
     def clean(self):
         cleaned_data = super(SearchForm, self).clean()
