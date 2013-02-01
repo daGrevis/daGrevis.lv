@@ -14,7 +14,7 @@
                 <p>
                     <button>{% trans "Add comment" %}</button>
                     {% if comment_pk_to_reply  %}
-                        <span id="reply_to">
+                        <span class="reply_to">
                             {% blocktrans %}
                                 (reply to <a href="{{ article_link }}?comment_pk_to_reply={{ comment.pk }}">comment #{{ comment_pk_to_reply }}</a>)
                             {% endblocktrans %}
