@@ -228,3 +228,19 @@ class SearchTest(TestCase):
         response = self.client.get(reverse("blog_search"), {"phrase": r"#(\d)+"})
         found_articles = response.context[-1]["found_articles"]
         self.assertEqual(found_articles, [article])
+
+    def test_by_phrase_and_tags(self):
+        article_content = "spam"
+        tag_content1 = "eggs"
+        tag_content2 = "cheese"
+        article1 = test_utilities.create_article(content=article_content)
+        article2 = test_utilities.create_article(content=article_content)
+        test_utilities.create_tag(article1, content=tag_content1)
+        test_utilities.create_tag(article2, content=tag_content1)
+        test_utilities.create_tag(article2, content=tag_content2)
+        response = self.client.get(reverse("blog_search"), {
+            "phrase": article_content,
+            "tags": "{}, {}".format(tag_content1, tag_content2)
+        })
+        found_articles = response.context[-1]["found_articles"]
+        self.assertEqual(found_articles, [article2])
