@@ -14,6 +14,7 @@ def articles(request):
     return render_to_response(
         "articles.html",
         {
+            "page_title": "Blog",
             "articles": articles,
             "sorted_articles": sorted_articles,
         },
@@ -58,6 +59,7 @@ def article(request, article_pk, slug=None):
     return render_to_response(
         "article.html",
         {
+            "page_title": article.title,
             "article": article,
             "comments": comments,
             "tags": tags,
@@ -72,7 +74,10 @@ def tags(request):
     tags = Tag.get_tags_by_priority()
     return render_to_response(
         "tags.html",
-        {"tags": tags},
+        {
+            "page_title": "Tags",
+            "tags": tags,
+        },
         context_instance=RequestContext(request),
     )
 
@@ -85,6 +90,7 @@ def search(request):
     return render_to_response(
         "search.html",
         {
+            "page_title": "Search",
             "found_articles": found_articles,
             "search_form": search_form,
         },
