@@ -162,6 +162,7 @@
         line-height: $line_height;
         padding: .5em .75em;
         width: 60px * 9;
+        overflow-y: scroll;
     }
 
     pre {
@@ -321,7 +322,11 @@
             margin: 4em 0;
         }
 
-        #reply_to {
+        #add_comment textarea {
+            background: url("/static/images/markdown_mark-66x40.png") no-repeat 95% 95%;
+        }
+
+        .reply_to {
             margin-left: .5em;
         }
 
