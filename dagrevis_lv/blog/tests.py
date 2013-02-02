@@ -61,6 +61,11 @@ class ArticleTest(TestCase):
         self.assertIn(article.title, response.content)
         self.assertIn(article.content, response.content)
 
+    def test_articles_feed(self):
+        article = test_utilities.create_article()
+        response = self.client.get(reverse("blog_articles_feed"))
+        self.assertIn(article.title, response.content)
+
 
 class CommentTest(TestCase):
     def test_no_comments(self):
@@ -131,6 +136,11 @@ class CommentTest(TestCase):
         })
         self.assertEqual(403, response.status_code)
         settings.MAXIMUM_DEPTH_FOR_COMMENT = original_max
+
+    def test_comments_feed(self):
+        comment = test_utilities.create_comment()
+        response = self.client.get(reverse("blog_comments_feed"))
+        self.assertIn(comment.content, response.content)
 
 
 class TagTest(TestCase):
