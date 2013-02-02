@@ -7,5 +7,8 @@ class LegacyArticle(models.Model):
     created = models.IntegerField()
     last_updated = models.IntegerField()
 
+    class Meta(object):
+        db_table = "blog_articles"
+
     def __unicode__(self):
         return self.title
