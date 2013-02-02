@@ -8,6 +8,7 @@ class LegacyArticle(models.Model):
     last_updated = models.IntegerField()
 
     class Meta(object):
+        app_label = "legacy"
         db_table = "blog_articles"
 
     def __unicode__(self):
