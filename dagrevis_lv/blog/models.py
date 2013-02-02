@@ -24,7 +24,7 @@ class Article(models.Model):
             self.slug = defaultfilters.slugify(self.title)
         super(Article, self).clean()
 
-    def get_link(self):
+    def get_absolute_url(self):
         return reverse("blog_article", kwargs={"article_pk": self.pk, "slug": self.slug})
 
     @staticmethod
@@ -68,6 +68,13 @@ class Comment(models.Model):
 
     def __unicode__(self):
         return self.content
+
+    def get_absolute_url(self):
+        article = self.article
+        before_hash = article.get_absolute_url()
+        after_hash = "comment{}".format(self.pk)
+        link = "{before_hash}#{after_hash}".format(before_hash=before_hash, after_hash=after_hash)
+        return link
 
     @staticmethod
     def calculate_depth_and_sort(comments, _sorted_comments=None, _deeper_comment=None, _depth=1):

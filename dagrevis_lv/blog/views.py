@@ -10,7 +10,7 @@ from blog.forms import SearchForm
 
 
 def articles(request):
-    articles = Article.objects.order_by("-id")[:settings.ARTICLE_COUNT_PER_PAGE]
+    articles = Article.objects.order_by("-pk")[:settings.ARTICLE_COUNT_PER_PAGE]
     sorted_articles = Article.sort_articles_by_month(articles)
     return render_to_response(
         "articles.html",
@@ -28,7 +28,7 @@ def article(request, article_pk, slug=None):
     article = get_object_or_404(Article, pk=article_pk)
     # If slug is incorrect, "redirect friendly" to URL with correct slug.
     if not slug or slug != article.slug:
-        return http.HttpResponsePermanentRedirect(article.get_link())
+        return http.HttpResponsePermanentRedirect(article.get_absolute_url())
     if request.method == "POST":
         # Comment adding.
         if request.user.is_anonymous():

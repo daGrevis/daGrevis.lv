@@ -1,7 +1,8 @@
 from os import path
-from django.core.urlresolvers import reverse
 
-# Django settings for dagrevis_lv project.
+from django.core.urlresolvers import reverse
+from django.utils.translation import ugettext
+
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -189,4 +190,22 @@ AUTHOR_URL = "http://dagrevis.lv/about-me/"
 GA_ENABLED = False
 GA_ID = "UA-7141181-6"
 
-ARTICLE_COUNT_PER_PAGE = 40
+ARTICLE_COUNT_PER_PAGE = 20
+
+ARTICLES_FEED = {
+    "RSS_TITLE": ugettext("Articles feed (RSS)"),
+    "ATOM_TITLE": ugettext("Articles feed (Atom)"),
+    "DESCRIPTION": ugettext("Latest articles"),
+    "RSS_LINK": reverse("blog_articles_rss_feed"),
+    "ATOM_LINK": reverse("blog_articles_atom_feed"),
+    "ITEM_LIMIT": 5,
+}
+
+COMMENTS_FEED = {
+    "RSS_TITLE": ugettext("Comments feed (RSS)"),
+    "ATOM_TITLE": ugettext("Comments feed (Atom)"),
+    "DESCRIPTION": ugettext("Latest comments"),
+    "RSS_LINK": reverse("blog_comments_rss_feed"),
+    "ATOM_LINK": reverse("blog_comments_atom_feed"),
+    "ITEM_LIMIT": 20,
+}
