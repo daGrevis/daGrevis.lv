@@ -45,7 +45,7 @@ class CommentsRssFeed(Feed):
         return settings.LINK_FOR_COMMENTS_FEED
 
     def items(self):
-        return Comment.objects.all()[:settings.ITEM_LIMIT_FOR_COMMENTS_FEED]
+        return Comment.objects.order_by("-pk")[:settings.ITEM_LIMIT_FOR_COMMENTS_FEED]
 
     def item_title(self, comment):
         author = comment.author
