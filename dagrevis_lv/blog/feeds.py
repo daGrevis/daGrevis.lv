@@ -1,5 +1,6 @@
 from django.contrib.syndication.views import Feed
 from django.conf import settings
+from django.utils.translation import ugettext
 
 from blog.models import Article, Comment
 
@@ -41,6 +42,11 @@ class CommentsFeed(Feed):
         return Comment.objects.all()[:settings.ITEM_LIMIT_FOR_COMMENTS_FEED]
 
     def item_title(self, comment):
+        author = comment.author
+        title = ugettext("Comment #{pk} by {username}").format(pk=comment.pk, username=author.username)
+        return title
+
+    def item_description(self, comment):
         return comment.content
 
     def item_link(self, comment):
