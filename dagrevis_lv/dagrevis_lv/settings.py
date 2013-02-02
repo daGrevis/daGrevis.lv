@@ -130,6 +130,7 @@ INSTALLED_APPS = (
     "core",
     "blog",
     "user",
+    "legacy",
 )
 
 # A sample logging configuration. The only tangible logging
