@@ -70,4 +70,4 @@ def create_tag(article=None, content=None):
 
 def request_article(client, article=None):
     article = article if article is not None else create_article()
-    return client.get(article.get_link())
+    return client.get(article.get_absolute_url())

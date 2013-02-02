@@ -1,4 +1,5 @@
 from django.conf.urls import patterns, url
+from blog.feeds import ArticlesFeed, CommentsFeed
 
 
 urlpatterns = patterns(
@@ -27,5 +28,15 @@ urlpatterns = patterns(
         r"^search/$",
         "search",
         name="blog_search",
+    ),
+    url(
+        r"^articles_feed/$",
+        ArticlesFeed(),
+        name="blog_articles_feed",
+    ),
+    url(
+        r"^comments_feed/$",
+        CommentsFeed(),
+        name="blog_comments_feed",
     ),
 )

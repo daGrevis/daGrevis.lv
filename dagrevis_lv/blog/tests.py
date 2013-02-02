@@ -86,13 +86,13 @@ class CommentTest(TestCase):
         article = test_utilities.create_article()
 
         # As anonymous.
-        response = self.client.post(article.get_link(), {"content": test_utilities.get_data()})
+        response = self.client.post(article.get_absolute_url(), {"content": test_utilities.get_data()})
         self.assertEqual(response.status_code, 403)
         self.assertFalse(Article.objects.get(pk=article.pk).comment_set.exists())
 
         # As member.
         test_utilities.create_and_login_user(self.client)
-        self.client.post(article.get_link(), {"content": test_utilities.get_data()})
+        self.client.post(article.get_absolute_url(), {"content": test_utilities.get_data()})
         self.assertEqual(Article.objects.get(pk=article.pk).comment_set.count(), 1)
 
     def test_nested_comments(self):
@@ -125,7 +125,7 @@ class CommentTest(TestCase):
         comment1 = test_utilities.create_comment(article=article)
         comment2 = test_utilities.create_comment(article=article, parent=comment1)
         test_utilities.create_and_login_user(self.client)
-        response = self.client.post(article.get_link(), {
+        response = self.client.post(article.get_absolute_url(), {
             "content": test_utilities.get_data(),
             "comment_pk_to_reply": comment2.pk,
         })
