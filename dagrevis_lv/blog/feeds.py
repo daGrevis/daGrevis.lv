@@ -8,16 +8,16 @@ from blog.models import Article, Comment
 
 class ArticlesRssFeed(Feed):
     def title(self):
-        return settings.TITLE_FOR_ARTICLES_FEED
+        return settings.ARTICLES_FEED["TITLE"]
 
     def description(self):
-        return settings.DESCRIPTION_FOR_ARTICLES_FEED
+        return settings.ARTICLES_FEED["DESCRIPTION"]
 
     def link(self):
-        return settings.LINK_FOR_ARTICLES_FEED
+        return settings.ARTICLES_FEED["RSS_LINK"]
 
     def items(self):
-        return Article.objects.order_by("-pk")[:settings.ITEM_LIMIT_FOR_ARTICLES_FEED]
+        return Article.objects.order_by("-pk")[:settings.ARTICLES_FEED["ITEM_LIMIT"]]
 
     def item_title(self, article):
         return article.title
@@ -33,23 +33,25 @@ class ArticlesAtomFeed(ArticlesRssFeed):
     feed_type = Atom1Feed
     subtitle = ArticlesRssFeed.description
 
+    def link(self):
+        return settings.ARTICLES_FEED["ATOM_LINK"]
+
 
 class CommentsRssFeed(Feed):
     def title(self):
-        return settings.TITLE_FOR_COMMENTS_FEED
+        return settings.COMMENTS_FEED["TITLE"]
 
     def description(self):
-        return settings.DESCRIPTION_FOR_COMMENTS_FEED
+        return settings.COMMENTS_FEED["DESCRIPTION"]
 
     def link(self):
-        return settings.LINK_FOR_COMMENTS_FEED
+        return settings.COMMENTS_FEED["RSS_LINK"]
 
     def items(self):
-        return Comment.objects.order_by("-pk")[:settings.ITEM_LIMIT_FOR_COMMENTS_FEED]
+        return Comment.objects.order_by("-pk")[:settings.COMMENTS_FEED["ITEM_LIMIT"]]
 
     def item_title(self, comment):
-        author = comment.author
-        title = ugettext("Comment #{pk} by {username}").format(pk=comment.pk, username=author.username)
+        title = ugettext("Comment #{pk} by {username}").format(pk=comment.pk, username=comment.author.username)
         return title
 
     def item_description(self, comment):
@@ -62,3 +64,6 @@ class CommentsRssFeed(Feed):
 class CommentsAtomFeed(CommentsRssFeed):
     feed_type = Atom1Feed
     subtitle = CommentsRssFeed.description
+
+    def link(self):
+        return settings.COMMENTS_FEED["ATOM_LINK"]

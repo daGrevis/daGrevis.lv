@@ -37,7 +37,7 @@ urlpatterns = patterns(
     url(
         r"^articles_feed\.atom$",
         ArticlesAtomFeed(),
-        name="blog_articles_feed",
+        name="blog_articles_atom_feed",
     ),
     url(
         r"^comments_feed\.rss$",
