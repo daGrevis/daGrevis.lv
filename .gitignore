@@ -2,6 +2,6 @@ bin/
 include/
 lib/
 *.pyc
-database
+*.db
 .sass-cache/
 main.css
