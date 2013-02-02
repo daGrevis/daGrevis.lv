@@ -162,7 +162,7 @@
         line-height: $line_height;
         padding: .5em .75em;
         width: 60px * 9;
-        overflow-y: scroll;
+        overflow-y: hidden;
     }
 
     pre {
@@ -323,7 +323,7 @@
         }
 
         #add_comment textarea {
-            background: url("/static/images/markdown_mark-66x40.png") no-repeat 95% 95%;
+            background: url("/static/images/markdown_mark-66x40.png") no-repeat 98% 95%;
         }
 
         .reply_to {
