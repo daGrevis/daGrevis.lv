@@ -8,7 +8,7 @@ from blog.models import Article, Comment
 
 class ArticlesRssFeed(Feed):
     def title(self):
-        return settings.ARTICLES_FEED["TITLE"]
+        return settings.ARTICLES_FEED["RSS_TITLE"]
 
     def description(self):
         return settings.ARTICLES_FEED["DESCRIPTION"]
@@ -33,13 +33,16 @@ class ArticlesAtomFeed(ArticlesRssFeed):
     feed_type = Atom1Feed
     subtitle = ArticlesRssFeed.description
 
+    def title(self):
+        return settings.ARTICLES_FEED["ATOM_TITLE"]
+
     def link(self):
         return settings.ARTICLES_FEED["ATOM_LINK"]
 
 
 class CommentsRssFeed(Feed):
     def title(self):
-        return settings.COMMENTS_FEED["TITLE"]
+        return settings.COMMENTS_FEED["RSS_TITLE"]
 
     def description(self):
         return settings.COMMENTS_FEED["DESCRIPTION"]
@@ -64,6 +67,9 @@ class CommentsRssFeed(Feed):
 class CommentsAtomFeed(CommentsRssFeed):
     feed_type = Atom1Feed
     subtitle = CommentsRssFeed.description
+
+    def title(self):
+        return settings.COMMENTS_FEED["ATOM_TITLE"]
 
     def link(self):
         return settings.COMMENTS_FEED["ATOM_LINK"]

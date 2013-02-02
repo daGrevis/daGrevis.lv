@@ -28,6 +28,10 @@
         <link rel="apple-touch-icon" href="{{ STATIC_URL }}favicons/favicon-57.png" />
         <link rel="apple-touch-icon" sizes="72x72" href="{{ STATIC_URL }}favicons/favicon-72.png" />
         <link rel="apple-touch-icon" sizes="114x114" href="{{ STATIC_URL }}favicons/favicon-114.png" />
+        <link rel="alternate" type="application/rss+xml" title="{{ settings.ARTICLES_FEED.RSS_TITLE }}" href="{{ settings.ARTICLES_FEED.RSS_LINK }}" />
+        <link rel="alternate" type="application/atom+xml" title="{{ settings.ARTICLES_FEED.ATOM_TITLE }}" href="{{ settings.ARTICLES_FEED.ATOM_LINK }}" />
+        <link rel="alternate" type="application/rss+xml" title="{{ settings.COMMENTS_FEED.RSS_TITLE }}" href="{{ settings.COMMENTS_FEED.RSS_LINK }}" />
+        <link rel="alternate" type="application/atom+xml" title="{{ settings.COMMENTS_FEED.ATOM_TITLE }}" href="{{ settings.COMMENTS_FEED.ATOM_LINK }}" />
     </head>
     <body>
         <div class="container">

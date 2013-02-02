@@ -193,7 +193,8 @@ GA_ID = "UA-7141181-6"
 ARTICLE_COUNT_PER_PAGE = 20
 
 ARTICLES_FEED = {
-    "TITLE": ugettext("Articles feed"),
+    "RSS_TITLE": ugettext("Articles feed (RSS)"),
+    "ATOM_TITLE": ugettext("Articles feed (Atom)"),
     "DESCRIPTION": ugettext("Latest articles"),
     "RSS_LINK": reverse("blog_articles_rss_feed"),
     "ATOM_LINK": reverse("blog_articles_atom_feed"),
@@ -201,7 +202,8 @@ ARTICLES_FEED = {
 }
 
 COMMENTS_FEED = {
-    "TITLE": ugettext("Comments feed"),
+    "RSS_TITLE": ugettext("Comments feed (RSS)"),
+    "ATOM_TITLE": ugettext("Comments feed (Atom)"),
     "DESCRIPTION": ugettext("Latest comments"),
     "RSS_LINK": reverse("blog_comments_rss_feed"),
     "ATOM_LINK": reverse("blog_comments_atom_feed"),
