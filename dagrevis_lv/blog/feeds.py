@@ -1,11 +1,12 @@
 from django.contrib.syndication.views import Feed
 from django.conf import settings
 from django.utils.translation import ugettext
+from django.utils.feedgenerator import Atom1Feed
 
 from blog.models import Article, Comment
 
 
-class ArticlesFeed(Feed):
+class ArticlesRssFeed(Feed):
     def title(self):
         return settings.TITLE_FOR_ARTICLES_FEED
 
@@ -28,7 +29,12 @@ class ArticlesFeed(Feed):
         return article.get_absolute_url()
 
 
-class CommentsFeed(Feed):
+class ArticlesAtomFeed(ArticlesRssFeed):
+    feed_type = Atom1Feed
+    subtitle = ArticlesRssFeed.description
+
+
+class CommentsRssFeed(Feed):
     def title(self):
         return settings.TITLE_FOR_COMMENTS_FEED
 
@@ -51,3 +57,8 @@ class CommentsFeed(Feed):
 
     def item_link(self, comment):
         return comment.get_absolute_url()
+
+
+class CommentsAtomFeed(CommentsRssFeed):
+    feed_type = Atom1Feed
+    subtitle = CommentsRssFeed.description

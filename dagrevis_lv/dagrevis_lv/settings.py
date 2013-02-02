@@ -194,10 +194,10 @@ ARTICLE_COUNT_PER_PAGE = 20
 
 TITLE_FOR_ARTICLES_FEED = ugettext("Articles feed")
 DESCRIPTION_FOR_ARTICLES_FEED = ugettext("Latest articles")
-LINK_FOR_ARTICLES_FEED = reverse("blog_articles_feed")
+LINK_FOR_ARTICLES_FEED = reverse("blog_articles_rss_feed")
 ITEM_LIMIT_FOR_ARTICLES_FEED = 5
 
 TITLE_FOR_COMMENTS_FEED = ugettext("Comments feed")
 DESCRIPTION_FOR_COMMENTS_FEED = ugettext("Latest comments")
-LINK_FOR_COMMENTS_FEED = reverse("blog_comments_feed")
+LINK_FOR_COMMENTS_FEED = reverse("blog_comments_rss_feed")
 ITEM_LIMIT_FOR_COMMENTS_FEED = 20
