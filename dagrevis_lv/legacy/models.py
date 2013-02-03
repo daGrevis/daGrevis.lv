@@ -6,6 +6,7 @@ class LegacyArticle(models.Model):
     content = models.TextField()
     created = models.IntegerField()
     last_updated = models.IntegerField()
+    tweet_id = models.CharField(max_length=255, null=True)
 
     class Meta(object):
         app_label = "legacy"
