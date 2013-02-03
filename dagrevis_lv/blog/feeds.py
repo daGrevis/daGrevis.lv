@@ -23,7 +23,7 @@ class ArticlesRssFeed(Feed):
         return article.title
 
     def item_description(self, article):
-        return article.content
+        return article.get_content_as_html()
 
     def item_link(self, article):
         return article.get_absolute_url()
@@ -58,7 +58,7 @@ class CommentsRssFeed(Feed):
         return title
 
     def item_description(self, comment):
-        return comment.content
+        return comment.get_content_as_html()
 
     def item_link(self, comment):
         return comment.get_absolute_url()

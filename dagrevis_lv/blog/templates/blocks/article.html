@@ -1,5 +1,4 @@
 {% load i18n %}
-{% load text_processors %}
 
 
 <article>
@@ -8,7 +7,7 @@
         {% include "blocks/tags.html" %}
     </header>
     <section>
-        {{ article.content|markdown }}
+        {{ article.get_content_as_html|safe }}
     </section>
     <footer>
         <div class="about">

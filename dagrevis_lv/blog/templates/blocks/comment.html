@@ -1,10 +1,9 @@
 {% load i18n %}
-{% load text_processors %}
 
 
 <div id="comment{{ comment.pk }}" class="comment depth{{ comment.depth }} {% if comment.author.is_superuser %}superuser_comment{% endif %}">
     <section>
-        {{ comment.content|markdown }}
+        {{ comment.get_content_as_html|safe }}
     </section>
     <footer>
         <p class="about">
