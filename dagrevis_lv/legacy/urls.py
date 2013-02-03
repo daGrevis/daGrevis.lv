@@ -8,4 +8,9 @@ urlpatterns = patterns(
         "legacy_blog_article",
         name="legacy_blog_article",
     ),
+    url(
+        r"^article/list",
+        "legacy_blog_articles",
+        name="legacy_blog_articles",
+    ),
 )
