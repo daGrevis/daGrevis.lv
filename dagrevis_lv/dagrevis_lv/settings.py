@@ -183,7 +183,7 @@ MAXIMUM_DEPTH_FOR_COMMENT = 5
 SITE_TITLE = "daGrevis.lv"
 META_DESCRIPTION = ""
 META_AUTHOR = ""
-AUTHOR_NAME = "Raitis Stengrevics"
+AUTHOR_NAME = "Raitis (daGrevis) Stengrevics"
 AUTHOR_URL = "http://dagrevis.lv/about-me/"
 
 # Google analytics.
