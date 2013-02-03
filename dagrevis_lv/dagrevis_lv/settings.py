@@ -22,14 +22,14 @@ DATABASES = {
         "HOST": "",                              # Set to empty string for localhost. Not used with sqlite3.
         "PORT": "",                              # Set to empty string for default. Not used with sqlite3.
     },
-    "legacy": {
-        "ENGINE": "django.db.backends.mysql",
-        "NAME": "legacy",
-        "USER": "root",  # Ahh, this is so evil!
-        "PASSWORD": "",
-        "HOST": "",
-        "PORT": "",
-    },
+    # "legacy": {
+    #     "ENGINE": "django.db.backends.mysql",
+    #     "NAME": "legacy",
+    #     "USER": "root",  # Ahh, this is so evil!
+    #     "PASSWORD": "",
+    #     "HOST": "",
+    #     "PORT": "",
+    # },
 }
 
 DATABASE_ROUTERS = ["core.routers.DefaultRouter", "legacy.routers.LegacyRouter"]
@@ -183,7 +183,7 @@ MAXIMUM_DEPTH_FOR_COMMENT = 5
 SITE_TITLE = "daGrevis.lv"
 META_DESCRIPTION = ""
 META_AUTHOR = ""
-AUTHOR_NAME = "Raitis Stengrevics"
+AUTHOR_NAME = "Raitis (daGrevis) Stengrevics"
 AUTHOR_URL = "http://dagrevis.lv/about-me/"
 
 # Google analytics.

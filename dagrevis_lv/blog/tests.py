@@ -66,6 +66,13 @@ class ArticleTest(TestCase):
         response = self.client.get(reverse("blog_articles_rss_feed"))
         self.assertIn(article.title, response.content)
 
+    def test_xss_vulnerability(self):
+        content = "<script>alert('foo')</script>"
+        article = test_utilities.create_article(content=content)
+        expected = "<p>&lt;script&gt;alert('foo')&lt;/script&gt;</p>"
+        actual = article.get_content_as_html()
+        self.assertEqual(expected, actual)
+
 
 class CommentTest(TestCase):
     def test_no_comments(self):
@@ -141,6 +148,13 @@ class CommentTest(TestCase):
         comment = test_utilities.create_comment()
         response = self.client.get(reverse("blog_comments_rss_feed"))
         self.assertIn(comment.content, response.content)
+
+    def test_xss_vulnerability(self):
+        content = "<script>alert('foo')</script>"
+        comment = test_utilities.create_comment(content=content)
+        expected = "<p>&lt;script&gt;alert('foo')&lt;/script&gt;</p>"
+        actual = comment.get_content_as_html()
+        self.assertEqual(expected, actual)
 
 
 class TagTest(TestCase):
