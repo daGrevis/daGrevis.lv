@@ -22,14 +22,14 @@ DATABASES = {
         "HOST": "",                              # Set to empty string for localhost. Not used with sqlite3.
         "PORT": "",                              # Set to empty string for default. Not used with sqlite3.
     },
-    "legacy": {
-        "ENGINE": "django.db.backends.mysql",
-        "NAME": "legacy",
-        "USER": "root",  # Ahh, this is so evil!
-        "PASSWORD": "",
-        "HOST": "",
-        "PORT": "",
-    },
+    # "legacy": {
+    #     "ENGINE": "django.db.backends.mysql",
+    #     "NAME": "legacy",
+    #     "USER": "root",  # Ahh, this is so evil!
+    #     "PASSWORD": "",
+    #     "HOST": "",
+    #     "PORT": "",
+    # },
 }
 
 DATABASE_ROUTERS = ["core.routers.DefaultRouter", "legacy.routers.LegacyRouter"]
