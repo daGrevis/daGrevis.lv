@@ -3,6 +3,7 @@ from django.template import RequestContext
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.conf import settings
 from django.utils.translation import ugettext
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from blog.models import Article, Comment, Tag
 from blog.forms import CommentForm
@@ -10,7 +11,15 @@ from blog.forms import SearchForm
 
 
 def articles(request):
-    articles = Article.objects.order_by("-pk")[:settings.ARTICLE_COUNT_PER_PAGE]
+    articles = Article.objects.order_by("-pk")
+    paginator = Paginator(articles, settings.ARTICLE_COUNT_PER_PAGE)
+    page = request.GET.get("page")
+    try:
+        articles = paginator.page(page)
+    except PageNotAnInteger:
+        articles = paginator.page(1)
+    except EmptyPage:
+        articles = paginator.page(paginator.num_pages)
     sorted_articles = Article.sort_articles_by_month(articles)
     return render_to_response(
         "articles.html",
