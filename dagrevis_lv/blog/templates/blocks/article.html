@@ -35,7 +35,9 @@
             <nav>
                 <ul>
                     <li><a href="{{ article.get_absolute_url }}" class="icon-link" title="{% trans "Article link" %}"></a></li>
-                    <li><a href="{{ article.get_tweet_link }}" target="_blank" class="icon-retweet" title="{% trans "Tweet link" %}"></a></li>
+                    {% if article.tweet_id %}
+                        <li><a href="{{ article.get_tweet_link }}" target="_blank" class="icon-retweet" title="{% trans "Tweet link" %}"></a></li>
+                    {% endif %}
                 </ul>
             </nav>
         </div>
