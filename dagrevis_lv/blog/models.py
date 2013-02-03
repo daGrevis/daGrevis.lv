@@ -12,8 +12,8 @@ class Article(models.Model):
     author = models.ForeignKey(User)
     created = models.DateTimeField(default=datetime.now)
     modified = models.DateTimeField(auto_now=True)
-    title = models.CharField(max_length=255)
-    content = models.TextField()
+    title = models.CharField(max_length=255, db_index=True)
+    content = models.TextField(db_index=True)
     slug = models.CharField(max_length=255, blank=True)
     tweet_id = models.IntegerField(null=True, blank=True)
 
@@ -71,7 +71,7 @@ class Comment(models.Model):
     author = models.ForeignKey(User)
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
-    content = models.TextField()
+    content = models.TextField(db_index=True)
     depth = None
 
     def __unicode__(self):
@@ -118,7 +118,7 @@ class Comment(models.Model):
 
 class Tag(models.Model):
     article = models.ForeignKey(Article)
-    content = models.CharField(max_length=255)
+    content = models.CharField(max_length=255, db_index=True)
     created = models.DateTimeField(auto_now_add=True)
 
     def __unicode__(self):
