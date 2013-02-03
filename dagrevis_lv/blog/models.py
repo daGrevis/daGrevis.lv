@@ -1,5 +1,5 @@
 from datetime import datetime
-from markdown2 import markdown
+from markdown import markdown
 
 from django.db import models
 from django.template import defaultfilters
@@ -29,7 +29,7 @@ class Article(models.Model):
         return reverse("blog_article", kwargs={"article_pk": self.pk, "slug": self.slug})
 
     def get_content_as_html(self):
-        return markdown(self.content)
+        return markdown(self.content, safe_mode="escape")
 
     @staticmethod
     def sort_articles_by_month(articles):
@@ -81,7 +81,7 @@ class Comment(models.Model):
         return link
 
     def get_content_as_html(self):
-        return markdown(self.content)
+        return markdown(self.content, safe_mode="escape")
 
     @staticmethod
     def calculate_depth_and_sort(comments, _sorted_comments=None, _deeper_comment=None, _depth=1):
