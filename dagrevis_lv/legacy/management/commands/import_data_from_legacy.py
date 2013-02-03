@@ -29,7 +29,7 @@ class Command(BaseCommand):
         legacy_articles = LegacyArticle.objects.all()
         for legacy_article in legacy_articles:
             article = Article()
-            article.pk = article.pk
+            article.pk = legacy_article.pk
             article.author = superuser
             # MySQL returns `long` type for all `IntegerField`s.
             article.created = datetime.fromtimestamp(int(legacy_article.created))
