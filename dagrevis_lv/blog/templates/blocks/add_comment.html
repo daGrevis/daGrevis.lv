@@ -15,7 +15,7 @@
                     <button>{% trans "Add comment" %}</button>
                     {% if comment_pk_to_reply  %}
                         <span class="reply_to">
-                            {% blocktrans %}
+                            {% blocktrans with article.get_absolute_url as article_link %}
                                 (reply to <a href="{{ article_link }}?comment_pk_to_reply={{ comment.pk }}">comment #{{ comment_pk_to_reply }}</a>)
                             {% endblocktrans %}
                         </span>
@@ -30,7 +30,9 @@
                 <br />
                 {% url user_login as url_for_user_login %}
                 {% url user_registration as url_for_user_registration %}
-                {% blocktrans %}It's possible to use simple <a href="{{ url_for_user_login }}">login</a> and <a href="{{ url_for_user_registration }}">registration</a> too!{% endblocktrans %}
+                {% blocktrans with article.get_absolute_url as article_link %}
+                    It's possible to use simple <a href="{{ url_for_user_login }}?redirect_to={{ article_link }}#add_comment">login</a> and <a href="{{ url_for_user_registration }}">registration</a> too!
+                {% endblocktrans %}
             </p>
 
         {% endif %}
