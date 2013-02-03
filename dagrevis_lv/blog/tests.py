@@ -73,6 +73,13 @@ class ArticleTest(TestCase):
         actual = article.get_content_as_html()
         self.assertEqual(expected, actual)
 
+    def test_tweet_link(self):
+        article = test_utilities.create_article(tweet_id=42)
+        response = test_utilities.request_article(self.client, article)
+        expected = article.get_tweet_link()
+        actual = response.content
+        self.assertIn(expected, actual)
+
 
 class CommentTest(TestCase):
     def test_no_comments(self):
