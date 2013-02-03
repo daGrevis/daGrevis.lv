@@ -240,6 +240,14 @@
         .article_month + .article_month {
             margin-top: 4em;
         }
+        .more_articles {
+            font-size: 1.125em;
+            margin-top: 4em;
+            a {
+                color: $grey;
+                font-weight: 400;
+            }
+        }
         article {
             header {
                 ul {
