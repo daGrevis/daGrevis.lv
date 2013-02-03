@@ -10,4 +10,5 @@ urlpatterns = patterns(
     url(r"^", include("core.urls")),
     url(r"^", include("blog.urls")),
     url(r"^", include("user.urls")),
+    url(r"^", include("legacy.urls")),
 )
