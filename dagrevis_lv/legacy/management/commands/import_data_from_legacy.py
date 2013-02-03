@@ -39,5 +39,7 @@ class Command(BaseCommand):
             article.title = legacy_article.title
             article.content = legacy_article.content
             article.slug = defaultfilters.slugify(legacy_article.title)
+            if legacy_article.tweet_id:
+                article.tweet_id = int(legacy_article.tweet_id)
             article.save()
         self.stdout.write("Import was successful! Total of {} articles were imported.\n".format(legacy_articles.count()))

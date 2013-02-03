@@ -15,6 +15,7 @@ class Article(models.Model):
     title = models.CharField(max_length=255)
     content = models.TextField()
     slug = models.CharField(max_length=255, blank=True)
+    tweet_id = models.IntegerField(null=True, blank=True)
 
     def __unicode__(self):
         return self.title
@@ -30,6 +31,9 @@ class Article(models.Model):
 
     def get_content_as_html(self):
         return markdown(self.content, safe_mode="escape")
+
+    def get_tweet_link(self):
+        return "https://twitter.com/daGrevis_lv/status/{}".format(self.tweet_id)
 
     @staticmethod
     def sort_articles_by_month(articles):
