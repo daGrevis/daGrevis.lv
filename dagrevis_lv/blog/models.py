@@ -32,6 +32,10 @@ class Article(models.Model):
     def get_content_as_html(self):
         return markdown(self.content, safe_mode="escape")
 
+    def get_tweet_link(self):
+        if self.tweet_id:
+            return "https://twitter.com/daGrevis_lv/status/{}".format(self.tweet_id)
+
     @staticmethod
     def sort_articles_by_month(articles):
         sorted_articles = {}
