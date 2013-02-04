@@ -26,7 +26,11 @@
         {% else %}
 
             <p>
-                {% blocktrans %}Please login with <a href="#">Twitter</a> or <a href="#">GitHub</a>, if you want to comment.{% endblocktrans %}
+                {% url socialauth_begin "twitter" as url_for_twitter_login %}
+                {% url socialauth_begin "github" as url_for_github_login %}
+                {% blocktrans with article.get_absolute_url as article_link %}
+                    Please login with <a href="{{ url_for_twitter_login }}?next={{ article_link }}#add_comment">Twitter</a> or <a href="{{ url_for_github_login }}?next={{ article_link }}#add_comment">GitHub</a>, if you want to comment.
+                {% endblocktrans %}
                 <br />
                 {% url user_login as url_for_user_login %}
                 {% url user_registration as url_for_user_registration %}

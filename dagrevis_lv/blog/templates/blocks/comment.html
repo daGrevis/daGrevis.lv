@@ -7,8 +7,8 @@
     </section>
     <footer>
         <p class="about">
-            {% trans "Published:" %} <time datetime="{{ article.created|date:"c" }}">{{ article.created|date:"F j, Y" }}</time><br />
-            {% trans "Author:" %} <a href="#">{{ article.author.username }}</a>
+            {% trans "Published:" %} <time datetime="{{ article.created|date:"c" }}">{{ comment.created|date:"F j, Y" }}</time><br />
+            {% trans "Author:" %} <a href="#">{{ comment.author.username }}</a>
         </p>
         <nav class="share">
             <ul>
