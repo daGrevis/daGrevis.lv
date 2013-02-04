@@ -13,7 +13,7 @@
         <div class="about">
             <p>
                 {% trans "Published:" %} <time datetime="{{ article.created|date:"c" }}">{{ article.created|date:"F j, Y" }}</time><br />
-                {% trans "Author:" %} <a href="#">{{ article.author.username }}</a>
+                {% trans "Author:" %} <strong>{{ article.author.username }}</strong>
             </p>
         </div>
         <div class="share">
