@@ -251,4 +251,6 @@ TWITTER_CONSUMER_SECRET = ""
 GITHUB_APP_ID = ""
 GITHUB_API_SECRET = ""
 
-SOCIAL_AUTH_DEFAULT_USERNAME = lambda: random.choice(["Darth Vader", "Obi-Wan Kenobi", "R2-D2", "C-3PO", "Yoda"])
+SOCIAL_AUTH_EXTRA_DATA = False
+
+LOGIN_REDIRECT_URL = "/"

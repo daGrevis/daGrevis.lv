@@ -5,3 +5,4 @@ lib/
 *.db
 .sass-cache/
 main.css
+prod_settings.py
