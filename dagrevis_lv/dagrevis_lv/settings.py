@@ -1,8 +1,5 @@
 from os import path
 
-from django.core.urlresolvers import reverse
-from django.utils.translation import ugettext
-
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -127,9 +124,8 @@ INSTALLED_APPS = (
     "django.contrib.sites",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.sitemaps",
     "django.contrib.admin",
-    # Uncomment the next line to enable admin documentation:
-    # "django.contrib.admindocs",
     "core",
     "blog",
     "user",
@@ -165,8 +161,6 @@ LOGGING = {
     }
 }
 
-LOGIN_REDIRECT_URL = reverse("blog_articles")
-
 TEMPLATE_CONTEXT_PROCESSORS = (
     "django.contrib.auth.context_processors.auth",
     "django.core.context_processors.debug",
@@ -193,19 +187,42 @@ GA_ID = "UA-7141181-6"
 ARTICLE_COUNT_PER_PAGE = 20
 
 ARTICLES_FEED = {
-    "RSS_TITLE": ugettext("Articles feed (RSS)"),
-    "ATOM_TITLE": ugettext("Articles feed (Atom)"),
-    "DESCRIPTION": ugettext("Latest articles"),
-    "RSS_LINK": reverse("blog_articles_rss_feed"),
-    "ATOM_LINK": reverse("blog_articles_atom_feed"),
+    "RSS_TITLE": "Articles feed (RSS)",
+    "ATOM_TITLE": "Articles feed (Atom)",
+    "DESCRIPTION": "Latest articles",
+    "RSS_LINK": "blog_articles_rss_feed",
+    "ATOM_LINK": "blog_articles_atom_feed",
     "ITEM_LIMIT": 5,
 }
 
 COMMENTS_FEED = {
-    "RSS_TITLE": ugettext("Comments feed (RSS)"),
-    "ATOM_TITLE": ugettext("Comments feed (Atom)"),
-    "DESCRIPTION": ugettext("Latest comments"),
-    "RSS_LINK": reverse("blog_comments_rss_feed"),
-    "ATOM_LINK": reverse("blog_comments_atom_feed"),
+    "RSS_TITLE": "Comments feed (RSS)",
+    "ATOM_TITLE": "Comments feed (Atom)",
+    "DESCRIPTION": "Latest comments",
+    "RSS_LINK": "blog_comments_rss_feed",
+    "ATOM_LINK": "blog_comments_atom_feed",
     "ITEM_LIMIT": 20,
 }
+
+ARTICLES_SITEMAP = {
+    "ITEM_LIMIT": ARTICLE_COUNT_PER_PAGE,
+    "CHANGEFREQ": "always",
+    "PRIORITY": 1.,
+}
+
+PAGES_SITEMAP = {
+    "CHANGEFREQ": "never",
+    "PRIORITY": .5,
+}
+
+PAGES = [
+    "blog_articles",
+    "core_about",
+    "core_contacts",
+    "blog_tags",
+    "blog_search",
+    "blog_articles_rss_feed",
+    "blog_articles_atom_feed",
+    "blog_comments_rss_feed",
+    "blog_comments_atom_feed",
+]
