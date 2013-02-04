@@ -15,6 +15,16 @@ urlpatterns = patterns(
         "contacts",
         name="core_contacts",
     ),
+    url(
+        r"^robots\.txt$",
+        "robots_txt",
+        name="core_robots_txt",
+    ),
+    url(
+        r"^humans\.txt$",
+        "humans_txt",
+        name="core_humans_txt",
+    ),
 )
 
 urlpatterns += patterns(

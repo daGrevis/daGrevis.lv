@@ -226,3 +226,13 @@ PAGES = [
     "blog_comments_rss_feed",
     "blog_comments_atom_feed",
 ]
+
+CONTENTS_OF_ROBOTS_TXT = (
+    "User-agent: *\n"
+    "Disallow: /admin/\n"
+    "Sitemap: /sitemap.xml"
+)
+
+CONTENTS_OF_HUMANS_TXT = (
+    "Coded and designed by Raitis (daGrevis) Stengrevics."
+)
