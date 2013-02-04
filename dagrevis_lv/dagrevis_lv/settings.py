@@ -1,3 +1,4 @@
+import random
 from os import path
 
 
@@ -126,6 +127,7 @@ INSTALLED_APPS = (
     "django.contrib.staticfiles",
     "django.contrib.sitemaps",
     "django.contrib.admin",
+    "social_auth",
     "core",
     "blog",
     "user",
@@ -236,3 +238,17 @@ CONTENTS_OF_ROBOTS_TXT = (
 CONTENTS_OF_HUMANS_TXT = (
     "Coded and designed by Raitis (daGrevis) Stengrevics."
 )
+
+AUTHENTICATION_BACKENDS = (
+    "social_auth.backends.twitter.TwitterBackend",
+    "social_auth.backends.contrib.github.GithubBackend",
+    "django.contrib.auth.backends.ModelBackend",
+)
+
+TWITTER_CONSUMER_KEY = ""
+TWITTER_CONSUMER_SECRET = ""
+
+GITHUB_APP_ID = ""
+GITHUB_API_SECRET = ""
+
+SOCIAL_AUTH_DEFAULT_USERNAME = lambda: random.choice(["Darth Vader", "Obi-Wan Kenobi", "R2-D2", "C-3PO", "Yoda"])
