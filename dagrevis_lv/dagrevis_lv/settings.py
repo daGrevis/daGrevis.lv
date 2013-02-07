@@ -128,6 +128,7 @@ INSTALLED_APPS = (
     "django.contrib.sitemaps",
     "django.contrib.admin",
     "social_auth",
+    "gunicorn",
     "core",
     "blog",
     "user",
