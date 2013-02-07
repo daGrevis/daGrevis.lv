@@ -1,4 +1,5 @@
 {% load i18n %}
+{% load url from future %}
 
 
 <!DOCTYPE html>
@@ -28,12 +29,12 @@
         <link rel="apple-touch-icon" href="{{ STATIC_URL }}favicons/favicon-57.png" />
         <link rel="apple-touch-icon" sizes="72x72" href="{{ STATIC_URL }}favicons/favicon-72.png" />
         <link rel="apple-touch-icon" sizes="114x114" href="{{ STATIC_URL }}favicons/favicon-114.png" />
-        <link rel="alternate" type="application/rss+xml" title="{{ settings.ARTICLES_FEED.RSS_TITLE }}" href="{{ settings.ARTICLES_FEED.RSS_LINK }}" />
-        <link rel="alternate" type="application/atom+xml" title="{{ settings.ARTICLES_FEED.ATOM_TITLE }}" href="{{ settings.ARTICLES_FEED.ATOM_LINK }}" />
-        <link rel="alternate" type="application/rss+xml" title="{{ settings.COMMENTS_FEED.RSS_TITLE }}" href="{{ settings.COMMENTS_FEED.RSS_LINK }}" />
-        <link rel="alternate" type="application/atom+xml" title="{{ settings.COMMENTS_FEED.ATOM_TITLE }}" href="{{ settings.COMMENTS_FEED.ATOM_LINK }}" />
+        <link rel="alternate" type="application/rss+xml" title="{% blocktrans with title=settings.ARTICLES_FEED.RSS_TITLE %}{{ title }}{% endblocktrans %}" href="{% url settings.ARTICLES_FEED.RSS_LINK %}" />
+        <link rel="alternate" type="application/atom+xml" title="{% blocktrans with title=settings.ARTICLES_FEED.ATOM_TITLE %}{{ title }}{% endblocktrans %}" href="{% url settings.ARTICLES_FEED.ATOM_LINK %}" />
+        <link rel="alternate" type="application/rss+xml" title="{% blocktrans with title=settings.COMMENTS_FEED.RSS_TITLE %}{{ title }}{% endblocktrans %}" href="{% url settings.COMMENTS_FEED.RSS_LINK %}" />
+        <link rel="alternate" type="application/atom+xml" title="{% blocktrans with title=settings.COMMENTS_FEED.ATOM_TITLE %}{{ title }}{% endblocktrans %}" href="{% url settings.COMMENTS_FEED.ATOM_LINK %}" />
 
-        <link type="text/plain" rel="author" href="{% url core_humans_txt %}" />
+        <link type="text/plain" rel="author" href="{% url "core_humans_txt" %}" />
 
         <!--
 
@@ -49,13 +50,13 @@
         <div class="container">
             <div class="ten columns">
                 <header role="banner">
-                    <h1><a href="{% url blog_articles %}">{{ settings.SITE_TITLE }}</a></h1>
+                    <h1><a href="{% url "blog_articles" %}">{{ settings.SITE_TITLE }}</a></h1>
                     <nav role="navigation">
                         <ul>
-                            <li><a href="{% url core_about %}">{% trans "About" %}</a></li>
-                            <li><a href="{% url core_contacts %}">{% trans "Contacts" %}</a></li>
-                            <li><a href="{% url blog_tags %}">{% trans "Tags" %}</a></li>
-                            <li><a href="{% url blog_search %}">{% trans "Search" %}</a></li>
+                            <li><a href="{% url "core_about" %}">{% trans "About" %}</a></li>
+                            <li><a href="{% url "core_contacts" %}">{% trans "Contacts" %}</a></li>
+                            <li><a href="{% url "blog_tags" %}">{% trans "Tags" %}</a></li>
+                            <li><a href="{% url "blog_search" %}">{% trans "Search" %}</a></li>
                         </ul>
                     </nav>
                 </header>
@@ -78,7 +79,7 @@
                         <li><a href="https://twitter.com/daGrevis" class="icon-twitter" title="{% trans "Twitter" %}"></a></li>
                         <li><a href="https://github.com/daGrevis" class="icon-github-alt" title="{% trans "GitHub" %}"></a></li>
                         <li><a href="https://linkedin.com/in/daGrevis" class="icon-linkedin" title="{% trans "LinkedIn" %}"></a></li>
-                        <li><a href="{% url core_contacts %}" class="icon-envelope" title="{% trans "Contacts" %}"></a></li>
+                        <li><a href="{% url "core_contacts" %}" class="icon-envelope" title="{% trans "Contacts" %}"></a></li>
                     </ul>
                 </footer>
             </div>
