@@ -6,3 +6,6 @@ lib/
 .sass-cache/
 main.css
 prod_settings.py
+logs.txt
+start
+static/
