@@ -2,19 +2,20 @@ from django.contrib.syndication.views import Feed
 from django.conf import settings
 from django.utils.translation import ugettext
 from django.utils.feedgenerator import Atom1Feed
+from django.core.urlresolvers import reverse
 
 from blog.models import Article, Comment
 
 
 class ArticlesRssFeed(Feed):
     def title(self):
-        return settings.ARTICLES_FEED["RSS_TITLE"]
+        return ugettext(settings.ARTICLES_FEED["RSS_TITLE"])
 
     def description(self):
-        return settings.ARTICLES_FEED["DESCRIPTION"]
+        return ugettext(settings.ARTICLES_FEED["DESCRIPTION"])
 
     def link(self):
-        return settings.ARTICLES_FEED["RSS_LINK"]
+        return reverse(settings.ARTICLES_FEED["RSS_LINK"])
 
     def items(self):
         return Article.objects.order_by("-pk")[:settings.ARTICLES_FEED["ITEM_LIMIT"]]
@@ -34,21 +35,21 @@ class ArticlesAtomFeed(ArticlesRssFeed):
     subtitle = ArticlesRssFeed.description
 
     def title(self):
-        return settings.ARTICLES_FEED["ATOM_TITLE"]
+        return ugettext(settings.ARTICLES_FEED["ATOM_TITLE"])
 
     def link(self):
-        return settings.ARTICLES_FEED["ATOM_LINK"]
+        return reverse(settings.ARTICLES_FEED["ATOM_LINK"])
 
 
 class CommentsRssFeed(Feed):
     def title(self):
-        return settings.COMMENTS_FEED["RSS_TITLE"]
+        return ugettext(settings.COMMENTS_FEED["RSS_TITLE"])
 
     def description(self):
-        return settings.COMMENTS_FEED["DESCRIPTION"]
+        return ugettext(settings.COMMENTS_FEED["DESCRIPTION"])
 
     def link(self):
-        return settings.COMMENTS_FEED["RSS_LINK"]
+        return reverse(settings.COMMENTS_FEED["RSS_LINK"])
 
     def items(self):
         return Comment.objects.order_by("-pk")[:settings.COMMENTS_FEED["ITEM_LIMIT"]]
@@ -69,7 +70,7 @@ class CommentsAtomFeed(CommentsRssFeed):
     subtitle = CommentsRssFeed.description
 
     def title(self):
-        return settings.COMMENTS_FEED["ATOM_TITLE"]
+        return ugettext(settings.COMMENTS_FEED["ATOM_TITLE"])
 
     def link(self):
-        return settings.COMMENTS_FEED["ATOM_LINK"]
+        return reverse(settings.COMMENTS_FEED["ATOM_LINK"])
