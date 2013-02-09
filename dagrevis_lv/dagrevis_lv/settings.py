@@ -181,7 +181,7 @@ SITE_TITLE = "daGrevis.lv"
 META_DESCRIPTION = ""
 META_AUTHOR = ""
 AUTHOR_NAME = "Raitis (daGrevis) Stengrevics"
-AUTHOR_URL = "http://dagrevis.lv/about-me/"
+AUTHOR_URL = "/about/"
 
 # Google analytics.
 GA_ENABLED = False
