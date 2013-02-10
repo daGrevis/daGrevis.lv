@@ -199,7 +199,13 @@ class TagTest(TestCase):
         test_utilities.create_tag(content=tag2.content)
         response = self.client.get(reverse("blog_tags"))
         tags = response.context[-1]["tags"]
-        self.assertEqual(tags, {tag1.content: 1, tag2.content: 2})
+        tag1 = {"content": tag1.content, "priority": 1}
+        tag2 = {"content": tag2.content, "priority": 2}
+        # The order is randomed.
+        try:
+            self.assertEqual(tags, [tag1, tag2])
+        except AssertionError:
+            self.assertEqual(tags, [tag2, tag1])
 
 
 class SearchTest(TestCase):
