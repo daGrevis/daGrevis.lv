@@ -12,11 +12,9 @@
         {% if tags %}
 
             <ul class="tags">
-                {% with max_priority=tags|max_priority %}
-                    {% for tag_content, priority in tags.items %}
-                        <li><a href="{% url blog_search %}?tags={{ tag_content }}" class="{{ max_priority|css_class:priority }}">{{ tag_content }}</a></li>
-                    {% endfor %}
-                {% endwith %}
+                {% for tag in tags %}
+                    <li><a href="{% url blog_search %}?tags={{ tag.content|urlencode }}" style="{{ tags|get_style:tag.priority }}">{{ tag.content }}</a></li>
+                {% endfor %}
             </ul>
 
         {% else %}

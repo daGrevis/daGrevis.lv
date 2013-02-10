@@ -340,26 +340,8 @@
 
         .tags {
             @include horiz_list;
-            .tag_size1 {
-                font-size: 1em;
-            }
-            .tag_size2 {
-                font-size: 1.2em;
-            }
-            .tag_size3 {
-                font-size: 1.4em;
-            }
-            .tag_size4 {
-                font-size: 1.6em;
-            }
-            .tag_size5 {
-                font-size: 1.8em;
-            }
-            .tag_size6 {
-                font-size: 2em;
-            }
             li {
-                line-height: 2em;
+                line-height: 3em;
                 padding-right: 1em;
             }
         }
