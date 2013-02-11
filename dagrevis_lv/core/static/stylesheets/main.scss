@@ -108,7 +108,7 @@
 /* Tag selectors */
 
     ::selection {
-        background: lighten($blue, 45%);
+        background: lighten($blue, 40%);
     }
 
     body {
@@ -309,7 +309,7 @@
             }
         }
         .superuser_comment {
-            background: lighten($green, 55%);
+            background: lighten($blue, 50%);
         }
         .depth1 {
         }
