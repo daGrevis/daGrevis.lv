@@ -31,7 +31,7 @@ class Article(models.Model):
         return reverse("blog_article", kwargs={"article_pk": self.pk, "slug": self.slug})
 
     def get_content_as_html(self):
-        return markdown(self.content, safe_mode="escape", extensions=["syntax"])
+        return markdown(self.content, safe_mode="escape", extensions=["codehilite(guess_lang=False)"])
 
     def get_tweet_link(self):
         return "https://twitter.com/daGrevis_lv/status/{}".format(self.tweet_id)
@@ -86,7 +86,7 @@ class Comment(models.Model):
         return link
 
     def get_content_as_html(self):
-        return markdown(self.content, safe_mode="escape")
+        return markdown(self.content, safe_mode="escape", extensions=["codehilite(guess_lang=False)"])
 
     @staticmethod
     def calculate_depth_and_sort(comments, _sorted_comments=None, _deeper_comment=None, _depth=1):
