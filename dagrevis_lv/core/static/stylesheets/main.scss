@@ -337,17 +337,32 @@
             background: lighten($blue, 50%);
         }
         .depth1 {
+            section img {
+                max-width: 530px;
+            }
         }
         .depth2 {
+            section img {
+                max-width: 498px;
+            }
             margin-left: 2em;
         }
         .depth3 {
+            section img {
+                max-width: 466px;
+            }
             margin-left: 4em;
         }
         .depth4 {
+            section img {
+                max-width: 434px;
+            }
             margin-left: 6em;
         }
         .depth5 {
+            section img {
+                max-width: 402px;
+            }
             margin-left: 8em;
         }
 
