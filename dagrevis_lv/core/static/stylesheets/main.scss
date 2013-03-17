@@ -105,6 +105,10 @@
         display: none;
     }
 
+    .clearer {
+        clear: both;
+    }
+
 /* Tag selectors */
 
     ::selection {
@@ -210,6 +214,9 @@
         margin-bottom: 4em;
         h1, nav {
             display: inline-block;
+        }
+        h1 {
+            float: left;
         }
         nav {
             float: right;
