@@ -9,3 +9,4 @@ prod_settings.py
 logs.txt
 start
 /static/
+*~
