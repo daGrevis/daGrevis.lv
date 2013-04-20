@@ -37,7 +37,7 @@
             <div class="more_articles">
 
                 {% if articles.has_next %}
-                    <a href="{% url blog_articles %}?page={{ articles.next_page_number }}">{% trans "More articles" %}</a>
+                    <a href="{% url "blog_articles" %}?page={{ articles.next_page_number }}">{% trans "More articles" %}</a>
                 {% endif %}
 
             </div>

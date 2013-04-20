@@ -26,14 +26,14 @@
         {% else %}
 
             <p>
-                {% url socialauth_begin "twitter" as url_for_twitter_login %}
-                {% url socialauth_begin "github" as url_for_github_login %}
+                {% url "socialauth_begin" "twitter" as url_for_twitter_login %}
+                {% url "socialauth_begin" "github" as url_for_github_login %}
                 {% blocktrans with article.get_absolute_url as article_link %}
                     Please login with <a href="{{ url_for_twitter_login }}?next={{ article_link }}#add_comment">Twitter</a> or <a href="{{ url_for_github_login }}?next={{ article_link }}#add_comment">GitHub</a>, if you want to comment.
                 {% endblocktrans %}
                 <br />
-                {% url user_login as url_for_user_login %}
-                {% url user_registration as url_for_user_registration %}
+                {% url "user_login" as url_for_user_login %}
+                {% url "user_registration" as url_for_user_registration %}
                 {% blocktrans with article.get_absolute_url as article_link %}
                     It's possible to use simple <a href="{{ url_for_user_login }}?redirect_to={{ article_link }}#add_comment">login</a> and <a href="{{ url_for_user_registration }}">registration</a> too!
                 {% endblocktrans %}
