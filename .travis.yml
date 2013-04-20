@@ -3,14 +3,10 @@ python:
   - "2.7"
   - "3.3"
   - "pypy"
-env:
-  - DJANGO=1.4.5
-  - DJANGO=1.5.1
 install:
-  - pip install -q Django==$DJANGO --use-mirrors
   - pip install -q -e . --use-mirrors
 before_script:
   - "pep8 src"
   - pyflakes -x W src
 script:
-  - python setup.py test
+  - python manage.py test
