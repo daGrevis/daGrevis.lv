@@ -1,4 +1,4 @@
-# daGrevis.lv — My blog on Django 1.4 (Python)
+# daGrevis.lv — My blog on Django 1.5 (Python)
 
 I could use [Tumblr](tumblr.com) or [WordPress](http://wordpress.org/), but that is too easy. :)
 
