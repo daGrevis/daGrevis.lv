@@ -23,3 +23,5 @@ Then open `http://127.0.0.1:8000/` link.
 ### Run tests
 
     bin/python dagrevis_lv/manage.py test
+
+[![Build Status](https://travis-ci.org/daGrevis/daGrevis.lv.png?branch=master)](https://travis-ci.org/daGrevis/daGrevis.lv)
