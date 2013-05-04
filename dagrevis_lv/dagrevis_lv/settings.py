@@ -126,7 +126,8 @@ INSTALLED_APPS = (
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.sitemaps",
-    "suit",
+    # Disabled because package failed one of the Django tests.
+    # "suit",
     "django.contrib.admin",
     "social_auth",
     "gunicorn",
