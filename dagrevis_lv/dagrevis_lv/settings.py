@@ -131,6 +131,7 @@ INSTALLED_APPS = (
     "django.contrib.admin",
     "social_auth",
     "gunicorn",
+    "south",
     "core",
     "blog",
     "user",
