@@ -179,7 +179,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "core.context_processors.settings",
 )
 
-MAXIMUM_DEPTH_FOR_COMMENT = 5
+MAX_DEPTH_FOR_COMMENT = 5
 
 SITE_TITLE = "daGrevis.lv"
 META_DESCRIPTION = ""

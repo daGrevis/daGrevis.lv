@@ -56,7 +56,7 @@ class Article(models.Model):
     @staticmethod
     def search_articles(phrase=None, tags=[]):
         """Searches for an articles by it's title and content, and / or tags. Results are "and'ed" together."""
-        query_set = Article.objects.all()
+        query_set = Article.objects.filter(is_draft=False)
         phrase_query = (models.Q(title__icontains=phrase)
                         | models.Q(content__icontains=phrase)
                         | models.Q(title__regex=phrase)
@@ -69,6 +69,9 @@ class Article(models.Model):
                          .annotate(num_tags=models.Count("tag"))
                          .filter(num_tags=len(tags)))
         return query_set[:settings.ARTICLE_COUNT_PER_PAGE]
+
+    def get_comments(self):
+        return Comment.calculate_depth_and_sort(self.comment_set.all())
 
 
 class Comment(models.Model):
@@ -136,6 +139,7 @@ class Tag(models.Model):
 
     @staticmethod
     def get_tags_by_priority():
-        tags = list(Tag.objects.values("content").annotate(priority=models.Count("content")).order_by("-priority")[:settings.TAG_COUNT_IN_TAG_CLOUD])
+        tags = (list(Tag.objects.filter(article__is_draft=False).values("content").annotate(priority=models.Count("content"))
+                .order_by("-priority")[:settings.TAG_COUNT_IN_TAG_CLOUD]))
         random.shuffle(tags)
         return tags

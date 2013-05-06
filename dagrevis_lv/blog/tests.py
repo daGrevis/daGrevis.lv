@@ -3,10 +3,11 @@ from datetime import datetime
 from django.test import TestCase
 from django.core.urlresolvers import reverse
 from django.template.defaultfilters import slugify
+from django.test.utils import override_settings
 from django.conf import settings
 
 from core import test_utilities
-from blog.models import Article
+from blog.models import Article, Comment
 
 
 class ArticleTest(TestCase):
@@ -98,12 +99,10 @@ class CommentTest(TestCase):
 
     def test_show_or_hide_form(self):
         article = test_utilities.create_article()
-
         # As anonymous.
         response = test_utilities.request_article(self.client, article)
         expected = "Please login"
         self.assertIn(expected, response.content)
-
         # As member.
         test_utilities.create_and_login_user(self.client)
         response = test_utilities.request_article(self.client, article)
@@ -111,16 +110,26 @@ class CommentTest(TestCase):
 
     def test_add_comment(self):
         article = test_utilities.create_article()
-
         # As anonymous.
-        response = self.client.post(article.get_absolute_url(), {"content": test_utilities.get_data()})
+        response = self.client.post(
+            article.get_absolute_url(),
+            {
+                "article": article.pk,
+                "content": test_utilities.get_data(),
+            }
+        )
         self.assertEqual(response.status_code, 403)
         self.assertFalse(Article.objects.get(pk=article.pk).comment_set.exists())
-
         # As member.
         test_utilities.create_and_login_user(self.client)
-        self.client.post(article.get_absolute_url(), {"content": test_utilities.get_data()})
-        self.assertEqual(Article.objects.get(pk=article.pk).comment_set.count(), 1)
+        response = self.client.post(
+            article.get_absolute_url(),
+            {
+                "article": article.pk,
+                "content": test_utilities.get_data(),
+            }
+        )
+        self.assertTrue(Article.objects.get(pk=article.pk).comment_set.exists())
 
     def test_nested_comments(self):
         """Testing order and depth of comments."""
@@ -131,7 +140,7 @@ class CommentTest(TestCase):
         comment4 = test_utilities.create_comment(article=article, parent=comment3)
         response = test_utilities.request_article(self.client, article)
         expected_comments = [comment1, comment3, comment4, comment2]
-        actual_comments = list(response.context[-1]["comments"])
+        actual_comments = list(response.context[-1]["article"].get_comments())
         self.assertEqual(expected_comments, actual_comments)  # Order.
         expected_depth = [1, 2, 3, 1]
         actual_depth = [comment.depth for comment in actual_comments]
@@ -144,20 +153,18 @@ class CommentTest(TestCase):
         self.assertEqual(1, comment1.get_depth())
         self.assertEqual(3, comment3.get_depth())
 
+    @override_settings(MAX_DEPTH_FOR_COMMENT=2)
     def test_max_depth(self):
         """Tests that comment nesting isn't deeper than defined."""
-        original_max = settings.MAXIMUM_DEPTH_FOR_COMMENT
-        settings.MAXIMUM_DEPTH_FOR_COMMENT = 2
         article = test_utilities.create_article()
         comment1 = test_utilities.create_comment(article=article)
         comment2 = test_utilities.create_comment(article=article, parent=comment1)
         test_utilities.create_and_login_user(self.client)
-        response = self.client.post(article.get_absolute_url(), {
+        self.client.post(article.get_absolute_url(), {
             "content": test_utilities.get_data(),
-            "comment_pk_to_reply": comment2.pk,
+            "comment_pk": comment2.pk,
         })
-        self.assertEqual(403, response.status_code)
-        settings.MAXIMUM_DEPTH_FOR_COMMENT = original_max
+        self.assertEqual(Comment.objects.count(), settings.MAX_DEPTH_FOR_COMMENT)
 
     def test_comments_feed(self):
         comment = test_utilities.create_comment()
@@ -177,15 +184,14 @@ class CommentTest(TestCase):
         response = self.client.post(article.get_absolute_url(), {
             "content": test_utilities.get_data(),
         })
-        print response.status_code
-        self.assertEqual(response.status_code, 403)
+        self.assertEqual(response.status_code, 404)
 
 
 class TagTest(TestCase):
     def test_no_tags(self):
         article = test_utilities.create_article()
         response = test_utilities.request_article(self.client, article)
-        tags = response.context[-1]["tags"]
+        tags = response.context[-1]["article"].tag_set.all()
         self.assertEqual(0, len(tags))
 
     def test_has_tags(self):
@@ -193,7 +199,7 @@ class TagTest(TestCase):
         tag1 = test_utilities.create_tag(article)
         tag2 = test_utilities.create_tag(article)
         response = test_utilities.request_article(self.client, article)
-        tags = response.context[-1]["tags"]
+        tags = response.context[-1]["article"].tag_set.all()
         self.assertEqual(tag1, tags[0])
         self.assertEqual(tag2, tags[1])
 

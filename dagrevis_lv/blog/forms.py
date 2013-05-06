@@ -1,4 +1,5 @@
 from django import forms
+from django.conf import settings
 
 from blog.models import Comment
 
@@ -6,7 +7,18 @@ from blog.models import Comment
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
-        fields = ("content", )
+        fields = (
+            "parent",
+            "article",
+            "content",
+        )
+
+    def clean(self):
+        cleaned_data = super(CommentForm, self).clean()
+        parent = cleaned_data["parent"]
+        if parent and parent.get_depth() >= settings.MAX_DEPTH_FOR_COMMENT:
+            raise forms.ValidationError("Comments can't go deeper than {} levels.".format(settings.MAX_DEPTH_FOR_COMMENT))
+        return cleaned_data
 
 
 class SearchForm(forms.Form):
