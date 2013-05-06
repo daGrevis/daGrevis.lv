@@ -3,6 +3,6 @@ python:
     - "2.7"
     - "pypy"
 install:
-    - pip install -r requirements.txt --use-mirrors
+    - pip install -r requirements.txt --use-mirrors --default-timeout=3600
 script:
     - python dagrevis_lv/manage.py test --noinput --failfast
