@@ -35,7 +35,7 @@ def logged_in(client):
     return "_auth_user_id" in client.session
 
 
-def create_article(author=None, created=None, title=None, content=None, slug=None, tweet_id=None):
+def create_article(author=None, created=None, title=None, content=None, slug=None, tweet_id=None, is_draft=None):
     article = Article()
     article.author = author if author is not None else create_user()
     if created:
@@ -45,6 +45,7 @@ def create_article(author=None, created=None, title=None, content=None, slug=Non
     article.slug = slug if slug is not None else slugify(get_data())
     if tweet_id:
         article.tweet_id = tweet_id
+    article.is_draft = is_draft if is_draft is not None else False
     article.save()
     return article
 

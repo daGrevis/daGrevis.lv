@@ -80,6 +80,14 @@ class ArticleTest(TestCase):
         actual = response.content
         self.assertIn(expected, actual)
 
+    def test_draft_open(self):
+        article = test_utilities.create_article()
+        response = test_utilities.request_article(self.client, article)
+        self.assertEqual(response.status_code, 200)
+        article = test_utilities.create_article(is_draft=True)
+        response = test_utilities.request_article(self.client, article)
+        self.assertEqual(response.status_code, 404)
+
 
 class CommentTest(TestCase):
     def test_no_comments(self):
@@ -163,6 +171,15 @@ class CommentTest(TestCase):
         actual = comment.get_content_as_html()
         self.assertEqual(expected, actual)
 
+    def test_comment_draft(self):
+        article = test_utilities.create_article(is_draft=True)
+        test_utilities.create_and_login_user(self.client)
+        response = self.client.post(article.get_absolute_url(), {
+            "content": test_utilities.get_data(),
+        })
+        print response.status_code
+        self.assertEqual(response.status_code, 403)
+
 
 class TagTest(TestCase):
     def test_no_tags(self):
@@ -206,6 +223,13 @@ class TagTest(TestCase):
             self.assertEqual(tags, [tag1, tag2])
         except AssertionError:
             self.assertEqual(tags, [tag2, tag1])
+
+    def test_drafts_excluded(self):
+        article = test_utilities.create_article(is_draft=True)
+        test_utilities.create_tag(article)
+        response = self.client.get(reverse("blog_tags"))
+        tags = response.context[-1]["tags"]
+        self.assertEqual(0, len(tags))
 
 
 class SearchTest(TestCase):
@@ -281,3 +305,9 @@ class SearchTest(TestCase):
         })
         found_articles = response.context[-1]["found_articles"]
         self.assertEqual(list(found_articles), [article2])
+
+    def test_drafts_excluded(self):
+        article = test_utilities.create_article(is_draft=True)
+        response = self.client.get(reverse("blog_search"), {"phrase": article.title})
+        found_articles = response.context[-1]["found_articles"]
+        self.assertEqual(list(found_articles), [])

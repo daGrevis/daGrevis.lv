@@ -17,6 +17,7 @@ class Article(models.Model):
     content = models.TextField(db_index=True)
     slug = models.CharField(max_length=255, blank=True)
     tweet_id = models.IntegerField(null=True, blank=True)
+    is_draft = models.BooleanField(default=False)
 
     def __unicode__(self):
         return self.title
