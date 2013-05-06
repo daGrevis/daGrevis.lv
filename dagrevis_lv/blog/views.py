@@ -4,10 +4,8 @@ from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.conf import settings
 from django.utils.translation import ugettext
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.views.decorators.http import require_POST
-from django.contrib.auth.decorators import login_required
 
-from blog.models import Article, Comment, Tag
+from blog.models import Article, Tag
 from blog.forms import CommentForm
 from blog.forms import SearchForm
 
