@@ -3,8 +3,10 @@ django-suit
 Markdown==2.2.1
 MySQL-python==1.2.4
 Pygments==1.6
+South==0.7.6
 django-social-auth==0.7.18
+django-suit
 gunicorn==0.17.2
+git+https://github.com/daGrevis/mdx_linkify@0.2
 mdx-smartypants==1.3
 mdx-video==0.1.7.4
-git+https://github.com/daGrevis/mdx_linkify@0.2
