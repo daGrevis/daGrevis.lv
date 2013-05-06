@@ -81,7 +81,13 @@ class ArticleTest(TestCase):
         actual = response.content
         self.assertIn(expected, actual)
 
-    def test_draft_open(self):
+    def test_drafts_excluded_from_list(self):
+        test_utils.create_article(is_draft=True)
+        response = self.client.get(reverse("blog_articles"))
+        articles = response.context[-1]["articles"]
+        self.assertEqual(len(articles), 0)
+
+    def test_drafts_article_not_found(self):
         article = test_utils.create_article()
         response = test_utils.request_article(self.client, article)
         self.assertEqual(response.status_code, 200)

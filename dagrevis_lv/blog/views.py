@@ -13,7 +13,7 @@ from blog.forms import SearchForm
 
 
 def articles(request):
-    articles = Article.objects.order_by("-pk")
+    articles = Article.objects.filter(is_draft=False).order_by("-pk")
     paginator = Paginator(articles, settings.ARTICLE_COUNT_PER_PAGE)
     page = request.GET.get("page")
     try:
