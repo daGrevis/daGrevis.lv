@@ -3,7 +3,7 @@ from django.core.urlresolvers import reverse
 from django.contrib import auth
 from django.contrib.auth.models import User
 
-from core import test_utilities
+from core import test_utils
 
 
 class RegistrationTest(TestCase):
@@ -15,7 +15,7 @@ class RegistrationTest(TestCase):
         self.client.post(
             reverse("user_registration"),
             {
-                "username": test_utilities.get_data(length=30),
+                "username": test_utils.get_data(length=30),
                 "password1": "P4ssw0rd*",
                 "password2": "P4ssw0rd",
             },
@@ -26,7 +26,7 @@ class RegistrationTest(TestCase):
         self.client.post(
             reverse("user_registration"),
             {
-                "username": test_utilities.get_data(length=30),
+                "username": test_utils.get_data(length=30),
                 "password1": "P4ssw0rd*",
                 "password2": "P4ssw0rd*",
             },
@@ -34,7 +34,7 @@ class RegistrationTest(TestCase):
         self.assertTrue(User.objects.all().exists())
 
     def test_username_remembered_when_fail(self):
-        username = test_utilities.get_data(length=30)
+        username = test_utils.get_data(length=30)
         response = self.client.post(
             reverse("user_registration"),
             {"username": username},
@@ -46,7 +46,7 @@ class RegistrationTest(TestCase):
         response = self.client.post(
             reverse("user_registration"),
             {
-                "username": test_utilities.get_data(length=30),
+                "username": test_utils.get_data(length=30),
                 "password1": "P4ssw0rd*",
                 "password2": "P4ssw0rd*",
                 "im_bot": "on",
@@ -58,25 +58,25 @@ class RegistrationTest(TestCase):
 
 class LoginTest(TestCase):
     def test_fail(self):
-        self.client.post(reverse("user_login"), {"username": test_utilities.get_data(), "password": test_utilities.get_data()})
-        logged_in = test_utilities.logged_in(self.client)
+        self.client.post(reverse("user_login"), {"username": test_utils.get_data(), "password": test_utils.get_data()})
+        logged_in = test_utils.logged_in(self.client)
         self.assertFalse(logged_in)
 
     def test_success(self):
-        username = test_utilities.get_data(length=16)
-        password = test_utilities.get_data()
-        test_utilities.create_user(username, password)
+        username = test_utils.get_data(length=16)
+        password = test_utils.get_data()
+        test_utils.create_user(username, password)
         self.client.post(reverse("user_login"), {"username": username, "password": password})
-        logged_in = test_utilities.logged_in(self.client)
+        logged_in = test_utils.logged_in(self.client)
         self.assertTrue(logged_in)
 
 
 class LogoutTest(TestCase):
     def test_success(self):
-        username = test_utilities.get_data()
-        password = test_utilities.get_data()
-        test_utilities.create_user(username, password)
+        username = test_utils.get_data()
+        password = test_utils.get_data()
+        test_utils.create_user(username, password)
         auth.authenticate(username=username, password=password)
         self.client.get(reverse("user_logout"))
-        logged_in = test_utilities.logged_in(self.client)
+        logged_in = test_utils.logged_in(self.client)
         self.assertFalse(logged_in)
