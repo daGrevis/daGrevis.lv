@@ -9,14 +9,15 @@
 
             <form action="#add_comment" method="post">
                 {% csrf_token %}
-                {% if comment_pk_to_reply %}<input name="comment_pk_to_reply" type="hidden" value="{{ comment_pk_to_reply }}" />{% endif %}
+                <input type="hidden" name="article" value="{{ article.pk }}" />
+                {% if comment_pk %}<input name="parent" type="hidden" value="{{ comment_pk }}" />{% endif %}
                 <p><textarea name="content" rows="5" placeholder="{% trans "Your comment..." %}"></textarea></p>
                 <p>
                     <button>{% trans "Add comment" %}</button>
-                    {% if comment_pk_to_reply  %}
+                    {% if comment_pk %}
                         <span class="reply_to">
                             {% blocktrans with article.get_absolute_url as article_link %}
-                                (reply to <a href="{{ article_link }}?comment_pk_to_reply={{ comment.pk }}">comment #{{ comment_pk_to_reply }}</a>)
+                                (reply to <a href="{{ article_link }}?comment_pk={{ comment.pk }}">comment #{{ comment_pk }}</a>)
                             {% endblocktrans %}
                         </span>
                     {% endif %}
