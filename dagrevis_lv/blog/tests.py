@@ -67,6 +67,11 @@ class ArticleTest(TestCase):
         response = self.client.get(reverse("blog_articles_rss_feed"))
         self.assertIn(article.title, response.content)
 
+    def test_articles_feed_drafts_excluded(self):
+        article = test_utils.create_article(is_draft=True)
+        response = self.client.get(reverse("blog_articles_rss_feed"))
+        self.assertNotIn(article.title, response.content)
+
     def test_xss_vulnerability(self):
         content = "<script>alert('foo')</script>"
         article = test_utils.create_article(content=content)
@@ -176,6 +181,12 @@ class CommentTest(TestCase):
         comment = test_utils.create_comment()
         response = self.client.get(reverse("blog_comments_rss_feed"))
         self.assertIn(comment.content, response.content)
+
+    def test_articles_feed_drafts_excluded(self):
+        article = test_utils.create_article(is_draft=True)
+        comment = test_utils.create_comment(article=article)
+        response = self.client.get(reverse("blog_comments_rss_feed"))
+        self.assertNotIn(comment.content, response.content)
 
     def test_xss_vulnerability(self):
         content = "<script>alert('foo')</script>"

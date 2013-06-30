@@ -18,7 +18,7 @@ class ArticlesRssFeed(Feed):
         return reverse(settings.ARTICLES_FEED["RSS_LINK"])
 
     def items(self):
-        return Article.objects.order_by("-pk")[:settings.ARTICLES_FEED["ITEM_LIMIT"]]
+        return Article.objects.filter(is_draft=False).order_by("-pk")[:settings.ARTICLES_FEED["ITEM_LIMIT"]]
 
     def item_title(self, article):
         return article.title
@@ -52,7 +52,7 @@ class CommentsRssFeed(Feed):
         return reverse(settings.COMMENTS_FEED["RSS_LINK"])
 
     def items(self):
-        return Comment.objects.order_by("-pk")[:settings.COMMENTS_FEED["ITEM_LIMIT"]]
+        return Comment.objects.filter(article__is_draft=False).order_by("-pk")[:settings.COMMENTS_FEED["ITEM_LIMIT"]]
 
     def item_title(self, comment):
         title = ugettext("Comment #{pk} by {username}").format(pk=comment.pk, username=comment.author.username)
