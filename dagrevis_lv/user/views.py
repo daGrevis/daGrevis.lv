@@ -1,3 +1,5 @@
+import logging
+
 from django.http import HttpResponseRedirect, HttpResponseForbidden
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
@@ -8,6 +10,9 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.utils.http import is_safe_url
 
 from user.forms import CustomUserCreationForm
+
+
+logger = logging.getLogger(__name__)
 
 
 def registration(request):

@@ -1,3 +1,5 @@
+import logging
+
 from django import http
 from django.template import RequestContext
 from django.shortcuts import render_to_response, get_object_or_404, redirect
@@ -8,6 +10,9 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from blog.models import Article, Tag
 from blog.forms import CommentForm
 from blog.forms import SearchForm
+
+
+logger = logging.getLogger(__name__)
 
 
 def articles(request):

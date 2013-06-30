@@ -1,8 +1,13 @@
+import logging
+
 from django.http import HttpResponse
 from django.template import RequestContext
 from django.shortcuts import render_to_response
 from django.utils.translation import ugettext
 from django.conf import settings
+
+
+logger = logging.getLogger(__name__)
 
 
 def about(request):
