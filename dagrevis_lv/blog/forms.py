@@ -17,7 +17,9 @@ class CommentForm(forms.ModelForm):
         cleaned_data = super(CommentForm, self).clean()
         parent = cleaned_data["parent"]
         if parent and parent.get_depth() >= settings.MAX_DEPTH_FOR_COMMENT:
-            raise forms.ValidationError("Comments can't go deeper than {} levels.".format(settings.MAX_DEPTH_FOR_COMMENT))
+            raise (forms.ValidationError(
+                   "Comments can't go deeper than {} levels."
+                   .format(settings.MAX_DEPTH_FOR_COMMENT)))
         return cleaned_data
 
 

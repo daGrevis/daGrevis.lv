@@ -7,7 +7,8 @@ from blog.models import Article
 
 class ArticlesSitemap(Sitemap):
     def items(self):
-        return Article.objects.order_by("-pk")[:settings.ARTICLES_SITEMAP["ITEM_LIMIT"]]
+        return (Article.objects
+                .order_by("-pk")[:settings.ARTICLES_SITEMAP["ITEM_LIMIT"]])
 
     def location(self, article):
         return article.get_absolute_url()

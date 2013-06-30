@@ -29,17 +29,19 @@ class Article(models.Model):
         super(Article, self).clean()
 
     def get_absolute_url(self):
-        return reverse("blog_article", kwargs={"article_pk": self.pk, "slug": self.slug})
+        return reverse("blog_article", kwargs={"article_pk": self.pk,
+                                               "slug": self.slug})
 
     def get_content_as_html(self):
-        return markdown(self.content, safe_mode="escape", extensions=["codehilite(guess_lang=False)",
-                                                                      "tables",
-                                                                      "smartypants",
-                                                                      "video",
-                                                                      "linkify"])
+        return markdown(self.content, safe_mode="escape",
+                        extensions=["codehilite(guess_lang=False)",
+                                    "tables",
+                                    "smartypants",
+                                    "video",
+                                    "linkify"])
 
     def get_tweet_link(self):
-        return "https://twitter.com/daGrevis_lv/status/{}".format(self.tweet_id)
+        return (settings.URL_TO_TWITTER_TWEET).format(self.tweet_id)
 
     @staticmethod
     def sort_articles_by_month(articles):
@@ -55,7 +57,10 @@ class Article(models.Model):
 
     @staticmethod
     def search_articles(phrase=None, tags=[]):
-        """Searches for an articles by it's title and content, and / or tags. Results are "and'ed" together."""
+        """
+        Searches for an articles by it's title and content, and / or tags.
+        Results are "and'ed" together.
+        """
         query_set = Article.objects.filter(is_draft=False)
         phrase_query = (models.Q(title__icontains=phrase)
                         | models.Q(content__icontains=phrase)
@@ -90,23 +95,28 @@ class Comment(models.Model):
         article = self.article
         before_hash = article.get_absolute_url()
         after_hash = "comment{}".format(self.pk)
-        link = "{before_hash}#{after_hash}".format(before_hash=before_hash, after_hash=after_hash)
+        link = "{before_hash}#{after_hash}".format(before_hash=before_hash,
+                                                   after_hash=after_hash)
         return link
 
     def get_content_as_html(self):
-        return markdown(self.content, safe_mode="escape", extensions=["codehilite(guess_lang=False)",
-                                                                      "tables",
-                                                                      "smartypants",
-                                                                      "video",
-                                                                      "linkify"])
+        return markdown(self.content, safe_mode="escape",
+                        extensions=["codehilite(guess_lang=False)",
+                                    "tables",
+                                    "smartypants",
+                                    "video",
+                                    "linkify"])
 
     @staticmethod
-    def calculate_depth_and_sort(comments, _sorted_comments=None, _deeper_comment=None, _depth=1):
+    def calculate_depth_and_sort(comments, _sorted_comments=None,
+                                 _deeper_comment=None, _depth=1):
         """
         @brief Calculates depth of comments and sorts them.
         @param comments: Comments (unsorted).
-        @param _sorted_comments: Sorted comments (for recursion, isn't used from outside).
-        @param _deeper_comment: Comment that is deeper than current comment (for recursion, isn't used from outside).
+        @param _sorted_comments: Sorted comments (for recursion, isn't used
+                                 from outside).
+        @param _deeper_comment: Comment that is deeper than current comment
+                                (for recursion, isn't used from outside).
         @param _depth: Depth (for recursion, isn't used from outside).
         @return Sorted comments w/ depth.
         """
@@ -116,11 +126,14 @@ class Comment(models.Model):
                 if _sorted_comments is None:
                     _sorted_comments = []
                 _sorted_comments.append(comment)
-                Comment.calculate_depth_and_sort(comments, _sorted_comments, comment, _depth + 1)
+                Comment.calculate_depth_and_sort(comments, _sorted_comments,
+                                                 comment, _depth + 1)
         return _sorted_comments
 
     def get_depth(self):
-        """Calculates depth. **Will perform one query for each level, be careful!"""
+        """
+        Calculates depth. Will perform one query for each level, be careful!
+        """
         depth = 1
         comment = self
         while comment.parent is not None:
@@ -139,7 +152,11 @@ class Tag(models.Model):
 
     @staticmethod
     def get_tags_by_priority():
-        tags = (list(Tag.objects.filter(article__is_draft=False).values("content").annotate(priority=models.Count("content"))
-                .order_by("-priority")[:settings.TAG_COUNT_IN_TAG_CLOUD]))
+        tags = (Tag.objects
+                .filter(article__is_draft=False)
+                .values("content")
+                .annotate(priority=models.Count("content"))
+                .order_by("-priority")[:settings.TAG_COUNT_IN_TAG_CLOUD])
+        tags = list(tags)
         random.shuffle(tags)
         return tags

@@ -1,5 +1,3 @@
-import math
-
 from django import template
 
 

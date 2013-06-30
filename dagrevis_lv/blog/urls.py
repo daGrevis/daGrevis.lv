@@ -1,5 +1,5 @@
 from django.conf.urls import patterns, url
-from blog.feeds import ArticlesRssFeed, ArticlesAtomFeed, CommentsRssFeed, CommentsAtomFeed
+from blog import feeds as blog_feeds
 
 
 urlpatterns = patterns(
@@ -31,22 +31,22 @@ urlpatterns = patterns(
     ),
     url(
         r"^blog/articles_feed\.rss$",
-        ArticlesRssFeed(),
+        blog_feeds.ArticlesRssFeed(),
         name="blog_articles_rss_feed",
     ),
     url(
         r"^blog/articles_feed\.atom$",
-        ArticlesAtomFeed(),
+        blog_feeds.ArticlesAtomFeed(),
         name="blog_articles_atom_feed",
     ),
     url(
         r"^blog/comments_feed\.rss$",
-        CommentsRssFeed(),
+        blog_feeds.CommentsRssFeed(),
         name="blog_comments_rss_feed",
     ),
     url(
         r"^blog/comments_feed\.atom$",
-        CommentsAtomFeed(),
+        blog_feeds.CommentsAtomFeed(),
         name="blog_comments_atom_feed",
     ),
 )

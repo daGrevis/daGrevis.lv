@@ -1,4 +1,7 @@
-"""Test utilities are NOT tested because they are used by many tests and that's why they are self-tested in indirect way."""
+"""
+Test utilities are NOT tested because they are used by many tests and that's
+why they are self-tested in indirect way.
+"""
 
 from uuid import uuid4
 
@@ -24,7 +27,10 @@ def create_user(username=None, password=None):
 
 
 def create_and_login_user(client, username=None, password=None):
-    # Store or genarate and then store the password, because it will be needed as plain text to login.
+    """
+    Store or genarate and then store the password, because it will be needed
+    as plain text to login.
+    """
     password = password if password is not None else get_data()
     user = create_user(username, password)
     client.login(username=user.username, password=password)
@@ -35,7 +41,8 @@ def logged_in(client):
     return "_auth_user_id" in client.session
 
 
-def create_article(author=None, created=None, title=None, content=None, slug=None, tweet_id=None, is_draft=None):
+def create_article(author=None, created=None, title=None, content=None,
+                   slug=None, tweet_id=None, is_draft=None):
     article = Article()
     article.author = author if author is not None else create_user()
     if created:

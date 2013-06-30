@@ -46,7 +46,8 @@ def article(request, article_pk, slug=None):
             comment = comment_form.save(commit=False)
             comment.author = user
             comment.save()
-            link = "{}{}".format(article.get_absolute_url(), "#comment{}".format(comment.pk))
+            link = "{}{}".format(article.get_absolute_url(),
+                                 "#comment{}".format(comment.pk))
             return redirect(link)
     else:
         comment_form = CommentForm()
@@ -78,7 +79,9 @@ def search(request):
     search_form = SearchForm(request.GET)
     found_articles = []
     if search_form.is_valid():
-        found_articles = Article.search_articles(search_form.cleaned_data["phrase"], search_form.cleaned_data["tags"])
+        found_articles = (Article.search_articles(
+                          search_form.cleaned_data["phrase"],
+                          search_form.cleaned_data["tags"]))
     return render_to_response(
         "search.html",
         {

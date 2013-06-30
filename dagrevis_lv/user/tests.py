@@ -58,7 +58,9 @@ class RegistrationTest(TestCase):
 
 class LoginTest(TestCase):
     def test_fail(self):
-        self.client.post(reverse("user_login"), {"username": test_utils.get_data(), "password": test_utils.get_data()})
+        self.client.post(reverse("user_login"),
+                         {"username": test_utils.get_data(),
+                          "password": test_utils.get_data()})
         logged_in = test_utils.logged_in(self.client)
         self.assertFalse(logged_in)
 
@@ -66,7 +68,9 @@ class LoginTest(TestCase):
         username = test_utils.get_data(length=16)
         password = test_utils.get_data()
         test_utils.create_user(username, password)
-        self.client.post(reverse("user_login"), {"username": username, "password": password})
+        self.client.post(reverse("user_login"),
+                         {"username": username,
+                          "password": password})
         logged_in = test_utils.logged_in(self.client)
         self.assertTrue(logged_in)
 
