@@ -200,6 +200,17 @@
         padding: 0
     }
 
+    hr:before {
+        content: "***";
+    }
+
+    hr {
+        border: 0;
+        letter-spacing: 1em;
+        margin: 1em 0;
+        text-align: center;
+    }
+
 /* Class selectors */
 
     .container {
