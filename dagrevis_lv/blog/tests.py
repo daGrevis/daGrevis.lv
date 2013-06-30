@@ -190,7 +190,7 @@ class CommentTest(TestCase):
         response = self.client.get(reverse("blog_comments_rss_feed"))
         self.assertIn(comment.content, response.content)
 
-    def test_articles_feed_drafts_excluded(self):
+    def test_comments_feed_drafts_excluded(self):
         article = test_utils.create_article(is_draft=True)
         comment = test_utils.create_comment(article=article)
         response = self.client.get(reverse("blog_comments_rss_feed"))
