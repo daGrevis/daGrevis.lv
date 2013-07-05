@@ -12,7 +12,7 @@
     <footer>
         <div class="about">
             <p>
-                {% trans "Published:" %} <time datetime="{{ article.created|date:"c" }}">{{ article.created|date:"F j, Y" }}</time><br />
+                {% trans "Published:" %} <time datetime="{{ article.created|date:"c" }}">{{ article.created|date:"j. F, Y." }}</time><br />
                 {% trans "Author:" %} <strong>{{ article.author.username }}</strong>
             </p>
         </div>

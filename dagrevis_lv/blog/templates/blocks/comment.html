@@ -7,7 +7,7 @@
     </section>
     <footer>
         <p class="about">
-            {% trans "Published:" %} <time datetime="{{ article.created|date:"c" }}">{{ comment.created|date:"F j, Y" }}</time><br />
+            {% trans "Published:" %} <time datetime="{{ article.created|date:"c" }}">{{ comment.created|date:"j. F, Y." }}</time><br />
             {% trans "Author:" %} <strong>{{ comment.author.username }}</strong>
         </p>
         <nav class="share">

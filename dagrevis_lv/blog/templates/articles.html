@@ -12,7 +12,7 @@
 
                 <section class="article_month">
 
-                    <time>{{ date|fake_date_without_day|date:"F, Y" }}</time>
+                    <time>{{ date|fake_date_without_day|date:"F, Y."|capfirst }}</time>
 
                     {% for article in articles %}
 
