@@ -24,6 +24,8 @@ DATABASE_ROUTERS = [
 
 TIME_ZONE = "Europe/Riga"
 
+LANGUAGE_CODE = "lv"
+
 SITE_ID = 1
 
 STATIC_ROOT = path.join(path.dirname(__file__), "static")

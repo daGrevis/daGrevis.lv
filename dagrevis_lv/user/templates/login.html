@@ -24,10 +24,13 @@
         {{ form.password.errors }}
 
         <p>
-            <button>{% trans "Login" %}</button>
+            <button>{% trans "Log in" %}</button>
         </p>
     </form>
 
-    <p>You can <a href="{% url "user_registration" %}">register here</a>.</p>
+    {% url "user_registration" as user_registration %}
+    {% blocktrans %}
+        <p>You can <a href="{{ user_registration }}">register here</a>.</p>
+    {% endblocktrans %}
 
 {% endblock %}

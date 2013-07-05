@@ -1,0 +1,80 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-07-05 20:52+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : "
+"2);\n"
+
+#: views.py:14 templates/about.html:7 templates/base.html:55
+msgid "About"
+msgstr "Par mani"
+
+#: views.py:20 templates/base.html:56 templates/base.html.py:80
+#: templates/contacts.html:7
+msgid "Contacts"
+msgstr "Kontakti"
+
+#: templates/about.html:11
+msgid ""
+"Mans vārds ir Raitis Stengrevics, bet gīku sabiedrībā mani mēdz dēvēt par "
+"Grevi. Es esmu Python programmētājs, liels tvītotājs, Vim lietotājs un panks "
+"sirdī. Brīvajā laikā, kad neprogrammēju kerneļus, cenšos būt reālajā pasaulē "
+"un darīt visādas muļķīgas lietas. Arī eju uz svaru zāli un rakstu blogu."
+msgstr ""
+
+#: templates/base.html:31 templates/base.html.py:32 templates/base.html:33
+#: templates/base.html.py:34
+#, python-format
+msgid "%(title)s"
+msgstr ""
+
+#: templates/base.html:57
+msgid "Tags"
+msgstr "T[ae]gi"
+
+#: templates/base.html:58
+msgid "Search"
+msgstr "Atrašana"
+
+#: templates/base.html:71
+#, python-format
+msgid ""
+"\n"
+"                                Content author is <a href=\"%(author_url)s\">"
+"%(author_name)s</a>, unless it's specified otherwise.\n"
+"                            "
+msgstr ""
+"\n"
+"                                Satura autors ir <a href=\"%(author_url)s\">"
+"%(author_name)s</a>, ja vien nav norādīts citādāk.\n"
+"                            "
+
+#: templates/base.html:77
+msgid "Twitter"
+msgstr "Tviteris"
+
+#: templates/base.html:78
+msgid "GitHub"
+msgstr "Githabs"
+
+#: templates/base.html:79
+msgid "LinkedIn"
+msgstr "Linktins"
+
+#: templates/contacts.html:11
+msgid "<a href=\\"
+msgstr ""

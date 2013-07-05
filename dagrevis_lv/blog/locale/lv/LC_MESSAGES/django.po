@@ -1,0 +1,163 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-07-05 21:25+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : "
+"2);\n"
+
+#: feeds.py:60
+msgid "Comment #{pk} by {username}"
+msgstr "Komentārs #{pk} no {username}"
+
+#: views.py:32
+msgid "Blog"
+msgstr "Blogs"
+
+#: views.py:76 templates/search.html:20 templates/tags.html:10
+msgid "Tags"
+msgstr "T[ae]gi"
+
+#: views.py:93 templates/search.html:9
+msgid "Search"
+msgstr "Atrašana"
+
+#: templates/articles.html:40
+msgid "More articles"
+msgstr "Vairāk rakstu"
+
+#: templates/articles.html:47
+msgid "No articles."
+msgstr "Nav rakstu."
+
+#: templates/search.html:14
+msgid "Phrase"
+msgstr "Frāze"
+
+#: templates/search.html:14
+msgid "(regular expressions are allowed)"
+msgstr "(regulārās izteiksmes ir atļautas)"
+
+#: templates/search.html:20
+msgid "(separate them by comma)"
+msgstr "(atdali tos ar komatu)"
+
+#: templates/search.html:25
+msgid "Find articles"
+msgstr "Atrast rakstus"
+
+#: templates/tags.html:22
+msgid "No tags."
+msgstr "Nav t[ae]gu."
+
+#: templates/blocks/add_comment.html:14
+msgid "Your comment..."
+msgstr "Tavs komentārs..."
+
+#: templates/blocks/add_comment.html:16
+msgid "Add comment"
+msgstr "Pievienot komentāru"
+
+#: templates/blocks/add_comment.html:19
+#, python-format
+msgid ""
+"\n"
+"                                (reply to <a href=\"%(article_link)s?"
+"comment_pk=%(comment.pk)s\">comment #%(comment_pk)s</a>)\n"
+"                            "
+msgstr ""
+"\n"
+"                                (atbildēt <a href=\"%(article_link)s?"
+"comment_pk=%(comment.pk)s\">komentāram #%(comment_pk)s</a>)\n"
+"                            "
+
+#: templates/blocks/add_comment.html:32
+#, python-format
+msgid ""
+"\n"
+"                    Please login with <a href=\"%(url_for_twitter_login)s?"
+"next=%(article_link)s#add_comment\">Twitter</a> or <a href="
+"\"%(url_for_github_login)s?next=%(article_link)s#add_comment\">GitHub</a>, "
+"if you want to comment.\n"
+"                "
+msgstr ""
+"\n"
+"                    Lūdzu ielogojies ar <a href=\"%(url_for_twitter_login)s?"
+"next=%(article_link)s#add_comment\">Tviteri</a> vai <a href="
+"\"%(url_for_github_login)s?next=%(article_link)s#add_comment\">Githabu</a>, "
+"ja vēlies komentēt.\n"
+"                "
+
+#: templates/blocks/add_comment.html:38
+#, python-format
+msgid ""
+"\n"
+"                    It's possible to use simple <a href="
+"\"%(url_for_user_login)s?redirect_to=%(article_link)s#add_comment\">login</"
+"a> and <a href=\"%(url_for_user_registration)s\">registration</a> too!\n"
+"                "
+msgstr ""
+"\n"
+"                    Arī ir iespējams izmantot parasto <a href="
+"\"%(url_for_user_login)s?redirect_to=%(article_link)s#add_comment\">ielogošanos</"
+"a> un <a href=\"%(url_for_user_registration)s\">reģistrēšanos</a>!\n"
+"                "
+
+#: templates/blocks/article.html:15 templates/blocks/comment.html:10
+msgid "Published:"
+msgstr "Publicēts:"
+
+#: templates/blocks/article.html:16 templates/blocks/comment.html:11
+msgid "Author:"
+msgstr "Autors:"
+
+#: templates/blocks/article.html:24
+msgid "No comments"
+msgstr "Nav komentāru"
+
+#: templates/blocks/article.html:26
+msgid "1 comment"
+msgstr "1 komentārs"
+
+#: templates/blocks/article.html:28
+msgid ""
+"\n"
+"                                %(comment_count)s comments\n"
+"                            "
+msgstr ""
+"\n"
+"                                %(comment_count)s komentāri\n"
+"                            "
+
+#: templates/blocks/article.html:37
+msgid "Article link"
+msgstr "Raksta links"
+
+#: templates/blocks/article.html:39
+msgid "Tweet link"
+msgstr "Tvīta links"
+
+#: templates/blocks/comment.html:15
+msgid "Link"
+msgstr "Links"
+
+#: templates/blocks/comment.html:18
+msgid "Reply"
+msgstr "Atbildēt"
+
+#: templates/blocks/comments.html:12
+msgid "No comments."
+msgstr "Nav komentāru."
