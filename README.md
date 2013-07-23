@@ -11,7 +11,7 @@ I could use Tumblr or WordPress, but that is too easy. :)
     sass dagrevis_lv/core/static/stylesheets/main.scss dagrevis_lv/core/static/stylesheets/main.css
     bin/python dagrevis_lv/manage.py syncdb
 
-(`git`, `virtualenv` and `sass` is required)
+(`git`, `virtualenv` and `sass` are required)
 
 ### Running server
 
