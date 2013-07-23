@@ -10,6 +10,7 @@ I could use Tumblr or WordPress, but that is too easy. :)
     bin/pip install -r requirements.txt
     sass dagrevis_lv/core/static/stylesheets/main.scss dagrevis_lv/core/static/stylesheets/main.css
     bin/python dagrevis_lv/manage.py syncdb
+    bin/python dagrevis_lv/manage.py migrate blog
 
 (`git`, `virtualenv` and `sass` are required)
 
