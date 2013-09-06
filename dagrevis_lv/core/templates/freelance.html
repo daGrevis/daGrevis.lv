@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+
+{% block content %}
+
+    <h1>{% trans "Freelance" %}</h1>
+
+    <section class="content">
+
+        <p>{% trans "Esmu nolēmis nedaudz piepelnīties, tāpēc, ja tev vajag labu programmētaju, sazinies un visu sarunāsim! :) Esmu gatavs programmēt Python un pat PHP, salabot vai uzlabot jau esošo sistēmu un arī nogādāt visu uz servera!" %}</p>
+
+        <br />
+
+        <form method="post">
+            {% csrf_token %}
+            <p>
+                <input name="client_email" placeholder="{% trans "client@example.com" %}" />
+            </p>
+            <p>
+                <textarea name="message" rows="10" placeholder="{% trans "I would like you to build a..." %}"></textarea>
+            </p>
+            <p>
+                <button>Submit offer</button>
+            </p>
+
+        </form>
+
+        {{ freelance_form.errors }}
+
+    </section>
+
+{% endblock %}

@@ -56,6 +56,9 @@
                             <li><a href="{% url "core_contacts" %}">{% trans "Contacts" %}</a></li>
                             <li><a href="{% url "blog_tags" %}">{% trans "Tags" %}</a></li>
                             <li><a href="{% url "blog_search" %}">{% trans "Search" %}</a></li>
+                            {% if settings.FREELANCE_AVAILABLE %}
+                                <li><a href="{% url "core_freelance" %}">{% trans "Freelance" %} (<strong>!</strong>)</a></li>
+                            {% endif %}
                         </ul>
                     </nav>
                     <div class="clearer"></div>
