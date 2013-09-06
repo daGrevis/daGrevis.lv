@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-05 20:52+0300\n"
+"POT-Creation-Date: 2013-09-06 12:02+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,14 +19,18 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : "
 "2);\n"
 
-#: views.py:14 templates/about.html:7 templates/base.html:55
+#: views.py:17 templates/about.html:7 templates/base.html:55
 msgid "About"
 msgstr "Par mani"
 
-#: views.py:20 templates/base.html:56 templates/base.html.py:80
+#: views.py:23 templates/base.html:56 templates/base.html.py:83
 #: templates/contacts.html:7
 msgid "Contacts"
 msgstr "Kontakti"
+
+#: views.py:52 templates/base.html:60 templates/freelance.html:7
+msgid "Freelance"
+msgstr "Haltūra"
 
 #: templates/about.html:11
 msgid ""
@@ -50,7 +54,7 @@ msgstr "T[ae]gi"
 msgid "Search"
 msgstr "Atrašana"
 
-#: templates/base.html:71
+#: templates/base.html:74
 #, python-format
 msgid ""
 "\n"
@@ -63,18 +67,37 @@ msgstr ""
 "%(author_name)s</a>, ja vien nav norādīts citādāk.\n"
 "                            "
 
-#: templates/base.html:77
+#: templates/base.html:80
 msgid "Twitter"
 msgstr "Tviteris"
 
-#: templates/base.html:78
+#: templates/base.html:81
 msgid "GitHub"
 msgstr "Githabs"
 
-#: templates/base.html:79
+#: templates/base.html:82
 msgid "LinkedIn"
 msgstr "Linktins"
 
 #: templates/contacts.html:11
 msgid "<a href=\\"
 msgstr ""
+
+#: templates/freelance.html:11
+msgid ""
+"Esmu nolēmis nedaudz piepelnīties, tāpēc, ja tev vajag labu programmētaju, "
+"sazinies un visu sarunāsim! :) Esmu gatavs programmēt Python un pat PHP, "
+"salabot vai uzlabot jau esošo sistēmu un arī nogādāt visu uz servera!"
+msgstr ""
+
+#: templates/freelance.html:18
+msgid "client@example.com"
+msgstr ""
+
+#: templates/freelance.html:21
+msgid "I would like you to build a..."
+msgstr "Es vēlos, lai tu uzbūvē..."
+
+#: templates/freelance.html:24
+msgid "Submit offer"
+msgstr "Apstiprināt piedāvājumu"

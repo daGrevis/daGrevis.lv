@@ -25,6 +25,11 @@ urlpatterns = patterns(
         "humans_txt",
         name="core_humans_txt",
     ),
+    url(
+        r"^freelance/$",
+        "freelance",
+        name="core_freelance",
+    ),
 )
 
 urlpatterns += patterns(
