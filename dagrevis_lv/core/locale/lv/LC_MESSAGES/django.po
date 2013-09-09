@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-06 12:02+0300\n"
+"POT-Creation-Date: 2013-09-09 15:21+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -90,14 +90,14 @@ msgid ""
 "salabot vai uzlabot jau esošo sistēmu un arī nogādāt visu uz servera!"
 msgstr ""
 
-#: templates/freelance.html:18
+#: templates/freelance.html:21
 msgid "client@example.com"
 msgstr ""
 
-#: templates/freelance.html:21
+#: templates/freelance.html:26
 msgid "I would like you to build a..."
 msgstr "Es vēlos, lai tu uzbūvē..."
 
-#: templates/freelance.html:24
+#: templates/freelance.html:31
 msgid "Submit offer"
 msgstr "Apstiprināt piedāvājumu"
