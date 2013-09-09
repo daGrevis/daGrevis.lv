@@ -362,3 +362,13 @@ class SearchTest(TestCase):
                                    {"phrase": article.title})
         found_articles = response.context[-1]["found_articles"]
         self.assertEqual(list(found_articles), [])
+
+    def test_moderated(self):
+        article = test_utils.create_article(is_comments_moderated=True)
+        user = test_utils.create_and_login_user(self.client)
+        comment = test_utils.create_comment(author=user, is_moderated=False)
+        request = test_utils.request_article(self.client, article)
+        self.assertIn(comment.content, request.content)
+        self.client.logout()
+        request = test_utils.request_article(self.client, article)
+        self.assertNotIn(comment.content, request.content)
