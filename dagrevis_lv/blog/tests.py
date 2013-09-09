@@ -103,6 +103,32 @@ class ArticleTest(TestCase):
         response = test_utils.request_article(self.client, article)
         self.assertEqual(response.status_code, 404)
 
+    def test_comment_count(self):
+        article = test_utils.create_article()
+        test_utils.create_comment(article=article)
+        test_utils.create_comment(article=article)
+        self.assertEqual(article.get_comment_count(), 2)
+        article = test_utils.create_article(is_comments_moderated=True)
+        test_utils.create_comment(article=article, is_moderated=True)
+        test_utils.create_comment(article=article)
+        self.assertEqual(article.get_comment_count(), 1)
+
+    def test_moderated_automatically(self):
+        article = test_utils.create_article(is_comments_moderated=True)
+        user = test_utils.create_and_login_user(self.client)
+        # Special cases aren't special enough.
+        user.is_staff = True
+        user.is_superuser = True
+        user.save()
+        self.client.post(
+            article.get_absolute_url(),
+            {
+                "article": article.pk,
+                "content": test_utils.get_data(),
+            }
+        )
+        self.assertTrue(Comment.objects.get(article=article).is_moderated)
+
 
 class CommentTest(TestCase):
     def test_no_comments(self):
@@ -222,6 +248,19 @@ class CommentTest(TestCase):
             "content": comment.content,
         })
         self.assertEqual(Comment.objects.count(), 1)
+
+    def test_moderated(self):
+        article = test_utils.create_article(is_comments_moderated=True)
+        user = test_utils.create_and_login_user(self.client)
+        comment = test_utils.create_comment(article=article, author=user,
+                                            is_moderated=False)
+        request = test_utils.request_article(self.client, article)
+        self.assertIn(comment.content, request.content)
+        self.assertIn("waiting_approval", request.content)
+        self.client.logout()
+        request = test_utils.request_article(self.client, article)
+        self.assertNotIn(comment.content, request.content)
+        self.assertNotIn("waiting_approval", request.content)
 
 
 class TagTest(TestCase):

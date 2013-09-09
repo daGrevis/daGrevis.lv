@@ -19,7 +19,7 @@
         <div class="share">
             <p>
                 <a href="{{ article.get_link }}#comments">
-                    {% with comment_count=article.comment_set.count %}
+                    {% with comment_count=article.get_comment_count %}
                         {% if comment_count == 0 %}
                             {% trans "No comments" %}
                         {% elif comment_count == 1 %}
