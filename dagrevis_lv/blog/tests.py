@@ -113,6 +113,22 @@ class ArticleTest(TestCase):
         test_utils.create_comment(article=article)
         self.assertEqual(article.get_comment_count(), 1)
 
+    def test_moderated_automatically(self):
+        article = test_utils.create_article(is_comments_moderated=True)
+        user = test_utils.create_and_login_user(self.client)
+        # Special cases aren't special enough.
+        user.is_staff = True
+        user.is_superuser = True
+        user.save()
+        self.client.post(
+            article.get_absolute_url(),
+            {
+                "article": article.pk,
+                "content": test_utils.get_data(),
+            }
+        )
+        self.assertTrue(Comment.objects.get(article=article).is_moderated)
+
 
 class CommentTest(TestCase):
     def test_no_comments(self):

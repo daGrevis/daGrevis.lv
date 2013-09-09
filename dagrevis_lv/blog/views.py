@@ -50,6 +50,8 @@ def article(request, article_pk, slug=None):
         if comment_form.is_valid():
             comment = comment_form.save(commit=False)
             comment.author = user
+            if user.is_staff and user.is_superuser:
+                comment.is_moderated = True
             comment.save()
             return redirect(comment.get_absolute_url())
     else:
