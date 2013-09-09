@@ -46,7 +46,7 @@ def article(request, article_pk, slug=None):
         user = request.user
         if user.is_anonymous():
             return http.HttpResponseForbidden()
-        comment_form = CommentForm(request.POST)
+        comment_form = CommentForm(request.POST, user=user)
         if comment_form.is_valid():
             comment = comment_form.save(commit=False)
             comment.author = user
