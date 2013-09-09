@@ -26,7 +26,7 @@
         </footer>
 
         {% if article.is_comments_moderated and not comment.is_moderated %}
-            <p class="waiting_approval">Comment is waiting approval.</p>
+            <p class="waiting_approval">{% trans "Comment is waiting approval." %}</p>
         {% endif %}
     </div>
 {% endif %}

@@ -366,9 +366,12 @@ class SearchTest(TestCase):
     def test_moderated(self):
         article = test_utils.create_article(is_comments_moderated=True)
         user = test_utils.create_and_login_user(self.client)
-        comment = test_utils.create_comment(author=user, is_moderated=False)
+        comment = test_utils.create_comment(article=article, author=user,
+                                            is_moderated=False)
         request = test_utils.request_article(self.client, article)
         self.assertIn(comment.content, request.content)
+        self.assertIn("waiting_approval", request.content)
         self.client.logout()
         request = test_utils.request_article(self.client, article)
         self.assertNotIn(comment.content, request.content)
+        self.assertNotIn("waiting_approval", request.content)
