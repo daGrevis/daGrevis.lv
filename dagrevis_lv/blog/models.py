@@ -18,6 +18,7 @@ class Article(models.Model):
     slug = models.CharField(max_length=255, blank=True)
     tweet_id = models.IntegerField(null=True, blank=True)
     is_draft = models.BooleanField(default=False)
+    is_comments_moderated = models.BooleanField(default=False)
 
     def __unicode__(self):
         return self.title
@@ -86,6 +87,7 @@ class Comment(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
     content = models.TextField(db_index=True)
+    is_moderated = models.BooleanField(default=False)
     depth = None
 
     def __unicode__(self):
