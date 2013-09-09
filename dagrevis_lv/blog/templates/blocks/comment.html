@@ -12,7 +12,7 @@
         </p>
         <nav class="share">
             <ul>
-                <li><a href="{{ article.get_link }}#comment{{ comment.pk }}" class="icon-link" title="{% trans "Link" %}"></a></li>
+                <li><a href="{{ comment.get_absolute_url }}" class="icon-link" title="{% trans "Link" %}"></a></li>
                 {% if comment.depth < settings.MAX_DEPTH_FOR_COMMENT %}
                     <li>
                         <a href="{{ article.get_link }}?comment_pk={{ comment.pk }}#add_comment" class="icon-reply" title="{% trans "Reply" %}"></a>
