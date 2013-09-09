@@ -79,6 +79,12 @@ class Article(models.Model):
     def get_comments(self):
         return Comment.calculate_depth_and_sort(self.comment_set.all())
 
+    def get_comment_count(self):
+        count_qs = Comment.objects.filter(article=self)
+        if self.is_comments_moderated:
+            count_qs = count_qs.filter(is_moderated=True)
+        return count_qs.count()
+
 
 class Comment(models.Model):
     parent = models.ForeignKey("self", null=True, blank=True)
