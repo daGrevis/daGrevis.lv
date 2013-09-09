@@ -13,17 +13,23 @@
         <br />
 
         <form method="post">
+            {{ freelance_form.non_field_errors }}
+
             {% csrf_token %}
+
             <p>
                 <input name="client_email" placeholder="{% trans "client@example.com" %}" />
             </p>
+            {{ freelance_form.client_email.errors }}
+
             <p>
                 <textarea name="message" rows="10" placeholder="{% trans "I would like you to build a..." %}"></textarea>
             </p>
+            {{ freelance_form.message.errors }}
+
             <p>
                 <button>{% trans "Submit offer" %}</button>
             </p>
-
         </form>
 
     </section>
