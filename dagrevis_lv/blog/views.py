@@ -51,9 +51,7 @@ def article(request, article_pk, slug=None):
             comment = comment_form.save(commit=False)
             comment.author = user
             comment.save()
-            link = "{}{}".format(article.get_absolute_url(),
-                                 "#comment{}".format(comment.pk))
-            return redirect(link)
+            return redirect(comment.get_absolute_url())
     else:
         comment_form = CommentForm()
     return render_to_response(
