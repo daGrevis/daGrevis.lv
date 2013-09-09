@@ -209,6 +209,7 @@ class CommentTest(TestCase):
         article = test_utils.create_article(is_draft=True)
         test_utils.create_and_login_user(self.client)
         response = self.client.post(article.get_absolute_url(), {
+            "article": article.pk,
             "content": test_utils.get_data(),
         })
         self.assertEqual(response.status_code, 404)
