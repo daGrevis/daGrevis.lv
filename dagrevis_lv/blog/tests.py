@@ -179,8 +179,9 @@ class CommentTest(TestCase):
         comment2 = test_utils.create_comment(article=article, parent=comment1)
         test_utils.create_and_login_user(self.client)
         self.client.post(article.get_absolute_url(), {
+            "article": article.pk,
             "content": test_utils.get_data(),
-            "comment_pk": comment2.pk,
+            "parent": comment2.pk,
         })
         self.assertEqual(Comment.objects.count(),
                          settings.MAX_DEPTH_FOR_COMMENT)
