@@ -46,14 +46,12 @@ def article(request, article_pk, slug=None):
         user = request.user
         if user.is_anonymous():
             return http.HttpResponseForbidden()
-        comment_form = CommentForm(request.POST)
+        comment_form = CommentForm(request.POST, user=user)
         if comment_form.is_valid():
             comment = comment_form.save(commit=False)
             comment.author = user
             comment.save()
-            link = "{}{}".format(article.get_absolute_url(),
-                                 "#comment{}".format(comment.pk))
-            return redirect(link)
+            return redirect(comment.get_absolute_url())
     else:
         comment_form = CommentForm()
     return render_to_response(

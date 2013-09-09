@@ -179,8 +179,9 @@ class CommentTest(TestCase):
         comment2 = test_utils.create_comment(article=article, parent=comment1)
         test_utils.create_and_login_user(self.client)
         self.client.post(article.get_absolute_url(), {
+            "article": article.pk,
             "content": test_utils.get_data(),
-            "comment_pk": comment2.pk,
+            "parent": comment2.pk,
         })
         self.assertEqual(Comment.objects.count(),
                          settings.MAX_DEPTH_FOR_COMMENT)
@@ -208,9 +209,19 @@ class CommentTest(TestCase):
         article = test_utils.create_article(is_draft=True)
         test_utils.create_and_login_user(self.client)
         response = self.client.post(article.get_absolute_url(), {
+            "article": article.pk,
             "content": test_utils.get_data(),
         })
         self.assertEqual(response.status_code, 404)
+
+    def test_duplicate_comment(self):
+        user = test_utils.create_and_login_user(self.client)
+        comment = test_utils.create_comment(author=user)
+        self.client.post(comment.article.get_absolute_url(), {
+            "article": comment.article.pk,
+            "content": comment.content,
+        })
+        self.assertEqual(Comment.objects.count(), 1)
 
 
 class TagTest(TestCase):
