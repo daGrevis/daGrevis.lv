@@ -49,9 +49,3 @@ class SearchForm(forms.Form):
         tags = tags.split(",")
         tags = [tag.strip() for tag in tags]
         return tags
-
-    def clean(self):
-        cleaned_data = super(SearchForm, self).clean()
-        if not cleaned_data.get("phrase") and not cleaned_data.get("tags"):
-            raise forms.ValidationError("Specify phrase, tags or both!")
-        return cleaned_data
