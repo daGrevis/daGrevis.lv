@@ -311,6 +311,9 @@
                 a:visited {
                     color: $grey;
                 }
+                ul, ol {
+                    font-size: $font_size;
+                }
             }
             .about {
                 @include about;
