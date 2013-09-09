@@ -28,7 +28,10 @@ class CommentForm(forms.ModelForm):
                    .format(settings.MAX_DEPTH_FOR_COMMENT)))
 
         # Check for duplicate comment.
-        if Comment.objects.filter(article=cleaned_data["article"], author=self.user, content=cleaned_data["content"]).exists():
+        content = cleaned_data.get("content")
+        if content and Comment.objects.filter(article=cleaned_data["article"],
+                                              author=self.user,
+                                              content=content).exists():
             raise forms.ValidationError("Such comment is duplicate!")
 
         return cleaned_data

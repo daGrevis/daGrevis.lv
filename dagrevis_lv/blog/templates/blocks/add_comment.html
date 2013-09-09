@@ -8,10 +8,17 @@
         {% if user.is_authenticated %}
 
             <form action="#add_comment" method="post">
+                {{ comment_form.non_field_errors }}
+
                 {% csrf_token %}
+
                 <input type="hidden" name="article" value="{{ article.pk }}" />
+
                 {% if comment_pk %}<input name="parent" type="hidden" value="{{ comment_pk }}" />{% endif %}
+
                 <p><textarea name="content" rows="5" placeholder="{% trans "Your comment..." %}"></textarea></p>
+                {{ comment_form.content.errors }}
+
                 <p>
                     <button>{% trans "Add comment" %}</button>
                     {% if comment_pk %}
