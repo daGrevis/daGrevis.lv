@@ -34,6 +34,7 @@ def create_and_login_user(client, username=None, password=None):
     password = password if password is not None else get_data()
     user = create_user(username, password)
     client.login(username=user.username, password=password)
+    return user
 
 
 def logged_in(client):

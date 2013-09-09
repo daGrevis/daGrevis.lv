@@ -213,6 +213,15 @@ class CommentTest(TestCase):
         })
         self.assertEqual(response.status_code, 404)
 
+    def test_duplicate_comment(self):
+        user = test_utils.create_and_login_user(self.client)
+        comment = test_utils.create_comment(author=user)
+        self.client.post(comment.article.get_absolute_url(), {
+            "article": comment.article.pk,
+            "content": comment.content,
+        })
+        self.assertEqual(Comment.objects.count(), 1)
+
 
 class TagTest(TestCase):
     def test_no_tags(self):
