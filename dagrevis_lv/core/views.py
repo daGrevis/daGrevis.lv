@@ -7,7 +7,7 @@ from django.shortcuts import render_to_response, redirect
 from django.utils.translation import ugettext
 from django.conf import settings
 
-from core.forms import FreelanceForm
+from core.forms import ContactForm
 
 
 logger = logging.getLogger(__name__)
@@ -19,6 +19,16 @@ def about(request):
 
 
 def contacts(request):
+    if request.method == "POST":
+        contact_form = ContactForm(request.POST)
+        if contact_form.is_valid():
+            send_mail(ugettext("Email via {}").format(settings.SITE_TITLE),
+                      contact_form.cleaned_data["message"],
+                      contact_form.cleaned_data["email"],
+                      [settings.AUTHOR_EMAIL])
+            return redirect("blog_articles")
+    else:
+        contact_form = ContactForm()
     return render_to_response("contacts.html",
                               {"page_title": ugettext("Contacts")},
                               context_instance=RequestContext(request))
@@ -35,21 +45,4 @@ def humans_txt(request):
 
 
 def freelance(request):
-    if not settings.FREELANCE_AVAILABLE:
-        return redirect("blog_articles")
-    if request.method == "POST":
-        freelance_form = FreelanceForm(request.POST)
-        if freelance_form.is_valid():
-            send_mail("Freelance offer",
-                      freelance_form.cleaned_data["message"],
-                      freelance_form.cleaned_data["client_email"],
-                      [settings.AUTHOR_EMAIL])
-            return redirect("blog_articles")
-    else:
-        freelance_form = FreelanceForm()
-    return render_to_response("freelance.html",
-                              {
-                                  "page_title": ugettext("Freelance"),
-                                  "freelance_form": freelance_form,
-                              },
-                              context_instance=RequestContext(request))
+    return redirect("core_contacts")

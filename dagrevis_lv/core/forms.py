@@ -1,6 +1,6 @@
 from django import forms
 
 
-class FreelanceForm(forms.Form):
-    client_email = forms.EmailField()
+class ContactForm(forms.Form):
+    email = forms.EmailField()
     message = forms.CharField()
