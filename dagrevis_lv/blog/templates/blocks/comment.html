@@ -1,25 +1,32 @@
 {% load i18n %}
+{% load comment %}
 
 
-<div id="comment{{ comment.pk }}" class="comment depth{{ comment.depth }} {% if comment.author.is_superuser %}superuser_comment{% endif %}">
-    <section>
-        {{ comment.get_content_as_html|safe }}
-    </section>
-    <footer>
-        <p class="about">
-            {% trans "Published:" %} <time datetime="{{ article.created|date:"c" }}">{{ comment.created|date:"j. F, Y." }}</time><br />
-            {% trans "Author:" %} <strong>{{ comment.author.username }}</strong>
-        </p>
-        <nav class="share">
-            <ul>
-                <li><a href="{{ article.get_link }}#comment{{ comment.pk }}" class="icon-link" title="{% trans "Link" %}"></a></li>
-                {% if comment.depth < settings.MAX_DEPTH_FOR_COMMENT %}
-                    <li>
-                        <a href="{{ article.get_link }}?comment_pk={{ comment.pk }}#add_comment" class="icon-reply" title="{% trans "Reply" %}"></a>
-                    </li>
-                {% endif %}
-            </ul>
-        </nav>
-        <div class="clear"></div>
-    </footer>
-</div>
+{% if comment|is_visible:user %}
+    <div id="comment{{ comment.pk }}" class="comment depth{{ comment.depth }} {% if comment.author.is_superuser %}superuser_comment{% endif %}">
+        <section>
+            {{ comment.get_content_as_html|safe }}
+        </section>
+        <footer>
+            <p class="about">
+                {% trans "Published:" %} <time datetime="{{ article.created|date:"c" }}">{{ comment.created|date:"j. F, Y." }}</time><br />
+                {% trans "Author:" %} <strong>{{ comment.author.username }}</strong>
+            </p>
+            <nav class="share">
+                <ul>
+                    <li><a href="{{ comment.get_absolute_url }}" class="icon-link" title="{% trans "Link" %}"></a></li>
+                    {% if comment.depth < settings.MAX_DEPTH_FOR_COMMENT %}
+                        <li>
+                            <a href="{{ article.get_link }}?comment_pk={{ comment.pk }}#add_comment" class="icon-reply" title="{% trans "Reply" %}"></a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+            <div class="clear"></div>
+        </footer>
+
+        {% if article.is_comments_moderated and not comment.is_moderated %}
+            <p class="waiting_approval">{% trans "Comment is waiting approval." %}</p>
+        {% endif %}
+    </div>
+{% endif %}

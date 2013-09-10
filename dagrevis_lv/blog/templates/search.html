@@ -8,19 +8,25 @@
 
         <h1>{% trans "Search" %}</h1>
 
-        <form action="">
+        <form>
+            {{ search_form.non_field_errors }}
+
             <p>
                 <label>
                     {% trans "Phrase" %} <em>{% trans "(regular expressions are allowed)" %}</em>
                     <input name="phrase" value="{{ search_form.phrase.value|default:"" }}" />
                 </label>
             </p>
+            {{ search_form.phrase.errors }}
+
             <p>
                 <label>
                     {% trans "Tags" %} <em>{% trans "(separate them by comma)" %}</em>
                     <input name="tags" value="{{ search_form.tags.value|default:"" }}" />
                 </label>
             </p>
+            {{ search_form.tags.errors }}
+
             <p>
                 <button>{% trans "Find articles" %}</button>
             </p>

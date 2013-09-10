@@ -10,6 +10,9 @@
         var has_shaked = false
         $(document).scroll(function() {
             var $icon_retweet = $(".icon-retweet")
+            if (! $icon_retweet.length) {
+                return
+            }
             if (! has_shaked && in_viewport($icon_retweet)) {
                 has_shaked = true
                 setTimeout(function() {

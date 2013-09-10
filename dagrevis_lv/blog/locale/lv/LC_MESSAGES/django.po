@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-05 21:25+0300\n"
+"POT-Creation-Date: 2013-09-09 15:20+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,6 +20,7 @@ msgstr ""
 "2);\n"
 
 #: feeds.py:60
+#, python-brace-format
 msgid "Comment #{pk} by {username}"
 msgstr "Komentārs #{pk} no {username}"
 
@@ -27,11 +28,11 @@ msgstr "Komentārs #{pk} no {username}"
 msgid "Blog"
 msgstr "Blogs"
 
-#: views.py:76 templates/search.html:20 templates/tags.html:10
+#: views.py:76 templates/search.html:24 templates/tags.html:10
 msgid "Tags"
 msgstr "T[ae]gi"
 
-#: views.py:93 templates/search.html:9
+#: views.py:94 templates/search.html:9
 msgid "Search"
 msgstr "Atrašana"
 
@@ -43,19 +44,19 @@ msgstr "Vairāk rakstu"
 msgid "No articles."
 msgstr "Nav rakstu."
 
-#: templates/search.html:14
+#: templates/search.html:16
 msgid "Phrase"
 msgstr "Frāze"
 
-#: templates/search.html:14
+#: templates/search.html:16
 msgid "(regular expressions are allowed)"
 msgstr "(regulārās izteiksmes ir atļautas)"
 
-#: templates/search.html:20
+#: templates/search.html:24
 msgid "(separate them by comma)"
 msgstr "(atdali tos ar komatu)"
 
-#: templates/search.html:25
+#: templates/search.html:31
 msgid "Find articles"
 msgstr "Atrast rakstus"
 
@@ -63,15 +64,15 @@ msgstr "Atrast rakstus"
 msgid "No tags."
 msgstr "Nav t[ae]gu."
 
-#: templates/blocks/add_comment.html:14
+#: templates/blocks/add_comment.html:19
 msgid "Your comment..."
 msgstr "Tavs komentārs..."
 
-#: templates/blocks/add_comment.html:16
+#: templates/blocks/add_comment.html:23
 msgid "Add comment"
 msgstr "Pievienot komentāru"
 
-#: templates/blocks/add_comment.html:19
+#: templates/blocks/add_comment.html:26
 #, python-format
 msgid ""
 "\n"
@@ -84,7 +85,7 @@ msgstr ""
 "comment_pk=%(comment.pk)s\">komentāram #%(comment_pk)s</a>)\n"
 "                            "
 
-#: templates/blocks/add_comment.html:32
+#: templates/blocks/add_comment.html:39
 #, python-format
 msgid ""
 "\n"
@@ -101,7 +102,7 @@ msgstr ""
 "ja vēlies komentēt.\n"
 "                "
 
-#: templates/blocks/add_comment.html:38
+#: templates/blocks/add_comment.html:45
 #, python-format
 msgid ""
 "\n"
@@ -112,15 +113,16 @@ msgid ""
 msgstr ""
 "\n"
 "                    Arī ir iespējams izmantot parasto <a href="
-"\"%(url_for_user_login)s?redirect_to=%(article_link)s#add_comment\">ielogošanos</"
-"a> un <a href=\"%(url_for_user_registration)s\">reģistrēšanos</a>!\n"
+"\"%(url_for_user_login)s?redirect_to=%(article_link)s#add_comment"
+"\">ielogošanos</a> un <a href=\"%(url_for_user_registration)s"
+"\">reģistrēšanos</a>!\n"
 "                "
 
-#: templates/blocks/article.html:15 templates/blocks/comment.html:10
+#: templates/blocks/article.html:15 templates/blocks/comment.html:12
 msgid "Published:"
 msgstr "Publicēts:"
 
-#: templates/blocks/article.html:16 templates/blocks/comment.html:11
+#: templates/blocks/article.html:16 templates/blocks/comment.html:13
 msgid "Author:"
 msgstr "Autors:"
 
@@ -133,6 +135,7 @@ msgid "1 comment"
 msgstr "1 komentārs"
 
 #: templates/blocks/article.html:28
+#, python-format
 msgid ""
 "\n"
 "                                %(comment_count)s comments\n"
@@ -150,13 +153,17 @@ msgstr "Raksta links"
 msgid "Tweet link"
 msgstr "Tvīta links"
 
-#: templates/blocks/comment.html:15
+#: templates/blocks/comment.html:17
 msgid "Link"
 msgstr "Links"
 
-#: templates/blocks/comment.html:18
+#: templates/blocks/comment.html:20
 msgid "Reply"
 msgstr "Atbildēt"
+
+#: templates/blocks/comment.html:29
+msgid "Comment is waiting approval."
+msgstr "Komentārs vēl nav apstiprināts."
 
 #: templates/blocks/comments.html:12
 msgid "No comments."

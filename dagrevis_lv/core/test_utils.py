@@ -34,6 +34,7 @@ def create_and_login_user(client, username=None, password=None):
     password = password if password is not None else get_data()
     user = create_user(username, password)
     client.login(username=user.username, password=password)
+    return user
 
 
 def logged_in(client):
@@ -41,8 +42,10 @@ def logged_in(client):
     return "_auth_user_id" in client.session
 
 
+# TODO: Try to use FactoryBoy for these kind of things.
 def create_article(author=None, created=None, title=None, content=None,
-                   slug=None, tweet_id=None, is_draft=None):
+                   slug=None, tweet_id=None, is_draft=None,
+                   is_comments_moderated=False):
     article = Article()
     article.author = author if author is not None else create_user()
     if created:
@@ -53,11 +56,13 @@ def create_article(author=None, created=None, title=None, content=None,
     if tweet_id:
         article.tweet_id = tweet_id
     article.is_draft = is_draft if is_draft is not None else False
+    article.is_comments_moderated = is_comments_moderated
     article.save()
     return article
 
 
-def create_comment(article=None, author=None, content=None, parent=None):
+def create_comment(article=None, author=None, content=None, parent=None,
+                   is_moderated=False):
     article = article if article is not None else create_article()
     author = author if author is not None else create_user()
     content = content if content is not None else get_data()
@@ -66,6 +71,7 @@ def create_comment(article=None, author=None, content=None, parent=None):
         article=article,
         author=author,
         content=content,
+        is_moderated=is_moderated,
     )
 
 

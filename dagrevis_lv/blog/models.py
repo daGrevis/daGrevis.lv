@@ -18,6 +18,7 @@ class Article(models.Model):
     slug = models.CharField(max_length=255, blank=True)
     tweet_id = models.IntegerField(null=True, blank=True)
     is_draft = models.BooleanField(default=False)
+    is_comments_moderated = models.BooleanField(default=False)
 
     def __unicode__(self):
         return self.title
@@ -78,6 +79,12 @@ class Article(models.Model):
     def get_comments(self):
         return Comment.calculate_depth_and_sort(self.comment_set.all())
 
+    def get_comment_count(self):
+        count_qs = Comment.objects.filter(article=self)
+        if self.is_comments_moderated:
+            count_qs = count_qs.filter(is_moderated=True)
+        return count_qs.count()
+
 
 class Comment(models.Model):
     parent = models.ForeignKey("self", null=True, blank=True)
@@ -86,6 +93,7 @@ class Comment(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
     content = models.TextField(db_index=True)
+    is_moderated = models.BooleanField(default=False)
     depth = None
 
     def __unicode__(self):

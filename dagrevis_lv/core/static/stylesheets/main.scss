@@ -311,6 +311,9 @@
                 a:visited {
                     color: $grey;
                 }
+                ul, ol {
+                    font-size: $font_size;
+                }
             }
             .about {
                 @include about;
@@ -345,6 +348,10 @@
                 ul {
                     @include horiz_list;
                 }
+            }
+            .waiting_approval {
+                font-size: 1em;
+                font-weight: 600;
             }
         }
         .superuser_comment {
