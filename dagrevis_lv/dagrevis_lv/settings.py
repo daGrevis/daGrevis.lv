@@ -153,3 +153,5 @@ LOGIN_REDIRECT_URL = "/"
 URL_TO_TWITTER_TWEET = "https://twitter.com/daGrevis_lv/status/{}"
 
 FREELANCE_AVAILABLE = True
+
+LANGUAGE_CODE = "lv"

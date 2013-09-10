@@ -8,7 +8,22 @@
 
     <section class="content">
 
-    <p>{% trans "<a href=\"https://twitter.com/daGrevis\">Uzraksti tvītu</a> vai <a href=\"mailto:dagrevis@gmail.com\">atsūti meilu</a>. Arī Skype <a href=\"skype:raitis.stengrevics\">esmu atrodams</a>." %}</p>
+        <form method="post">
+            {% csrf_token %}
+            <p>
+                <input name="email" placeholder="{% trans "yourmail@example.com" %}" />
+            </p>
+            <p>
+                <textarea name="message" rows="10"></textarea>
+            </p>
+            <p>
+                <button>{% trans "Contact me" %}</button>
+            </p>
+
+        </form>
+
+        <br />
+        <p>{% trans "Arī esmu <a href=\"https://twitter.com/daGrevis\">Tviterā (@daGrevis)</a> un <a href=\"skype:raitis.stengrevics\">Skype (raitis.stengrevics)</a>!" %}</p>
 
     </section>
 
