@@ -3,6 +3,7 @@ from django.conf import settings
 from django.utils.translation import ugettext
 from django.utils.feedgenerator import Atom1Feed
 from django.core.urlresolvers import reverse
+from django.db.models import Q
 
 from blog.models import Article, Comment
 
@@ -53,7 +54,14 @@ class CommentsRssFeed(Feed):
         return reverse(settings.COMMENTS_FEED["RSS_LINK"])
 
     def items(self):
-        return (Comment.objects.filter(article__is_draft=False).order_by("-pk")
+
+        return (Comment.objects
+                .filter(article__is_draft=False)
+                .filter(
+                    (Q(article__is_comments_moderated=True)
+                     & Q(is_moderated=True))
+                    | Q(article__is_comments_moderated=False))
+                .order_by("-pk")
                 [:settings.COMMENTS_FEED["ITEM_LIMIT"]])
 
     def item_title(self, comment):
