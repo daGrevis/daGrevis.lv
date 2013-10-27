@@ -254,14 +254,18 @@ class CommentTest(TestCase):
         user = test_utils.create_and_login_user(self.client)
         comment = test_utils.create_comment(article=article, author=user,
                                             is_moderated=False)
-        request = test_utils.request_article(self.client, article)
-        self.assertIn(comment.content, request.content)
-        self.assertIn("waiting_approval", request.content)
+        response = test_utils.request_article(self.client, article)
+        self.assertIn(comment.content, response.content)
+        self.assertIn("waiting_approval", response.content)
         self.client.logout()
-        request = test_utils.request_article(self.client, article)
-        self.assertNotIn(comment.content, request.content)
-        self.assertNotIn("waiting_approval", request.content)
+        response = test_utils.request_article(self.client, article)
+        self.assertNotIn(comment.content, response.content)
+        self.assertNotIn("waiting_approval", response.content)
 
+    def test_moderated_feed(self):
+        comment = test_utils.create_comment(is_moderated=False)
+        response = self.client.get(reverse("blog_comments_rss_feed"))
+        self.assertNotIn(comment.content, response.content)
 
 class TagTest(TestCase):
     def test_no_tags(self):
