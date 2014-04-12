@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-10 12:21+0300\n"
+"POT-Creation-Date: 2014-04-12 12:43+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -79,14 +79,18 @@ msgstr "Githabs"
 msgid "LinkedIn"
 msgstr "Linktins"
 
-#: templates/contacts.html:14
+#: templates/contacts.html:12
+msgid "At the moment I'm not looking for any freelance jobs!"
+msgstr "Šajā momentā jaunus gabaldarbus vairs nemeklēju un nepieņemu!"
+
+#: templates/contacts.html:18
 msgid "yourmail@example.com"
 msgstr ""
 
-#: templates/contacts.html:20
+#: templates/contacts.html:24
 msgid "Contact me"
 msgstr "Sazināties"
 
-#: templates/contacts.html:26
+#: templates/contacts.html:30
 msgid "Arī esmu <a href=\\"
 msgstr ""

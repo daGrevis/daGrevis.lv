@@ -8,6 +8,10 @@
 
     <section class="content">
 
+        {% if not settings.ACCEPT_FREELANCE %}
+            <h2>{% trans "At the moment I'm not looking for any freelance jobs!" %}</h2>
+        {% endif %}
+
         <form method="post">
             {% csrf_token %}
             <p>

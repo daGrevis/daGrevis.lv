@@ -151,3 +151,5 @@ SOCIAL_AUTH_EXTRA_DATA = False
 LOGIN_REDIRECT_URL = "/"
 
 URL_TO_TWITTER_TWEET = "https://twitter.com/daGrevis_lv/status/{}"
+
+ACCEPT_FREELANCE = True
