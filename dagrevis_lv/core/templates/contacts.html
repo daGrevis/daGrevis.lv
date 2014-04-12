@@ -13,13 +13,22 @@
         {% endif %}
 
         <form method="post">
+
             {% csrf_token %}
+
             <p>
                 <input name="email" placeholder="{% trans "yourmail@example.com" %}" />
             </p>
+
             <p>
                 <textarea name="message" rows="10"></textarea>
             </p>
+
+            <p class="hidden">
+                <label>I'm bot (leave blank)</label>
+                <input type="checkbox" name="im_bot" />
+            </p>
+
             <p>
                 <button>{% trans "Contact me" %}</button>
             </p>

@@ -1,7 +1,7 @@
 import logging
 
 from django.core.mail import send_mail
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseForbidden
 from django.template import RequestContext
 from django.shortcuts import render_to_response, redirect
 from django.utils.translation import ugettext
@@ -20,6 +20,8 @@ def about(request):
 
 def contacts(request):
     if request.method == "POST":
+        if request.POST.get("im_bot") == "on":
+            return HttpResponseForbidden("Seems that you are a bot.")
         contact_form = ContactForm(request.POST)
         if contact_form.is_valid():
             send_mail(ugettext("Email via {}").format(settings.SITE_TITLE),
