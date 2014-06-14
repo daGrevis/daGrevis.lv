@@ -37,6 +37,11 @@ def contacts(request):
                       data["message"], data["email"], [settings.AUTHOR_EMAIL])
             return redirect("blog_articles")
     else:
+        data = {
+            "email": "",
+            "message": "",
+        }
+
         contact_form = ContactForm()
 
     captcha = ReCaptcha(attrs={"theme": "clean"}).render(None, None)
@@ -45,6 +50,7 @@ def contacts(request):
                               {
                                   "page_title": ugettext("Contacts"),
                                   "contact_form": contact_form,
+                                  "data": data,
                                   "captcha": captcha,
                               },
                               context_instance=RequestContext(request))

@@ -17,13 +17,13 @@
             {% csrf_token %}
 
             <p>
-                <input name="email" placeholder="{% trans "yourmail@example.com" %}" />
+                <input value="{{ data.email }}" name="email" placeholder="{% trans "yourmail@example.com" %}" />
             </p>
 
             {{ contact_form.email.errors }}
 
             <p>
-                <textarea name="message" rows="10"></textarea>
+                <textarea name="message" rows="10">{{ data.message }}</textarea>
             </p>
 
             {{ captcha }}
