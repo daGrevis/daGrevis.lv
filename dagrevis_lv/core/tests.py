@@ -23,12 +23,16 @@ class ContactTest(TestCase):
         # TODO: Add a decorator or something.
         os.environ['RECAPTCHA_TESTING'] = 'True'
         try:
+            body = "Build me a social site!"
             response = self.client.post(reverse("core_contacts"), {
                 "email": "client@example.com",
-                "message": "Build me a social site!",
+                "message": body,
             })
             self.assertEqual(response.status_code, 302)
             self.assertEqual(len(mail.outbox), 1)
+            envelope = mail.outbox[0]
+            self.assertEqual(envelope.body, body)
+            self.assertEqual(envelope.subject, "Email via daGrevis.lv")
         except Exception:
             os.environ['RECAPTCHA_TESTING'] = 'False'
             raise

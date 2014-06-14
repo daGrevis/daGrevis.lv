@@ -34,9 +34,7 @@ def contacts(request):
 
         if contact_form.is_valid():
             send_mail(ugettext("Email via {}").format(settings.SITE_TITLE),
-                      contact_form.cleaned_data["message"],
-                      contact_form.cleaned_data["email"],
-                      [settings.AUTHOR_EMAIL])
+                      data["message"], data["email"], [settings.AUTHOR_EMAIL])
             return redirect("blog_articles")
     else:
         contact_form = ContactForm()
