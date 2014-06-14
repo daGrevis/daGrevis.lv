@@ -3,6 +3,7 @@ Markdown==2.4
 Pygments==1.6
 South==0.7.6
 bleach==1.4
+django-recaptcha==1.0
 django-social-auth==0.7.18
 django-suit==0.2.7
 gunicorn==0.17.4

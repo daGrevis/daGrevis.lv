@@ -51,6 +51,7 @@ INSTALLED_APPS = (
     "social_auth",
     "gunicorn",
     "south",
+    "captcha",
     "core",
     "blog",
     "user",
@@ -154,3 +155,6 @@ LOGIN_REDIRECT_URL = "/"
 URL_TO_TWITTER_TWEET = "https://twitter.com/daGrevis_lv/status/{}"
 
 ACCEPT_FREELANCE = True
+
+RECAPTCHA_PUBLIC_KEY = "x" * 32
+RECAPTCHA_PRIVATE_KEY = "x" * 32

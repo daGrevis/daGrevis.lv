@@ -427,3 +427,14 @@
             margin-top: -.5em;
         }
     }
+
+#recaptcha_response_field {
+    border-color: $light_gray !important;
+    width: 278px !important;
+    padding: .5em .75em;
+}
+
+.recaptcha_only_if_privacy a {
+    color: $black !important;
+    font-size: .9em;
+}

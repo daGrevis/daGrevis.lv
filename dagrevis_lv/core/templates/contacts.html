@@ -20,9 +20,15 @@
                 <input name="email" placeholder="{% trans "yourmail@example.com" %}" />
             </p>
 
+            {{ contact_form.email.errors }}
+
             <p>
                 <textarea name="message" rows="10"></textarea>
             </p>
+
+            {{ captcha }}
+
+            {{ contact_form.message.errors }}
 
             <p class="hidden">
                 <label>I'm bot (leave blank)</label>

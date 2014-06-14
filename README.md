@@ -22,7 +22,7 @@ Then <http://127.0.0.1:8000/>.
 
 ### Running tests
 
-    bin/python dagrevis_lv/manage.py test
+    bin/python dagrevis_lv/manage.py test --settings=dagrevis_lv.test_settings
 
 [![Build Status](https://travis-ci.org/daGrevis/daGrevis.lv.png?branch=master)](https://travis-ci.org/daGrevis/daGrevis.lv)
 

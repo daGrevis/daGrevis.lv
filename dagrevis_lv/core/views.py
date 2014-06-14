@@ -7,6 +7,8 @@ from django.shortcuts import render_to_response, redirect
 from django.utils.translation import ugettext
 from django.conf import settings
 
+from captcha.widgets import ReCaptcha
+
 from core.forms import ContactForm
 
 
@@ -22,7 +24,14 @@ def contacts(request):
     if request.method == "POST":
         if request.POST.get("im_bot") == "on":
             return HttpResponseForbidden("Seems that you are a bot.")
-        contact_form = ContactForm(request.POST)
+
+        data = (request.POST).copy()
+
+        if settings.RECAPTCHA_TESTING:
+            data["recaptcha_response_field"] = "PASSED"
+
+        contact_form = ContactForm(data)
+
         if contact_form.is_valid():
             send_mail(ugettext("Email via {}").format(settings.SITE_TITLE),
                       contact_form.cleaned_data["message"],
@@ -31,8 +40,15 @@ def contacts(request):
             return redirect("blog_articles")
     else:
         contact_form = ContactForm()
+
+    captcha = ReCaptcha(attrs={"theme": "clean"}).render(None, None)
+
     return render_to_response("contacts.html",
-                              {"page_title": ugettext("Contacts")},
+                              {
+                                  "page_title": ugettext("Contacts"),
+                                  "contact_form": contact_form,
+                                  "captcha": captcha,
+                              },
                               context_instance=RequestContext(request))
 
 
