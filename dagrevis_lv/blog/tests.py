@@ -141,7 +141,7 @@ class CommentTest(TestCase):
         article = test_utils.create_article()
         # As anonymous.
         response = test_utils.request_article(self.client, article)
-        expected = "Please login"
+        expected = "login"
         self.assertIn(expected, response.content)
         # As member.
         test_utils.create_and_login_user(self.client)

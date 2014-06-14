@@ -137,8 +137,8 @@ CONTENTS_OF_HUMANS_TXT = (
 )
 
 AUTHENTICATION_BACKENDS = (
-    "social_auth.backends.twitter.TwitterBackend",
-    "social_auth.backends.contrib.github.GithubBackend",
+    # "social_auth.backends.twitter.TwitterBackend",
+    # "social_auth.backends.contrib.github.GithubBackend",
     "django.contrib.auth.backends.ModelBackend",
 )
 
@@ -159,3 +159,5 @@ ACCEPT_FREELANCE = True
 RECAPTCHA_PUBLIC_KEY = "x" * 32
 RECAPTCHA_PRIVATE_KEY = "x" * 32
 RECAPTCHA_TESTING = False
+
+THIRD_PARTY_LOGIN_ENABLED = False

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-09 15:20+0300\n"
+"POT-Creation-Date: 2014-06-14 18:00+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : "
 "2);\n"
 
-#: feeds.py:60
+#: feeds.py:68
 #, python-brace-format
 msgid "Comment #{pk} by {username}"
 msgstr "Komentārs #{pk} no {username}"
@@ -85,15 +85,15 @@ msgstr ""
 "comment_pk=%(comment.pk)s\">komentāram #%(comment_pk)s</a>)\n"
 "                            "
 
-#: templates/blocks/add_comment.html:39
-#, python-format
+#: templates/blocks/add_comment.html:44
+#, fuzzy, python-format
 msgid ""
 "\n"
-"                    Please login with <a href=\"%(url_for_twitter_login)s?"
-"next=%(article_link)s#add_comment\">Twitter</a> or <a href="
-"\"%(url_for_github_login)s?next=%(article_link)s#add_comment\">GitHub</a>, "
-"if you want to comment.\n"
-"                "
+"                        Please login with <a href="
+"\"%(url_for_twitter_login)s?next=%(article_link)s#add_comment\">Twitter</a> "
+"or <a href=\"%(url_for_github_login)s?next=%(article_link)s#add_comment"
+"\">GitHub</a>, if you want to comment.\n"
+"                    "
 msgstr ""
 "\n"
 "                    Lūdzu ielogojies ar <a href=\"%(url_for_twitter_login)s?"
@@ -102,14 +102,14 @@ msgstr ""
 "ja vēlies komentēt.\n"
 "                "
 
-#: templates/blocks/add_comment.html:45
-#, python-format
+#: templates/blocks/add_comment.html:49
+#, fuzzy, python-format
 msgid ""
 "\n"
-"                    It's possible to use simple <a href="
+"                        It's possible to use simple <a href="
 "\"%(url_for_user_login)s?redirect_to=%(article_link)s#add_comment\">login</"
 "a> and <a href=\"%(url_for_user_registration)s\">registration</a> too!\n"
-"                "
+"                    "
 msgstr ""
 "\n"
 "                    Arī ir iespējams izmantot parasto <a href="
@@ -117,6 +117,17 @@ msgstr ""
 "\">ielogošanos</a> un <a href=\"%(url_for_user_registration)s"
 "\">reģistrēšanos</a>!\n"
 "                "
+
+#: templates/blocks/add_comment.html:55
+msgid ""
+"\n"
+"                        To comment you need to <a href="
+"\"%(url_for_user_login)s?redirect_to=%(article_link)s#add_comment\">login</"
+"a>.\n"
+"                    "
+msgstr ""
+"\n"
+"Lai komentētu, jums <a href=\"%(url_for_user_login)s?redirect_to=%(article_link)s#add_comment\">ir jāielogojas</a>."
 
 #: templates/blocks/article.html:15 templates/blocks/comment.html:12
 msgid "Published:"
