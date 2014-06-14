@@ -33,6 +33,11 @@
     /* All Mobile Sizes (devices and browser) */
     @media only screen and (max-width: 767px) {
 
+        // Hides videos.
+        iframe {
+            display: none;
+        }
+
         textarea {
             width: 60px * 6 !important;
         }
@@ -153,7 +158,7 @@
     }
 
     img {
-        max-width: 60px * 10;
+        max-width: 100%;
     }
 
     input {
