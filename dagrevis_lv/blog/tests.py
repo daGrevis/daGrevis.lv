@@ -77,7 +77,7 @@ class ArticleTest(TestCase):
     def test_xss_vulnerability(self):
         content = "<script>alert('foo')</script>"
         article = test_utils.create_article(content=content)
-        expected = ("<p>&lt;script&gt;alert(&lsquo;foo&rsquo;)"
+        expected = ("<p>&lt;script&gt;alert(&#8216;foo&#8217;)"
                     "&lt;/script&gt;</p>")
         actual = article.get_content_as_html()
         self.assertEqual(expected, actual)
@@ -226,7 +226,7 @@ class CommentTest(TestCase):
     def test_xss_vulnerability(self):
         content = "<script>alert('foo')</script>"
         comment = test_utils.create_comment(content=content)
-        expected = ("<p>&lt;script&gt;alert(&lsquo;foo&rsquo;)"
+        expected = ("<p>&lt;script&gt;alert(&#8216;foo&#8217;)"
                     "&lt;/script&gt;</p>")
         actual = comment.get_content_as_html()
         self.assertEqual(expected, actual)
