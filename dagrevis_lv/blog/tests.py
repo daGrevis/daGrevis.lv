@@ -305,7 +305,7 @@ class TagTest(TestCase):
         article = test_utils.create_article()
         tag = test_utils.create_tag(article)
         response = test_utils.request_article(self.client, article)
-        link = "{}?tags={}".format(reverse("blog_search"), tag.content)
+        link = "/blog/tag/{}".format(tag.content)
         self.assertIn(link, response.content)
 
     def test_blog_tags(self):

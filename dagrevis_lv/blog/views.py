@@ -80,6 +80,22 @@ def tags(request):
     )
 
 
+def tag(request, tag):
+    print(tag)
+    found_articles = Article.search_articles(
+        phrase=None,
+        tags=[tag],
+    )
+    return render_to_response(
+        "tag.html",
+        {
+            "page_title": tag,
+            "found_articles": found_articles,
+        },
+        context_instance=RequestContext(request),
+    )
+
+
 def search(request):
     search_form = SearchForm(request.GET)
     found_articles = []

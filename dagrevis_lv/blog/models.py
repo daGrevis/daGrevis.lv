@@ -59,7 +59,7 @@ class Article(models.Model):
     @staticmethod
     def search_articles(phrase=None, tags=[]):
         """
-        Searches for an articles by it's title and content, and / or tags.
+        Searches for articles by it's title and content, and / or tags.
         Results are "and'ed" together.
         """
         query_set = Article.objects.filter(is_draft=False)
