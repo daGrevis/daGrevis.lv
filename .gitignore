@@ -6,6 +6,7 @@ pip-selfcheck.json
 *.db
 .sass-cache/
 main.css
+main.css.map
 prod_settings.py
 logs.txt
 start
