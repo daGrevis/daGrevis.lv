@@ -2,7 +2,7 @@
     {% if tags %}
         <ul>
             {% for tag in tags %}
-                <li><a href="/blog/tag/{{ tag.content|urlencode }}">{{ tag.content }}</a></li>
+                <li><a href="{% url "blog_search" %}?tags={{ tag.content|urlencode }}">{{ tag.content }}</a></li>
             {% endfor %}
         </ul>
     {% endif %}

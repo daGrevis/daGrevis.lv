@@ -25,11 +25,6 @@ urlpatterns = patterns(
         name="blog_tags",
     ),
     url(
-        r"^blog/tag/(?P<tag>.+)/$",
-        "tag",
-        name="blog_tag",
-    ),
-    url(
         r"^blog/search/$",
         "search",
         name="blog_search",
